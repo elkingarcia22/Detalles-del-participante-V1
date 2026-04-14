@@ -9,8 +9,9 @@ export function JobPage() {
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
 
   // Lista de candidatos activos ordenados
-  const activeCandidates = candidatesData.filter(c => c.status === 'active' || c.status === 'hired');
-  
+  const activeCandidates = candidatesData.filter(c => 
+    c.applications?.some(app => app.status === 'active' || app.status === 'hired')
+  );
   // Encontrar el índice actual del candidato seleccionado
   const currentCandidateIndex = activeCandidates.findIndex(c => c.id === selectedCandidateId);
   const currentIndex = currentCandidateIndex >= 0 ? currentCandidateIndex + 1 : 1;
@@ -47,15 +48,6 @@ export function JobPage() {
           open={!!selectedCandidateId}
           onClose={handleCloseDrawer}
           width="90%"
-          navigationButtons={
-            <DrawerNavigation
-              currentIndex={currentIndex}
-              totalCandidates={totalCandidates}
-              onClose={handleCloseDrawer}
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-            />
-          }
         >
           <CandidateDetailDrawer
             candidateId={selectedCandidateId}
@@ -63,6 +55,7 @@ export function JobPage() {
             onNext={handleNext}
             onClose={handleCloseDrawer}
             totalCandidates={totalCandidates}
+            currentIndex={currentIndex}
           />
         </Drawer>
       )}

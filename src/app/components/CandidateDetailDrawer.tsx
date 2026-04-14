@@ -5,7 +5,7 @@ import { CandidateHeader } from './CandidateHeader';
 import { CandidateSidebar } from './CandidateSidebar';
 import { GeneralInfoSection } from './sections/GeneralInfoSection';
 import { ApplicationSection } from './sections/ApplicationSection';
-import { StagesSection } from './sections/StagesSection';
+import { VacanciesSection } from './sections/VacanciesSection';
 import { ExperienceSection } from './sections/ExperienceSection';
 import { EducationSection } from './sections/EducationSection';
 import { DocumentsSection } from './sections/DocumentsSection';
@@ -45,6 +45,7 @@ interface CandidateDetailDrawerProps {
   onNext?: () => void;
   onClose?: () => void;
   totalCandidates?: number;
+  currentIndex?: number;
 }
 
 export function CandidateDetailDrawer({ 
@@ -52,11 +53,13 @@ export function CandidateDetailDrawer({
   onPrevious, 
   onNext,
   onClose,
-  totalCandidates = 74 
+  totalCandidates = 74,
+  currentIndex = 1
 }: CandidateDetailDrawerProps) {
   const [activeSection, setActiveSection] = useState('generalInfo');
   const [triggerDocumentUpload, setTriggerDocumentUpload] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [activeApplicationId, setActiveApplicationId] = useState<string | null>(null);
   
   // Estados para controlar el ActivityHubPanel desde las etapas
   const [activityHubTab, setActivityHubTab] = useState('serena');
@@ -190,8 +193,12 @@ export function CandidateDetailDrawer({
     confidence: 'low' as const,
   };
 
-  // Generar comentarios y tareas dinámicamente cuando el candidato cambia
+  // Resetear sección y generar datos cuando el candidato cambia
   useEffect(() => {
+    // Siempre volver a Información General al cambiar de candidato
+    setActiveSection('generalInfo');
+    setHighlightedStageId(null);
+
     if (mockCandidate && 'notes' in mockCandidate) {
       // Generar comentarios desde notes
       const generatedComments = notesToComments(mockCandidate as any);
@@ -212,15 +219,20 @@ export function CandidateDetailDrawer({
       }));
       setTasks(formattedTasks);
     }
-  }, [candidateId, mockCandidate]);
+  }, [candidateId]);
 
-  const jobData = {
-    title: 'Product Designer Senior',
-    location: 'Aplicado en Bogotá, Colombia',
-    status: 'applied' as const,
-    stage: 'Evaluación CV',
-    stageProgress: 12,
-  };
+  // Set default active application when candidate changes
+  useEffect(() => {
+    if (mockCandidate && mockCandidate.applications && mockCandidate.applications.length > 0) {
+      if (!activeApplicationId || !mockCandidate.applications.some((app: any) => app.id === activeApplicationId)) {
+        setActiveApplicationId(mockCandidate.applications[0].id);
+      }
+    } else {
+      setActiveApplicationId(null);
+    }
+  }, [candidateId, mockCandidate, activeApplicationId]);
+
+  const activeApplication = mockCandidate?.applications?.find((app: any) => app.id === activeApplicationId) || mockCandidate?.applications?.[0];
 
   const handlePrevious = () => {
     if (onPrevious) {
@@ -242,14 +254,23 @@ export function CandidateDetailDrawer({
         return <GeneralInfoSection candidate={candidate} isEditMode={isEditMode} />;
       case 'application':
         return <ApplicationSection />;
-      case 'stages':
-        return <StagesSection comments={comments} addComment={addComment} openCommentPanel={openCommentPanel} highlightedStageId={highlightedStageId} candidate={mockCandidate as any} />;
+      case 'vacancies':
+        return (
+          <VacanciesSection 
+            candidate={candidate}
+            applications={candidate.applications || []}
+            comments={comments}
+            addComment={addComment}
+            openCommentPanel={openCommentPanel}
+            highlightedStageId={highlightedStageId}
+          />
+        );
       case 'experience':
         return <ExperienceSection experiences={candidate.experience} isEditMode={isEditMode} />;
       case 'education':
         return <EducationSection education={candidate.education} isEditMode={isEditMode} />;
       case 'documents':
-        return <DocumentsSection triggerUpload={triggerDocumentUpload} />;
+        return <DocumentsSection triggerUpload={triggerDocumentUpload} documents={(candidate as any).documents} />;
       default:
         return <GeneralInfoSection candidate={candidate} isEditMode={isEditMode} />;
     }
@@ -271,10 +292,19 @@ export function CandidateDetailDrawer({
       
       {/* Candidate Header */}
       <CandidateHeader
-        candidate={mockCandidate}
-        currentIndex={candidateId}
+        candidate={{
+          name: mockCandidate.name,
+          location: mockCandidate.location,
+          email: mockCandidate.email,
+          phone: mockCandidate.phone,
+          age: mockCandidate.age,
+          identificationNumber: mockCandidate.identificationNumber,
+          avatar: mockCandidate.avatar,
+          linkedin: mockCandidate.linkedin,
+        }}
+        currentIndex={currentIndex}
         totalCandidates={totalCandidates}
-        onBack={onClose} // Will be handled by drawer close
+        onBack={onClose || (() => {})}
         onPrevious={handlePrevious}
         onNext={handleNext}
       />
@@ -288,6 +318,9 @@ export function CandidateDetailDrawer({
             activeSection={activeSection}
             onSectionChange={setActiveSection}
             isEditMode={isEditMode}
+            applications={mockCandidate?.applications}
+            activeApplicationId={activeApplicationId}
+            onApplicationChange={setActiveApplicationId}
           />
 
           {/* Center Column - Content Area */}

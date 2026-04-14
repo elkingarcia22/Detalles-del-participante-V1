@@ -106,6 +106,15 @@ export function EducationSection({
   const editingEducationRef = useRef<HTMLDivElement>(null);
   const editingCertRef = useRef<HTMLDivElement>(null);
 
+  // Sync state with props when candidate changes
+  useEffect(() => {
+    setEducationList(convertedEducation);
+  }, [convertedEducation]);
+
+  useEffect(() => {
+    setCertificateList(certificates);
+  }, [certificates]);
+
   // Scroll automático a la educación en edición
   useEffect(() => {
     if (editingEducationId && editingEducationRef.current) {
@@ -533,7 +542,7 @@ export function EducationSection({
       {/* Certificates */}
       <div>
         <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3 px-1">
-          Certificaciones y Cursos
+          Licencias y certificaciones
         </h3>
         <div className="space-y-3">
           {certificateList.map((cert) => (

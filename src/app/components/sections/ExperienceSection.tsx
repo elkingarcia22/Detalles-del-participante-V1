@@ -82,6 +82,11 @@ export function ExperienceSection({ experiences = mockExperiences, isEditMode = 
   const [isCreatingNew, setIsCreatingNew] = useState(false);
   const editingRef = useRef<HTMLDivElement>(null);
 
+  // Sync state with props when candidate changes
+  useEffect(() => {
+    setExperienceList(experiencesWithIds);
+  }, [experiences]);
+
   // Scroll al elemento en edición cuando cambia editingId
   useEffect(() => {
     if (editingId && editingRef.current) {

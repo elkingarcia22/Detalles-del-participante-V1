@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, MapPin, Mail, Phone, Calendar, Check, Copy, CreditCard } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, MapPin, Mail, Phone, Calendar, Check, Copy, CreditCard, Linkedin } from 'lucide-react';
 import { Button } from './ui/button';
 import { Avatar } from './ui/avatar';
 import { Tooltip } from './ui/tooltip';
@@ -13,6 +13,7 @@ interface CandidateHeaderProps {
     age?: number;
     identificationNumber?: string;
     avatar?: string;
+    linkedin?: string;
   };
   currentIndex: number;
   totalCandidates: number;
@@ -95,18 +96,7 @@ export function CandidateHeader({
         <div className="flex items-start gap-6">
           {/* Left Section: Close + Avatar + Main Info */}
           <div className="flex items-start gap-4 flex-1 min-w-0">
-            {/* Close Button - HIDDEN (now in DrawerNavigation)
-            <Tooltip content="Cerrar">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onBack}
-                className="h-8 w-8 p-0 flex-shrink-0 text-gray-500 hover:text-gray-900 hover:bg-white rounded-full mt-1"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </Tooltip>
-            */}
+
 
             {/* Avatar with Ring */}
             <div className="relative flex-shrink-0">
@@ -136,18 +126,6 @@ export function CandidateHeader({
 
               {/* Contact & Info Grid - 4 Columns */}
               <div className="flex items-center gap-3.5 flex-wrap mb-3">
-                {/* Age */}
-                {candidate.age !== undefined && (
-                  <div className="flex items-center gap-1.5 text-sm px-1.5 py-1.5 -ml-1.5 min-w-0">
-                    <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                      <Calendar className="w-3 h-3 text-gray-600" />
-                    </div>
-                    <div className="flex-1 min-w-0 text-left">
-                      <div className="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Edad</div>
-                      <div className="text-xs text-gray-900 truncate">{candidate.age} años</div>
-                    </div>
-                  </div>
-                )}
 
                 {/* Identification Number */}
                 {candidate.identificationNumber && (
@@ -213,14 +191,33 @@ export function CandidateHeader({
                     )}
                   </button>
                 </Tooltip>
+
+                {/* LinkedIn */}
+                {candidate.linkedin && (
+                  <div className="flex items-center gap-1.5 text-sm px-1.5 py-1.5 -ml-1.5 min-w-0">
+                    <div className="w-6 h-6 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                      <Linkedin className="w-3 h-3 text-blue-600" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <div className="text-[10px] font-medium text-gray-500 uppercase tracking-wide">LinkedIn</div>
+                      <a 
+                        href={candidate.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-xs text-blue-600 truncate hover:underline block"
+                      >
+                        Ver perfil
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Right Section: Navigation - HIDDEN (now using DrawerNavigation) */}
-          {/* Keeping the code commented for reference
-          <div className="flex-shrink-0 pt-1">
-            <div className="flex items-center gap-1 px-2 py-1.5 bg-white rounded-lg border border-gray-200 shadow-sm">
+          {/* Right Section: Navigation */}
+          <div className="flex-shrink-0 pt-1 flex items-center gap-3">
+            <div className="flex items-center gap-1 px-2 py-1 bg-white rounded-lg border border-gray-200">
               <Tooltip content="Anterior">
                 <Button
                   variant="ghost"
@@ -253,8 +250,19 @@ export function CandidateHeader({
                 </Button>
               </Tooltip>
             </div>
+            
+            {/* Close Button */}
+            <Tooltip content="Cerrar">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onBack}
+                className="h-8 w-8 p-0 flex-shrink-0 text-gray-500 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </Tooltip>
           </div>
-          */}
         </div>
       </div>
     </div>

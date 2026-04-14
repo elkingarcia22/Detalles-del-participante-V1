@@ -37,11 +37,22 @@ export function JobView({ onCandidateClick }: JobViewProps) {
     'seleccionado': { active: true, discarded: false }
   });
 
-  // Agrupar candidatos por etapa
+  // Agrupar candidatos por etapa usando sus aplicaciones
   const candidatesByStage = stages.map(stage => {
-    const stageCandidates = candidatesData.filter(c => c.currentStage === stage.id);
-    const active = stageCandidates.filter(c => c.status === 'active' || c.status === 'hired');
-    const discarded = stageCandidates.filter(c => c.status === 'rejected');
+    // Encuentra candidatos que tienen al menos una aplicación en esta etapa
+    const stageCandidates = candidatesData.map(c => {
+      const appInStage = c.applications?.find(app => app.currentStage === stage.id);
+      if (appInStage) {
+        return {
+          ...c,
+          _activeApp: appInStage
+        };
+      }
+      return null;
+    }).filter(Boolean) as (typeof candidatesData[0] & { _activeApp: any })[];
+
+    const active = stageCandidates.filter(c => c._activeApp.status === 'active' || c._activeApp.status === 'hired');
+    const discarded = stageCandidates.filter(c => c._activeApp.status === 'rejected');
     
     return {
       ...stage,
@@ -61,8 +72,11 @@ export function JobView({ onCandidateClick }: JobViewProps) {
     }));
   };
 
-  const renderCandidateCard = (candidate: typeof candidatesData[0], isCompact = false) => {
-    const daysSinceApplied = Math.floor((new Date().getTime() - new Date(candidate.appliedDate).getTime()) / (1000 * 60 * 60 * 24));
+  const renderCandidateCard = (candidate: typeof candidatesData[0] & { _activeApp?: any }, isCompact = false) => {
+    const app = candidate._activeApp || candidate.applications?.[0] || {} as any;
+    const daysSinceApplied = app.appliedDate 
+      ? Math.floor((new Date().getTime() - new Date(app.appliedDate).getTime()) / (1000 * 60 * 60 * 24))
+      : 0;
     
     return (
       <div 
@@ -96,17 +110,17 @@ export function JobView({ onCandidateClick }: JobViewProps) {
           </div>
         )}
 
-        {candidate.status === 'hired' && (
+        {app.status === 'hired' && (
           <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-xs w-full justify-center">
             ✓ Contratado
           </Badge>
         )}
-        {candidate.status === 'rejected' && (
+        {app.status === 'rejected' && (
           <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 text-xs w-full justify-center">
             Descartado
           </Badge>
         )}
-        {candidate.status === 'active' && (
+        {app.status === 'active' && (
           <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-xs w-full justify-center">
             En proceso
           </Badge>

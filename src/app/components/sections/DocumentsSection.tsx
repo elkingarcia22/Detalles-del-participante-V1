@@ -13,40 +13,20 @@ interface Document {
 }
 
 interface DocumentsSectionProps {
+  documents?: Document[];
   onUploadTrigger?: () => void;
   triggerUpload?: boolean;
 }
 
-export function DocumentsSection({ onUploadTrigger, triggerUpload }: DocumentsSectionProps) {
+export function DocumentsSection({ documents: initialDocuments = [], onUploadTrigger, triggerUpload }: DocumentsSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  // Documentos de ejemplo
-  const [documents, setDocuments] = React.useState<Document[]>([
-    {
-      id: '1',
-      name: 'CV_Mateo_Sanchez.pdf',
-      type: 'CV',
-      size: '2.4 MB',
-      uploadedDate: '7 Ene 2025',
-      uploadedBy: 'Sistema',
-    },
-    {
-      id: '2',
-      name: 'Carta_Presentación.pdf',
-      type: 'Carta',
-      size: '1.1 MB',
-      uploadedDate: '7 Ene 2025',
-      uploadedBy: 'Mateo Sánchez',
-    },
-    {
-      id: '3',
-      name: 'Certificado_AWS.pdf',
-      type: 'Certificado',
-      size: '850 KB',
-      uploadedDate: '7 Ene 2025',
-      uploadedBy: 'Mateo Sánchez',
-    },
-  ]);
+  const [documents, setDocuments] = React.useState<Document[]>(initialDocuments);
+
+  // Sync state with props when candidate changes
+  React.useEffect(() => {
+    setDocuments(initialDocuments);
+  }, [initialDocuments]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;

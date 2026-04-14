@@ -1,5 +1,30 @@
 // Datos completos de candidatos para Product Designer Senior
 
+export interface Application {
+  id: string;
+  jobTitle: string;
+  jobLocation: string;
+  currentStage: string;
+  status: 'active' | 'rejected' | 'hired';
+  appliedDate: string;
+  matchScore: number;
+  confidence: 'high' | 'medium' | 'low';
+  scores: {
+    cvScore?: number;
+    psychometricScore?: number;
+    serenaScore?: number;
+    technicalScore?: number;
+    productManagerScore?: number;
+    hiringManagerScore?: number;
+  };
+  rejectionReason?: string;
+  blocker?: {
+    stageId: string;
+    reason: string;
+    priority: 'high' | 'medium';
+  };
+}
+
 export interface CandidateData {
   id: string;
   name: string;
@@ -8,12 +33,10 @@ export interface CandidateData {
   age: number;
   location: string;
   avatar: string;
-  currentStage: string;
-  status: 'active' | 'rejected' | 'hired';
-  appliedDate: string;
-  expectedSalary: string;
-  availability: string;
   yearsExperience: number;
+  
+  // Lista de aplicaciones (vacantes)
+  applications: Application[];
   
   // Información personal adicional
   firstName?: string;
@@ -34,11 +57,11 @@ export interface CandidateData {
   noticePeriod?: string;
   noticePeriodUnit?: string;
   currency?: string;
+  expectedSalary?: string; // Puede ser general o específico, lo dejamos aquí por ahora
+  availability?: string;
   
   // Perfil profesional
   description?: string;
-  matchScore?: number;
-  confidence?: 'high' | 'medium' | 'low';
   
   // Experiencia laboral
   experience: Array<{
@@ -78,19 +101,18 @@ export interface CandidateData {
     }>;
   };
   
-  // Scores por etapa
-  scores: {
-    cvScore?: number;
-    psychometricScore?: number;
-    serenaScore?: number;
-    technicalScore?: number;
-    productManagerScore?: number;
-    hiringManagerScore?: number;
-  };
+  // Documentos
+  documents?: Array<{
+    id: string;
+    name: string;
+    type: string;
+    size: string;
+    uploadedDate: string;
+    uploadedBy: string;
+  }>;
   
-  // Notas y comentarios
+  // Notas generales del candidato
   notes: string[];
-  rejectionReason?: string;
 }
 
 export const candidatesData: CandidateData[] = [
@@ -103,12 +125,60 @@ export const candidatesData: CandidateData[] = [
     age: 28,
     location: 'Bogotá, Colombia',
     avatar: 'MG',
-    currentStage: 'seleccionado',
-    status: 'hired',
-    appliedDate: '2026-02-10',
+    yearsExperience: 5,
     expectedSalary: '$8.000.000 - $10.000.000 COP',
     availability: 'Inmediata',
-    yearsExperience: 5,
+    
+    // Lista de aplicaciones (vacantes)
+    applications: [
+      {
+        id: 'app-001-1',
+        jobTitle: 'Product Designer Senior',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'seleccionado',
+        status: 'hired',
+        appliedDate: '2026-02-10',
+        matchScore: 92,
+        confidence: 'high',
+        scores: {
+          cvScore: 92,
+          psychometricScore: 88,
+          serenaScore: 91,
+          technicalScore: 94,
+          productManagerScore: 90,
+          hiringManagerScore: 93
+        }
+      },
+      {
+        id: 'app-001-2',
+        jobTitle: 'UX Lead',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'entrevista-tecnica',
+        status: 'rejected',
+        appliedDate: '2025-11-15',
+        matchScore: 85,
+        confidence: 'medium',
+        scores: {
+          cvScore: 88,
+          technicalScore: 78
+        },
+        rejectionReason: 'Falta de experiencia específica en el sector fintech'
+      },
+      {
+        id: 'app-001-3',
+        jobTitle: 'UI Specialist',
+        jobLocation: 'Remote',
+        currentStage: 'hired',
+        status: 'hired',
+        appliedDate: '2024-05-20',
+        matchScore: 95,
+        confidence: 'high',
+        scores: {
+          cvScore: 96,
+          technicalScore: 98
+        }
+      }
+    ],
     
     // Información personal adicional
     firstName: 'María',
@@ -132,8 +202,6 @@ export const candidatesData: CandidateData[] = [
     
     // Perfil profesional
     description: 'Product Designer con más de 5 años de experiencia creando experiencias digitales centradas en el usuario. Especializada en diseño de sistemas escalables, investigación UX y prototipado rápido. He trabajado con equipos multidisciplinarios en startups tecnológicas líderes como Rappi y Platzi, liderando proyectos desde la conceptualización hasta el lanzamiento. Mi enfoque combina pensamiento estratégico con ejecución visual impecable, siempre basándome en datos y feedback de usuarios. Apasionada por la educación digital y el impacto social a través del diseño.',
-    matchScore: 92,
-    confidence: 'high',
     
     experience: [
       {
@@ -196,20 +264,18 @@ export const candidatesData: CandidateData[] = [
         }
       ]
     },
-    scores: {
-      cvScore: 92,
-      psychometricScore: 88,
-      serenaScore: 91,
-      technicalScore: 94,
-      productManagerScore: 90,
-      hiringManagerScore: 93
-    },
+    documents: [
+      { id: 'doc-001-1', name: 'CV_Maria_Garcia.pdf', type: 'PDF', size: '1.2 MB', uploadedDate: '2026-02-10', uploadedBy: 'María García López' },
+      { id: 'doc-001-2', name: 'Portfolio_MG_2024.pdf', type: 'PDF', size: '25.4 MB', uploadedDate: '2026-02-10', uploadedBy: 'María García López' },
+      { id: 'doc-001-3', name: 'Cedula_Ciudadania.pdf', type: 'PDF', size: '0.8 MB', uploadedDate: '2026-02-10', uploadedBy: 'María García López' }
+    ],
     notes: [
       'Excelente portfolio con casos de estudio detallados',
       'Experiencia relevante en startups tech colombianas',
       'Muy buena presentación de proyectos de impacto',
       'Fit cultural excepcional',
-      'Referencias muy positivas'
+      'Referencias muy positivas',
+      'Demuestra liderazgo nato y capacidad de mentoría'
     ]
   },
 
@@ -222,12 +288,60 @@ export const candidatesData: CandidateData[] = [
     age: 31,
     location: 'Bogotá, Colombia',
     avatar: 'VH',
-    currentStage: 'antecedentes',
-    status: 'active',
-    appliedDate: '2026-02-12',
+    yearsExperience: 8,
     expectedSalary: '$9.500.000 - $11.500.000 COP',
     availability: '1 mes',
-    yearsExperience: 8,
+    
+    // Lista de aplicaciones (vacantes)
+    applications: [
+      {
+        id: 'app-002-1',
+        jobTitle: 'Product Designer Senior',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'antecedentes',
+        status: 'active',
+        appliedDate: '2026-02-12',
+        matchScore: 94,
+        confidence: 'high',
+        scores: {
+          cvScore: 94,
+          psychometricScore: 90,
+          serenaScore: 92,
+          technicalScore: 95,
+          productManagerScore: 91,
+          hiringManagerScore: 94
+        }
+      },
+      {
+        id: 'app-002-2',
+        jobTitle: 'UX Senior Strategist',
+        jobLocation: 'Remote (USA)',
+        currentStage: 'entrevista-pm',
+        status: 'active',
+        appliedDate: '2026-01-05',
+        matchScore: 88,
+        confidence: 'high',
+        scores: {
+          cvScore: 96,
+          technicalScore: 92
+        }
+      },
+      {
+        id: 'app-002-3',
+        jobTitle: 'Design Lead',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'seleccionado',
+        status: 'rejected',
+        appliedDate: '2025-09-20',
+        matchScore: 91,
+        confidence: 'high',
+        scores: {
+          cvScore: 92,
+          technicalScore: 94
+        },
+        rejectionReason: 'El candidato aceptó otra oferta'
+      }
+    ],
     
     // Información personal adicional
     firstName: 'Valentina',
@@ -251,8 +365,6 @@ export const candidatesData: CandidateData[] = [
     
     // Perfil profesional
     description: 'Product Designer Senior con 8 años de experiencia trabajando con equipos globales en Google y Accenture Interactive. Especializada en diseño de sistemas escalables, investigación de usuarios internacional y colaboración cross-cultural. He liderado proyectos de transformación digital para corporaciones Fortune 500 y startups tecnológicas, siempre enfocándome en crear experiencias intuitivas y accesibles. Mi experiencia en consultoría me ha dado una visión estratégica única para resolver problemas complejos de negocio a través del diseño. Apasionada por la accesibilidad digital, las metodologías ágiles y el liderazgo de equipos distribuidos. Certificada en Design Operations y con experiencia trabajando en ambientes altamente colaborativos y de ritmo acelerado.',
-    matchScore: 94,
-    confidence: 'high',
     
     experience: [
       {
@@ -355,23 +467,17 @@ export const candidatesData: CandidateData[] = [
         }
       ]
     },
-    scores: {
-      cvScore: 94,
-      psychometricScore: 90,
-      serenaScore: 92,
-      technicalScore: 95,
-      productManagerScore: 91,
-      hiringManagerScore: 94
-    },
+    documents: [
+      { id: 'doc-002-1', name: 'Valentina_Herrera_CV.pdf', type: 'PDF', size: '1.5 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' },
+      { id: 'doc-002-2', name: 'Google_UX_Certification.pdf', type: 'PDF', size: '2.1 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' },
+      { id: 'doc-002-3', name: 'Portfolio_Global_2024.pdf', type: 'PDF', size: '32.0 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' }
+    ],
     notes: [
       'Experiencia internacional excepcional - trabajó en Google',
       'Portfolio de alto nivel con proyectos de gran impacto medible',
       'Excelente fit cultural: colaborativa, estratégica y orientada a resultados',
       'Certificaciones de Nielsen Norman Group y General Assembly',
-      'Expectativa salarial en el límite superior pero completamente justificada',
-      'Fuerte enfoque en accesibilidad y design ops',
-      'Inglés fluido - apto para colaboración internacional',
-      'Proceso de verificación de antecedentes en curso'
+      'Expectativa salarial en el límite superior pero completamente justificada'
     ]
   },
   {
@@ -382,12 +488,87 @@ export const candidatesData: CandidateData[] = [
     age: 33,
     location: 'Santa Marta, Colombia',
     avatar: 'AP',
-    currentStage: 'antecedentes',
-    status: 'rejected',
-    appliedDate: '2026-02-14',
+    yearsExperience: 8,
     expectedSalary: '$9.000.000 - $10.000.000 COP',
     availability: '1 mes',
-    yearsExperience: 8,
+    
+    // Lista de aplicaciones (vacantes)
+    applications: [
+      {
+        id: 'app-003-1',
+        jobTitle: 'Product Designer Senior',
+        jobLocation: 'Santa Marta, Colombia',
+        currentStage: 'antecedentes',
+        status: 'rejected',
+        appliedDate: '2026-02-14',
+        matchScore: 76,
+        confidence: 'medium',
+        scores: {
+          cvScore: 76,
+          psychometricScore: 72,
+          serenaScore: 70,
+          technicalScore: 68,
+          productManagerScore: 65,
+          hiringManagerScore: 71
+        },
+        rejectionReason: 'Inconsistencias encontradas en verificación de referencias laborales.'
+      },
+      {
+        id: 'app-003-2',
+        jobTitle: 'Web Designer Specialist',
+        jobLocation: 'Barranquilla, Colombia',
+        currentStage: 'hired',
+        status: 'hired',
+        appliedDate: '2024-03-10',
+        matchScore: 82,
+        confidence: 'high',
+        scores: {
+          cvScore: 85,
+          technicalScore: 88
+        }
+      },
+      {
+        id: 'app-003-3',
+        jobTitle: 'Frontend Engineer',
+        jobLocation: 'Remote',
+        currentStage: 'evaluacion-cv',
+        status: 'active',
+        appliedDate: '2026-04-01',
+        matchScore: 68,
+        confidence: 'medium',
+        scores: {
+          cvScore: 70
+        }
+      },
+      {
+        id: 'app-003-4',
+        jobTitle: 'UI Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'entrevista-tecnica',
+        status: 'rejected',
+        appliedDate: '2025-01-15',
+        matchScore: 72,
+        confidence: 'medium',
+        scores: {
+          cvScore: 74,
+          technicalScore: 70
+        },
+        rejectionReason: 'Falta de experiencia en diseño de producto complejo.'
+      },
+      {
+        id: 'app-003-5',
+        jobTitle: 'Web Developer',
+        jobLocation: 'Remote',
+        currentStage: 'evaluacion-cv',
+        status: 'active',
+        appliedDate: '2026-04-10',
+        matchScore: 75,
+        confidence: 'medium',
+        scores: {
+          cvScore: 78
+        }
+      }
+    ],
     
     // Información personal adicional
     firstName: 'Andrés',
@@ -411,17 +592,16 @@ export const candidatesData: CandidateData[] = [
     
     // Perfil profesional
     description: 'Diseñador Digital con 8 años de experiencia en desarrollo web y diseño de interfaces. He trabajado en diversos proyectos para agencias digitales y clientes corporativos, con enfoque en sitios web responsivos, landing pages de alta conversión y experiencias de usuario intuitivas. Mi background técnico en ingeniería de sistemas me permite colaborar efectivamente con equipos de desarrollo y entender las limitaciones técnicas. Busco hacer la transición hacia diseño de producto digital en startups tech. Apasionado por el diseño limpio, la usabilidad y las últimas tendencias en desarrollo web.',
-    matchScore: 76,
-    confidence: 'medium',
     
     experience: [
       {
+        id: 'exp-003-001',
         company: 'Digital Agency Colombia',
         position: 'Diseñador Web Senior',
         duration: 'Mar 2018 - Presente',
         description: 'Diseño y desarrollo de sitios web corporativos para clientes nacionales e internacionales. Liderazgo de proyectos desde el brief inicial hasta el lanzamiento. Coordinación con equipos de marketing y desarrollo.',
         location: 'Santa Marta, Colombia',
-        startDate: 'Marzo 2018',
+        startDate: '2018-03',
         endDate: null,
         current: true,
         achievements: [
@@ -432,13 +612,14 @@ export const candidatesData: CandidateData[] = [
         ]
       },
       {
+        id: 'exp-003-002',
         company: 'TechSolutions SAS',
         position: 'Desarrollador Frontend / Diseñador',
         duration: 'Ene 2016 - Feb 2018',
         description: 'Desarrollo frontend con HTML, CSS, JavaScript y diseño de interfaces para aplicaciones web. Trabajo con frameworks como Bootstrap y WordPress. Colaboración con backend para integración de APIs.',
         location: 'Barranquilla, Colombia',
-        startDate: 'Enero 2016',
-        endDate: 'Febrero 2018',
+        startDate: '2016-01',
+        endDate: '2018-02',
         current: false,
         achievements: [
           'Desarrollé +20 landing pages con tasas de conversión superiores al 8%',
@@ -448,13 +629,14 @@ export const candidatesData: CandidateData[] = [
         ]
       },
       {
+        id: 'exp-003-003',
         company: 'Freelance',
         position: 'Diseñador Web Freelance',
         duration: 'Jun 2014 - Dic 2015',
         description: 'Proyectos freelance de diseño web para pequeñas empresas y emprendimientos. Gestión completa del proceso desde briefing hasta entrega y hosting.',
         location: 'Santa Marta, Colombia',
-        startDate: 'Junio 2014',
-        endDate: 'Diciembre 2015',
+        startDate: '2014-06',
+        endDate: '2015-12',
         current: false,
         achievements: [
           'Completé +15 proyectos web para pymes locales',
@@ -468,13 +650,13 @@ export const candidatesData: CandidateData[] = [
         institution: 'Universidad del Magdalena',
         degree: 'Ingeniería de Sistemas',
         year: '2015',
-        description: 'Título profesional en Ingeniería de Sistemas con énfasis en desarrollo web y bases de datos. Proyecto de grado sobre sistemas de información para pymes.'
+        description: 'Título profesional en Ingeniería de Sistemas con énfasis en desarrollo web y bases de datos. Proyecto de grado sobre sistemas de información para pymes locales.'
       },
       {
         institution: 'Platzi',
         degree: 'Curso de Diseño Web y UX/UI',
         year: '2017',
-        description: 'Cursos online de especialización en diseño web, UX/UI y desarrollo frontend.'
+        description: 'Especialización en diseño web moderno, maquetación avanzada con CSS Grid/Flexbox y fundamentos de arquitectura de información.'
       }
     ],
     skills: {
@@ -501,14 +683,10 @@ export const candidatesData: CandidateData[] = [
         }
       ]
     },
-    scores: {
-      cvScore: 76,
-      psychometricScore: 72,
-      serenaScore: 70,
-      technicalScore: 68,
-      productManagerScore: 65,
-      hiringManagerScore: 71
-    },
+    documents: [
+      { id: 'doc-003-1', name: 'Andres_Parra_CV.pdf', type: 'PDF', size: '1.1 MB', uploadedDate: '2026-02-14', uploadedBy: 'Andrés Parra Gómez' },
+      { id: 'doc-003-2', name: 'Certificado_Laboral_DigitalAgency.pdf', type: 'PDF', size: '0.9 MB', uploadedDate: '2026-02-14', uploadedBy: 'Andrés Parra Gómez' }
+    ],
     notes: [
       'Perfil con experiencia en web development pero limitada en producto digital',
       'Background técnico interesante - ingeniería de sistemas',
@@ -516,9 +694,8 @@ export const candidatesData: CandidateData[] = [
       'Poca experiencia en metodologías UX research y design thinking',
       'No tiene experiencia en startups tech ni productos SaaS',
       'Durante verificación de antecedentes se encontraron inconsistencias',
-      'ALERTA: Empresa "TechSolutions SAS" no confirmó fechas de trabajo declaradas'
-    ],
-    rejectionReason: 'Inconsistencias encontradas en verificación de referencias laborales. La empresa TechSolutions SAS no pudo confirmar las fechas de empleo declaradas (Ene 2016 - Feb 2018). El contacto de RRHH indicó que el candidato trabajó desde Junio 2016 hasta Octubre 2017, con una diferencia de 8 meses respecto a lo declarado en CV. Esta discrepancia genera dudas sobre la veracidad de la información proporcionada.'
+      'ALERTA: Empresa "TechSolutions SAS" no confirmó fechas de trabajo declaradas (Ene 2016 - Feb 2018). El contacto de RRHH indicó que el candidato trabajó desde Junio 2016 hasta Octubre 2017, con una diferencia de 8 meses respecto a lo declarado en CV. Esta discrepancia genera dudas sobre la veracidad de la información proporcionada.'
+    ]
   },
 
   // ====== ETAPA 7: ENTREVISTA HIRING MANAGER (1 ACTIVO) ======
@@ -526,31 +703,93 @@ export const candidatesData: CandidateData[] = [
     id: 'cand-004',
     name: 'Carolina Mendoza Ríos',
     email: 'carolina.mendoza@email.com',
-    phone: '+57 321 654 9870',
+    phone: '+57 311 234 5678',
     age: 29,
     location: 'Medellín, Colombia',
     avatar: 'CM',
-    currentStage: 'entrevista-hiring',
-    status: 'active',
-    appliedDate: '2026-02-15',
-    expectedSalary: '$8.500.000 - $10.000.000 COP',
-    availability: '2 semanas',
     yearsExperience: 6,
+    expectedSalary: '$8.500.000 - $10.500.000 COP',
+    availability: '2 semanas',
+    
+    // Lista de aplicaciones (vacantes)
+    applications: [
+      {
+        id: 'app-004-1',
+        jobTitle: 'Product Designer Senior',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'hiring-manager',
+        status: 'active',
+        appliedDate: '2026-02-15',
+        matchScore: 89,
+        confidence: 'high',
+        scores: {
+          cvScore: 89,
+          psychometricScore: 85,
+          serenaScore: 87,
+          technicalScore: 90,
+          productManagerScore: 88,
+          hiringManagerScore: 86
+        }
+      },
+      {
+        id: 'app-004-2',
+        jobTitle: 'Interaction Designer',
+        jobLocation: 'Remote',
+        currentStage: 'hired',
+        status: 'hired',
+        appliedDate: '2025-08-20',
+        matchScore: 92,
+        confidence: 'high',
+        scores: {
+          cvScore: 94,
+          technicalScore: 95
+        }
+      },
+      {
+        id: 'app-004-3',
+        jobTitle: 'UX Researcher',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'evaluacion-cv',
+        status: 'rejected',
+        appliedDate: '2025-03-12',
+        matchScore: 78,
+        confidence: 'medium',
+        scores: {
+          cvScore: 75
+        },
+        rejectionReason: 'Perfil más orientado a diseño visual que a investigación pura.'
+      },
+      {
+        id: 'app-004-4',
+        jobTitle: 'Product Designer',
+        jobLocation: 'Remote',
+        currentStage: 'entrevista-tecnica',
+        status: 'rejected',
+        appliedDate: '2024-11-05',
+        matchScore: 84,
+        confidence: 'high',
+        scores: {
+          cvScore: 86,
+          technicalScore: 82
+        },
+        rejectionReason: 'El candidato decidió retirar su postulación.'
+      }
+    ],
     
     // Información personal adicional
     firstName: 'Carolina',
     lastName: 'Mendoza Ríos',
-    identificationNumber: '1037654321',
+    identificationNumber: '1012345678',
     identificationType: 'Cédula de Ciudadanía',
     nationality: 'Colombiana',
     linkedin: 'https://www.linkedin.com/in/carolinamendoza',
-    birthDate: '12/09/1997',
+    birthDate: '12/11/1996',
     
     // Ubicación detallada
     city: 'Medellín',
     country: 'Colombia',
-    willingToRelocate: false,
-    interestedLocations: ['Remote (Global)', 'Medellín'],
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Remote'],
     
     // Información laboral adicional
     noticePeriod: '2',
@@ -676,6 +915,11 @@ export const candidatesData: CandidateData[] = [
       technicalScore: 92,
       productManagerScore: 88
     },
+    documents: [
+      { id: 'doc-004-1', name: 'Carolina_Mendoza_Resume.pdf', type: 'PDF', size: '1.3 MB', uploadedDate: '2026-02-15', uploadedBy: 'Carolina Mendoza Ríos' },
+      { id: 'doc-004-2', name: 'Stripe_Recommendation_Letter.pdf', type: 'PDF', size: '0.7 MB', uploadedDate: '2026-02-15', uploadedBy: 'Carolina Mendoza Ríos' },
+      { id: 'doc-004-3', name: 'Fintech_UX_Portfolio.pdf', type: 'PDF', size: '18.2 MB', uploadedDate: '2026-02-15', uploadedBy: 'Carolina Mendoza Ríos' }
+    ],
     notes: [
       'Experiencia en Stripe muy valorada - producto de clase mundial',
       'Excelente manejo de trabajo remoto y comunicación asíncrona',
@@ -688,8 +932,6 @@ export const candidatesData: CandidateData[] = [
       'En proceso de entrevista con Hiring Manager'
     ]
   },
-
-  // ====== ETAPA 6: ENTREVISTA PRODUCT MANAGER (1 ACTIVO, 1 RECHAZADO) ======
   {
     id: 'cand-005',
     name: 'Carlos Rodríguez Méndez',
@@ -698,12 +940,58 @@ export const candidatesData: CandidateData[] = [
     age: 32,
     location: 'Medellín, Colombia',
     avatar: 'CR',
-    currentStage: 'entrevista-pm',
-    status: 'active',
-    appliedDate: '2026-02-16',
+    yearsExperience: 7,
     expectedSalary: '$9.000.000 - $11.000.000 COP',
     availability: '2 semanas',
-    yearsExperience: 7,
+    
+    // Lista de aplicaciones (vacantes)
+    applications: [
+      {
+        id: 'app-005-1',
+        jobTitle: 'Product Designer Senior',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'entrevista-pm',
+        status: 'active',
+        appliedDate: '2026-02-16',
+        matchScore: 88,
+        confidence: 'high',
+        scores: {
+          cvScore: 88,
+          psychometricScore: 85,
+          serenaScore: 86,
+          technicalScore: 89,
+          productManagerScore: 87
+        }
+      },
+      {
+        id: 'app-005-2',
+        jobTitle: 'UX Lead',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'hired',
+        status: 'hired',
+        appliedDate: '2025-06-10',
+        matchScore: 92,
+        confidence: 'high',
+        scores: {
+          cvScore: 94,
+          technicalScore: 95
+        }
+      },
+      {
+        id: 'app-005-3',
+        jobTitle: 'Service Designer',
+        jobLocation: 'Remote',
+        currentStage: 'evaluacion-cv',
+        status: 'rejected',
+        appliedDate: '2025-01-20',
+        matchScore: 78,
+        confidence: 'medium',
+        scores: {
+          cvScore: 75
+        },
+        rejectionReason: 'El perfil no se ajusta completamente al enfoque estratégico requerido.'
+      }
+    ],
     
     // Información personal adicional
     firstName: 'Carlos',
@@ -725,18 +1013,12 @@ export const candidatesData: CandidateData[] = [
     noticePeriodUnit: 'Semanas',
     currency: 'Peso colombiano (COP)',
     
-    // Perfil profesional
-    description: 'Lead UX/UI Designer con 7 años de experiencia liderando equipos de diseño en transformación digital de productos financieros. Actualmente lidero un equipo de 5 diseñadores en Bancolombia, uno de los bancos más grandes de Latinoamérica, donde soy responsable de la estrategia de diseño de productos móviles y web utilizados por millones de usuarios. Mi enfoque combina liderazgo de equipos, pensamiento estratégico y ejecución táctica, siempre centrado en crear experiencias que generen impacto medible en métricas de negocio y satisfacción de usuarios. He trabajado en consultoría con Globant diseñando para clientes Fortune 500 en retail y fintech, lo que me ha dado una perspectiva amplia de diferentes industrias y modelos de negocio. Especializado en design systems escalables, investigación de usuarios, y gestión de stakeholders de alto nivel. Apasionado por la mentoría, he desarrollado programas de crecimiento para diseñadores junior y facilitado workshops de Design Sprint con equipos ejecutivos.',
-    matchScore: 88,
-    confidence: 'high',
-    
     experience: [
       {
-        id: 'exp-carlos-001',
         company: 'Bancolombia',
         position: 'Lead UX/UI Designer',
         duration: 'Jun 2020 - Presente',
-        description: 'Lidero equipo de 5 diseñadores en la transformación digital de productos bancarios. Responsable de la estrategia de diseño end-to-end en aplicaciones móviles y web con +15M usuarios activos. Gestión directa con stakeholders C-level y Product Managers para definir roadmap de diseño alineado con objetivos de negocio.',
+        description: 'Lidero equipo de 5 diseñadores en la transformación digital de productos bancarios. Responsable de la estrategia de diseño end-to-end en aplicaciones móviles y web con +15M usuarios activos.',
         location: 'Medellín, Colombia',
         startDate: 'Junio 2020',
         endDate: null,
@@ -744,48 +1026,21 @@ export const candidatesData: CandidateData[] = [
         achievements: [
           'Lideré rediseño completo de app móvil incrementando NPS de 45 a 72 en 6 meses',
           'Creé BcoDS (Bancolombia Design System) adoptado por 15+ equipos de producto',
-          'Reduje tiempo de diseño a producción en 45% mediante componentes reutilizables',
-          'Implementé programa de mentoría que desarrolló 3 diseñadores mid a senior level',
-          'Facilité +25 workshops de Design Sprint con stakeholders ejecutivos',
-          'Lideré iniciativas de accesibilidad digital alcanzando WCAG 2.1 AA compliance',
-          'Gestión de presupuesto de diseño de $150M COP anuales'
+          'Reduje tiempo de diseño a producción en 45% mediante componentes reutilizables'
         ]
       },
       {
-        id: 'exp-carlos-002',
         company: 'Globant',
         position: 'Senior UX Designer',
         duration: 'Ene 2018 - May 2020',
-        description: 'Diseño de experiencias para clientes internacionales Fortune 500 en retail, fintech y telecomunicaciones. Facilitador de workshops de Design Sprint y Design Thinking. Trabajo en equipos ágiles distribuidos con delivery managers y desarrolladores en Argentina, USA y Colombia.',
+        description: 'Diseño de experiencias para clientes internacionales Fortune 500 en retail, fintech y telecomunicaciones.',
         location: 'Medellín, Colombia',
         startDate: 'Enero 2018',
         endDate: 'Mayo 2020',
         current: false,
         achievements: [
           'Diseñé experiencia de e-commerce para retailer USA con +$5M en ventas mensuales',
-          'Facilité 15+ Design Sprints con clientes en USA, México y Colombia',
-          'Creé design system para cliente fintech adoptado por 8 productos digitales',
-          'Lideré user research con +100 usuarios en 3 países diferentes',
-          'Colaboré con equipos en 4 países simultáneamente en proyectos de alto impacto',
-          'Recibí reconocimiento "Outstanding Performer" 2 años consecutivos'
-        ]
-      },
-      {
-        id: 'exp-carlos-003',
-        company: 'Intergrupo',
-        position: 'UX Designer',
-        duration: 'Mar 2016 - Dic 2017',
-        description: 'Diseño de productos digitales para conglomerado financiero colombiano (seguros, créditos, inversiones). Colaboración con equipos de marketing, desarrollo y producto. Responsable de investigación de usuarios y wireframing de nuevas features.',
-        location: 'Medellín, Colombia',
-        startDate: 'Marzo 2016',
-        endDate: 'Diciembre 2017',
-        current: false,
-        achievements: [
-          'Diseñé plataforma de cotización de seguros reduciendo abandono en 40%',
-          'Implementé programa de user testing con +80 usuarios mensuales',
-          'Creé librerías de componentes UI que aceleraron desarrollo en 30%',
-          'Rediseñé flujo de solicitud de crédito incrementando conversión en 22%',
-          'Colaboré en lanzamiento de 3 productos digitales nuevos al mercado'
+          'Facilité 15+ Design Sprints con clientes en USA, México y Colombia'
         ]
       }
     ],
@@ -794,59 +1049,29 @@ export const candidatesData: CandidateData[] = [
         institution: 'Universidad EAFIT',
         degree: 'Diseño de Interacción',
         year: '2017',
-        description: 'Pregrado en Diseño de Interacción con distinción honorífica. Énfasis en diseño de servicios digitales y experiencia de usuario. Proyecto de grado sobre transformación digital en el sector financiero colombiano.'
-      },
-      {
-        institution: 'Interaction Design Foundation',
-        degree: 'UX Management Certificate',
-        year: '2021',
-        description: 'Certificación profesional en gestión de equipos de UX, incluyendo estrategia de diseño, operaciones, métricas y liderazgo de equipos creativos.'
-      },
-      {
-        institution: 'Google',
-        degree: 'Design Sprint Facilitator',
-        year: '2019',
-        description: 'Certificación oficial de Google Ventures en facilitación de Design Sprints. Metodología intensiva de 5 días para resolver problemas críticos de negocio mediante diseño.'
+        description: 'Énfasis en experiencia de usuario y diseño de servicios digitales.'
       }
     ],
     skills: {
-      technical: ['Figma (Expert)', 'Design Systems', 'User Research', 'Data Analytics', 'A/B Testing', 'Wireframing', 'Prototyping', 'Usability Testing', 'Design Ops', 'Accessibility (WCAG)', 'Sketch', 'Adobe XD', 'Miro', 'FigJam', 'Hotjar', 'Google Analytics', 'SQL (Basic)'],
-      soft: ['Liderazgo de equipos', 'Stakeholder management', 'Presentaciones ejecutivas', 'Mentoría', 'Facilitación de workshops', 'Pensamiento estratégico', 'Gestión de presupuesto', 'Comunicación ejecutiva', 'Design Sprints', 'Negociación', 'Gestión de proyectos']
+      technical: ['Figma', 'Design Systems', 'User Research', 'Leadership'],
+      soft: ['Mentoria', 'Comunicación estratégica', 'Stakeholder Management']
     },
     portfolio: {
       url: 'https://carlosrodriguez.co',
       projects: [
         {
           name: 'Bancolombia App Redesign',
-          description: 'Rediseño completo de la aplicación móvil principal del banco con +15M usuarios activos. Proyecto de 8 meses liderando equipo multidisciplinario de 12 personas.',
-          impact: 'NPS incrementó de 45 a 72 en 6 meses, reducción del 35% en llamadas a call center, incremento del 28% en usuarios activos mensuales'
-        },
-        {
-          name: 'BcoDS - Bancolombia Design System',
-          description: 'Sistema de diseño escalable para todos los productos digitales del banco. Documentación completa de componentes, tokens y guías de uso.',
-          impact: 'Adoptado por 15+ equipos de producto, reducción del 45% en tiempo de diseño a producción, estandarización visual en 20+ aplicaciones'
-        },
-        {
-          name: 'E-commerce Retail USA - Globant',
-          description: 'Experiencia completa de e-commerce para retailer estadounidense con catálogo de +50K productos',
-          impact: 'Generación de +$5M en ventas mensuales, conversion rate del 3.2%, rating de 4.6/5 en satisfacción'
-        },
-        {
-          name: 'Seguros Digital - Intergrupo',
-          description: 'Plataforma de cotización y compra de seguros online con comparador inteligente',
-          impact: 'Reducción del 40% en abandono, incremento del 22% en conversión, 15K pólizas vendidas en primer año'
+          description: 'Rediseño completo de la aplicación móvil con +15M usuarios activos',
+          impact: 'NPS incrementó de 45 a 72'
         }
       ]
     },
-    scores: {
-      cvScore: 88,
-      psychometricScore: 85,
-      serenaScore: 86,
-      technicalScore: 89,
-      productManagerScore: 87
-    },
+    documents: [
+      { id: 'doc-005-1', name: 'Carlos_Rodriguez_CV.pdf', type: 'PDF', size: '1.6 MB', uploadedDate: '2026-02-16', uploadedBy: 'Carlos Rodríguez Méndez' },
+      { id: 'doc-005-2', name: 'Portfolio_CR_2024.pdf', type: 'PDF', size: '12.5 MB', uploadedDate: '2026-02-16', uploadedBy: 'Carlos Rodríguez Méndez' }
+    ],
     notes: [
-      'Sólida experiencia en fintech y banca - sector altamente relevante',
+      'Excelente perfil senior con experiencia en banca',
       'Liderazgo de equipos comprobado - gestiona 5 diseñadores actualmente',
       'Certificaciones adicionales en UX Management y Design Sprint',
       'Portfolio con proyectos de alto impacto medible en métricas de negocio',
@@ -865,56 +1090,144 @@ export const candidatesData: CandidateData[] = [
     age: 25,
     location: 'Barranquilla, Colombia',
     avatar: 'SJ',
-    currentStage: 'entrevista-pm',
-    status: 'rejected',
-    appliedDate: '2026-02-17',
+    yearsExperience: 3,
     expectedSalary: '$6.500.000 - $8.000.000 COP',
     availability: 'Inmediata',
-    yearsExperience: 3,
+    
+    applications: [
+      {
+        id: 'app-006-1',
+        jobTitle: 'Product Designer Junior',
+        jobLocation: 'Barranquilla, Colombia',
+        currentStage: 'entrevista-pm',
+        status: 'rejected',
+        appliedDate: '2026-02-17',
+        matchScore: 78,
+        confidence: 'medium',
+        scores: {
+          cvScore: 78,
+          psychometricScore: 74,
+          serenaScore: 76,
+          technicalScore: 80,
+          productManagerScore: 65
+        },
+        rejectionReason: 'En entrevista con PM mostró poca profundidad en procesos de research y toma de decisiones basadas en datos.'
+      },
+      {
+        id: 'app-006-2',
+        jobTitle: 'UI Designer',
+        jobLocation: 'Remote',
+        currentStage: 'hired',
+        status: 'hired',
+        appliedDate: '2025-05-10',
+        matchScore: 82,
+        confidence: 'high',
+        scores: {
+          cvScore: 85,
+          technicalScore: 88
+        }
+      },
+      {
+        id: 'app-006-3',
+        jobTitle: 'Motion Designer',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'evaluacion-cv',
+        status: 'active',
+        appliedDate: '2026-04-12',
+        matchScore: 85,
+        confidence: 'medium',
+        scores: {
+          cvScore: 85
+        }
+      }
+    ],
+    
+    firstName: 'Sebastián',
+    lastName: 'Jiménez Gómez',
+    identificationNumber: '1047890123',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/sebastianjimenez',
+    birthDate: '1999-11-20',
+    city: 'Barranquilla',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Medellín', 'Remote'],
+    description: 'Product Designer con 3 años de experiencia en el sector de Media & Entertainment. Especializado en el diseño de interfaces móviles para aplicaciones de streaming de música y video. Mi enfoque se centra en la optimización de flujos de navegación y la mejora del engagement mediante micro-interacciones y motion design. Apasionado por la intersección entre el diseño visual y la usabilidad técnica.',
+    
     experience: [
       {
+        id: 'exp-006-001',
         company: 'Audiomack',
         position: 'Product Designer',
         duration: 'Oct 2022 - Presente',
-        description: 'Diseño de features para plataforma de música streaming. Optimización de player y discovery. Colaboración remota con equipo en USA.'
+        description: 'Diseño de features para plataforma de música streaming. Optimización de player y discovery. Colaboración remota con equipo en USA.',
+        location: 'Remote (USA)',
+        startDate: '2022-10',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Rediseñé el reproductor de música mobile logrando un incremento del 28% en el tiempo de escucha promedio',
+          'Implementé sistema de gestos para navegación rápida entre playlists activas',
+          'Colaboré en el lanzamiento de features de descubrimiento social de música',
+          'Coordiné con el equipo de ingeniería en USA para la implementación pixel-perfect de diseños en React Native'
+        ]
       },
       {
+        id: 'exp-006-002',
         company: 'Zemoga',
         position: 'Junior UX Designer',
         duration: 'Ene 2021 - Sep 2022',
-        description: 'Diseño para clientes internacionales en media y entertainment. Aprendizaje rápido en ambiente ágil.'
+        description: 'Diseño para clientes internacionales en media y entertainment. Aprendizaje rápido en ambiente ágil.',
+        location: 'Bogotá, Colombia',
+        startDate: '2021-01',
+        endDate: '2022-09',
+        current: false,
+        achievements: [
+          'Participé en el rediseño de la interfaz de usuario para 2 plataformas OTT de gran escala',
+          'Realicé mantenimiento y expansión de librerías de componentes UI en Figma',
+          'Apoyé en la ejecución de test de usabilidad moderados con usuarios reales',
+          'Documenté flujos de usuario complejos para facilitar el onboarding de desarrolladores'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad del Norte',
         degree: 'Diseño Gráfico',
-        year: '2020'
+        year: '2020',
+        description: 'Enfoque en diseño visual y comunicación. Proyecto de grado sobre identidad digital de marcas en mercados emergentes.'
       }
     ],
     skills: {
-      technical: ['Figma', 'Prototyping', 'Visual Design', 'Motion Design', 'Illustration', 'Branding'],
-      soft: ['Creatividad', 'Trabajo remoto', 'Inglés fluido', 'Autogestión', 'Curiosidad']
+      technical: ['Figma', 'Prototyping', 'Visual Design', 'Motion Design', 'Illustration', 'Branding', 'After Effects', 'Lottie', 'UI Design Patterns', 'Responsive Design'],
+      soft: ['Creatividad', 'Trabajo remoto', 'Inglés fluido', 'Autogestión', 'Curiosidad', 'Adaptabilidad']
     },
     portfolio: {
       url: 'https://sebastianjimenez.co',
       projects: [
         {
           name: 'Audiomack Player Redesign',
-          description: 'Rediseño del reproductor de música con nuevas features',
-          impact: 'Engagement +28%'
+          description: 'Rediseño del reproductor de música con nuevas features y gestos intuitivos',
+          impact: 'Engagement +28%, Rating en Store subió de 4.2 a 4.6'
+        },
+        {
+          name: 'Zemoga UI Kit',
+          description: 'Librería de componentes escalables para proyectos de media digital',
+          impact: 'Reducción del 20% en tiempo de prototipado'
         }
       ]
     },
-    scores: {
-      cvScore: 78,
-      psychometricScore: 74,
-      serenaScore: 76,
-      technicalScore: 80,
-      productManagerScore: 65
-    },
-    notes: [],
-    rejectionReason: 'En entrevista con PM mostró poca profundidad en procesos de research y toma de decisiones basadas en datos.'
+    documents: [
+      { id: 'doc-006-1', name: 'Sebastian_Jimenez_Portfolio.pdf', type: 'PDF', size: '14.2 MB', uploadedDate: '2026-02-17', uploadedBy: 'Sebastián Jiménez Gómez' },
+      { id: 'doc-006-2', name: 'Zemoga_Reference_Letter.pdf', type: 'PDF', size: '0.9 MB', uploadedDate: '2026-02-17', uploadedBy: 'Sebastián Jiménez Gómez' }
+    ],
+    notes: [
+      'Buen manejo de diseño visual y motion',
+      'Experiencia en productos de streaming es un plus',
+      'Inglés sólido para trabajar con equipos globales',
+      'Necesita profundizar en metodologías de research profundo'
+    ]
   },
 
   // ====== ETAPA 5: TEST PSICOMÉTRICO (1 ACTIVO, 1 RECHAZADO) ======
@@ -926,14 +1239,57 @@ export const candidatesData: CandidateData[] = [
     age: 26,
     location: 'Bogotá, Colombia',
     avatar: 'CAM',
-    currentStage: 'evaluacion-psicometrica',
-    status: 'active',
-    appliedDate: '2026-02-18',
+    yearsExperience: 4,
     expectedSalary: '$7.500.000 - $9.000.000 COP',
     availability: 'Inmediata',
-    yearsExperience: 4,
     
-    // Información personal adicional
+    applications: [
+      {
+        id: 'app-007-1',
+        jobTitle: 'Product Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'evaluacion-psicometrica',
+        status: 'active',
+        appliedDate: '2026-02-18',
+        matchScore: 85,
+        confidence: 'high',
+        scores: {
+          cvScore: 85,
+          psychometricScore: 82,
+          serenaScore: 84,
+          technicalScore: 86
+        }
+      },
+      {
+        id: 'app-007-2',
+        jobTitle: 'UX Researcher',
+        jobLocation: 'Remote',
+        currentStage: 'hired',
+        status: 'hired',
+        appliedDate: '2024-09-15',
+        matchScore: 88,
+        confidence: 'high',
+        scores: {
+          cvScore: 90,
+          technicalScore: 85
+        }
+      },
+      {
+        id: 'app-007-3',
+        jobTitle: 'Service Designer',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'evaluacion-cv',
+        status: 'rejected',
+        appliedDate: '2023-11-20',
+        matchScore: 70,
+        confidence: 'medium',
+        scores: {
+          cvScore: 72
+        },
+        rejectionReason: 'La candidata buscaba un rol más enfocado en diseño visual.'
+      }
+    ],
+    
     firstName: 'Camila Andrea',
     lastName: 'Martínez López',
     identificationNumber: '1024567890',
@@ -941,22 +1297,14 @@ export const candidatesData: CandidateData[] = [
     nationality: 'Colombiana',
     linkedin: 'https://linkedin.com/in/camila-martinez-designer',
     birthDate: '1999-05-14',
-    
-    // Ubicación detallada
     city: 'Bogotá',
     country: 'Colombia',
     willingToRelocate: true,
     interestedLocations: ['Bogotá', 'Medellín', 'Remoto'],
-    
-    // Información laboral adicional
     noticePeriod: '2',
     noticePeriodUnit: 'semanas',
     currency: 'COP',
-    
-    // Perfil profesional
     description: 'Product Designer con 4 años de experiencia especializada en diseño de experiencias mobile-first para e-commerce y marketplaces. Expertise en accesibilidad, design systems y colaboración con equipos de producto. Apasionada por crear experiencias inclusivas que generen impacto medible en conversión y retención.',
-    matchScore: 85,
-    confidence: 'high',
     
     experience: [
       {
@@ -1093,12 +1441,11 @@ export const candidatesData: CandidateData[] = [
         }
       ]
     },
-    scores: {
-      cvScore: 85,
-      psychometricScore: 82,
-      serenaScore: 84,
-      technicalScore: 86
-    },
+    documents: [
+      { id: 'doc-007-1', name: 'Camila_Martinez_UX_CV.pdf', type: 'PDF', size: '1.4 MB', uploadedDate: '2026-02-18', uploadedBy: 'Camila Andrea Martínez' },
+      { id: 'doc-007-2', name: 'MercadoLibre_Project_Case.pdf', type: 'PDF', size: '10.8 MB', uploadedDate: '2026-02-18', uploadedBy: 'Camila Andrea Martínez' },
+      { id: 'doc-007-3', name: 'IDF_Certification.pdf', type: 'PDF', size: '1.2 MB', uploadedDate: '2026-02-18', uploadedBy: 'Camila Andrea Martínez' }
+    ],
     notes: [
       'Excelente portafolio con casos de estudio bien documentados y métricas de impacto claras',
       'Expertise sólida en mobile-first design y accesibilidad, habilidades muy demandadas',
@@ -1120,45 +1467,108 @@ export const candidatesData: CandidateData[] = [
     age: 27,
     location: 'Armenia, Colombia',
     avatar: 'NR',
-    currentStage: 'test-psicometrico',
-    status: 'rejected',
-    appliedDate: '2026-02-19',
+    yearsExperience: 3,
     expectedSalary: '$6.000.000 - $7.500.000 COP',
     availability: 'Inmediata',
-    yearsExperience: 3,
+    
+    applications: [
+      {
+        id: 'app-008-1',
+        jobTitle: 'Content Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'test-psicometrico',
+        status: 'rejected',
+        appliedDate: '2026-02-19',
+        matchScore: 62,
+        confidence: 'medium',
+        scores: {
+          cvScore: 62,
+          psychometricScore: 45,
+          serenaScore: 58,
+          technicalScore: 52
+        },
+        rejectionReason: 'Test psicométrico reveló bajo score en pensamiento analítico y resolución de problemas complejos.'
+      },
+      {
+        id: 'app-008-2',
+        jobTitle: 'Visual Designer',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'evaluacion-cv',
+        status: 'rejected',
+        appliedDate: '2025-08-11',
+        matchScore: 55,
+        confidence: 'low',
+        scores: {
+          cvScore: 60
+        },
+        rejectionReason: 'Falta experiencia en roles de producto digital.'
+      }
+    ],
+
+    firstName: 'Natalia',
+    lastName: 'Rincón Castro',
+    identificationNumber: '1094567812',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/nataliarincon',
+    birthDate: '1997-03-12',
+    city: 'Armenia',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Medellín', 'Eje Cafetero'],
+    description: 'Diseñadora de contenidos con enfoque en e-commerce regional. Experiencia en la creación de piezas visuales para canales digitales y optimización de contenido para catálogos online. Buscando transicionar hacia roles de diseño de producto UX/UI.',
+    
     experience: [
       {
+        id: 'exp-008-001',
         company: 'E-commerce Local',
         position: 'Diseñadora de Contenidos',
         duration: 'Ago 2021 - Presente',
-        description: 'Creación de contenidos visuales para redes sociales y e-commerce.'
+        description: 'Creación de contenidos visuales para redes sociales y e-commerce.',
+        location: 'Armenia, Colombia',
+        startDate: '2021-08',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Diseñé el contenido visual para 5 campañas de temporada con incremento del 15% en engagement',
+          'Gestioné el catálogo digital de +200 productos asegurando consistencia visual',
+          'Colaboré en la definición de la línea gráfica para el relanzamiento de la marca en Instagram',
+          'Optimizé el flujo de creación de assets reduciendo el tiempo de entrega en un 20%'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad del Quindío',
         degree: 'Comunicación y Diseño',
-        year: '2020'
+        year: '2020',
+        description: 'Formación en comunicación visual, semiótica y diseño publicitario. Énfasis en medios digitales.'
       }
     ],
     skills: {
-      technical: ['Canva', 'Photoshop', 'Illustrator', 'Redes Sociales'],
-      soft: ['Creatividad', 'Organización']
+      technical: ['Canva', 'Photoshop', 'Illustrator', 'Redes Sociales', 'Content Marketing', 'Copywriting', 'Figma (Básico)'],
+      soft: ['Creatividad', 'Organización', 'Trabajo en equipo', 'Comunicación asertiva']
     },
     portfolio: {
       url: 'https://instagram.com/nataliadesigns',
-      projects: []
+      projects: [
+        {
+          name: 'Social Media Campaign 2023',
+          description: 'Campaña visual para crecimiento de audiencia orgánica',
+          impact: 'Aumento de 2K seguidores en 3 meses'
+        }
+      ]
     },
-    scores: {
-      cvScore: 62,
-      psychometricScore: 45,
-      serenaScore: 58,
-      technicalScore: 52
-    },
-    notes: [],
-    rejectionReason: 'Test psicométrico reveló bajo score en pensamiento analítico y resolución de problemas complejos.'
+    documents: [
+      { id: 'doc-008-1', name: 'Natalia_Rincon_CV.pdf', type: 'PDF', size: '0.8 MB', uploadedDate: '2026-02-19', uploadedBy: 'Natalia Rincón Castro' }
+    ],
+    notes: [
+      'Perfil junior con enfoque en contenido visual',
+      'Buen manejo de herramientas de diseño gráfico tradicional',
+      'Necesita formación en UX/UI y metodologías de producto',
+      'Actitud positiva hacia el aprendizaje'
+    ]
   },
-
   // ====== ETAPA 4: PARA REVISIÓN (1 ACTIVO, 2 RECHAZADOS) ======
   {
     id: 'cand-009',
@@ -1168,36 +1578,101 @@ export const candidatesData: CandidateData[] = [
     age: 30,
     location: 'Cali, Colombia',
     avatar: 'DT',
-    currentStage: 'para-revision',
-    status: 'active',
-    appliedDate: '2026-02-19',
+    yearsExperience: 6,
     expectedSalary: '$8.500.000 - $10.500.000 COP',
     availability: '1 mes',
-    yearsExperience: 6,
+
+    applications: [
+      {
+        id: 'app-009-1',
+        jobTitle: 'Product Designer',
+        jobLocation: 'Cali, Colombia',
+        currentStage: 'para-revision',
+        status: 'active',
+        appliedDate: '2026-02-19',
+        matchScore: 86,
+        confidence: 'high',
+        scores: {
+          cvScore: 86,
+          psychometricScore: 83,
+          serenaScore: 85
+        }
+      },
+      {
+        id: 'app-009-2',
+        jobTitle: 'UX Designer',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'hired',
+        status: 'hired',
+        appliedDate: '2024-03-01',
+        matchScore: 89,
+        confidence: 'high',
+        scores: {
+          cvScore: 90,
+          technicalScore: 85
+        }
+      }
+    ],
+    
+    firstName: 'Diego Alejandro',
+    lastName: 'Torres Ruiz',
+    identificationNumber: '1019876543',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/diegotorres',
+    birthDate: '1994-08-25',
+    city: 'Cali',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Remote', 'Medellín'],
+    description: 'Product Designer con 6 años de experiencia en el sector Fintech. Actualmente en Nubank, liderando el diseño de experiencias de ahorro e inversión para el mercado colombiano. Experto en transformar flujos financieros complejos en interfaces intuitivas y accesibles. Mi proceso combina investigación profunda con iteración rápida basada en datos.',
+    
     experience: [
       {
+        id: 'exp-009-001',
         company: 'Nubank Colombia',
         position: 'Product Designer',
         duration: 'Mar 2021 - Presente',
-        description: 'Diseño de experiencias fintech centradas en el usuario. Trabajo en features de ahorro, inversión y crédito. Research cualitativo y cuantitativo.'
+        description: 'Diseño de experiencias fintech centradas en el usuario. Trabajo en features de ahorro, inversión y crédito. Research cualitativo y cuantitativo.',
+        location: 'Bogotá, Colombia',
+        startDate: '2021-03',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Lideré el diseño de la feature "Cajitas de Ahorro" para Colombia logrando 200K adopciones en 3 meses',
+          'Implementé metodología de research continuo que redujo el tiempo de validación de hipótesis en un 30%',
+          'Rediseñé el flujo de solicitud de crédito aumentando la aprobación directa en un 12%',
+          'Colaboré en la adaptación del Design System global de Nubank para las necesidades específicas de Latam'
+        ]
       },
       {
+        id: 'exp-009-002',
         company: 'PSL - Pragma',
         position: 'UX Designer',
         duration: 'Ene 2019 - Feb 2021',
-        description: 'Diseño de soluciones empresariales para sector bancario y retail. Facilitación de workshops y metodologías ágiles.'
+        description: 'Diseño de soluciones empresariales para sector bancario y retail. Facilitación de workshops y metodologías ágiles.',
+        location: 'Medellín, Colombia',
+        startDate: '2019-01',
+        endDate: '2021-02',
+        current: false,
+        achievements: [
+          'Diseñé el dashboard administrativo corporativo para un banco líder, reduciendo el tiempo de tareas operativas en un 50%',
+          'Facilité +15 Design Sprints con clientes corporativos para definir roadmaps de producto',
+          'Implementé el primer programa de accesibilidad web para una plataforma de retail con +1M de usuarios'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad del Valle',
         degree: 'Diseño Visual',
-        year: '2018'
+        year: '2018',
+        description: 'Enfoque en sistemas de información y diseño de interacción. Tesis sobre interfaces para servicios públicos digitales.'
       }
     ],
     skills: {
-      technical: ['Figma', 'User Testing', 'Journey Mapping', 'Wireframing', 'Design Systems', 'Maze'],
-      soft: ['Facilitación', 'Pensamiento estratégico', 'Colaboración cross-funcional', 'Orientación al usuario']
+      technical: ['Figma', 'User Testing', 'Journey Mapping', 'Wireframing', 'Design Systems', 'Maze', 'Service Design', 'SQL (Básico)', 'Data Visualization', 'Axure'],
+      soft: ['Facilitación', 'Pensamiento estratégico', 'Colaboración cross-funcional', 'Orientación al usuario', 'Liderazgo técnico']
     },
     portfolio: {
       url: 'https://diegotorres.design',
@@ -1205,70 +1680,118 @@ export const candidatesData: CandidateData[] = [
         {
           name: 'Nubank Savings Feature',
           description: 'Feature de ahorro automático con insights personalizados',
-          impact: 'Adoptado por 200K+ usuarios en 3 meses'
+          impact: 'Adoptado por 200K+ usuarios en 3 meses, NPS de 82'
         },
         {
           name: 'Banking Dashboard - PSL',
-          description: 'Dashboard administrativo para gestión bancaria',
-          impact: 'Reducción del 50% en tiempo de tareas operativas'
+          description: 'Dashboard administrativo para gestión bancaria de alta complejidad',
+          impact: 'Reducción del 50% en tiempo de tareas operativas, ROI de 30% en eficiencia'
         }
       ]
     },
-    scores: {
-      cvScore: 86,
-      psychometricScore: 83,
-      serenaScore: 85
-    },
+    documents: [
+      { id: 'doc-009-1', name: 'Diego_Torres_Designer.pdf', type: 'PDF', size: '1.7 MB', uploadedDate: '2026-02-19', uploadedBy: 'Diego Alejandro Torres' },
+      { id: 'doc-009-2', name: 'Nubank_Experience_Letter.pdf', type: 'PDF', size: '1.1 MB', uploadedDate: '2026-02-19', uploadedBy: 'Diego Alejandro Torres' }
+    ],
     notes: [
       'Experiencia en fintech muy relevante',
-      'Buen balance entre research y ejecución',
-      'Casos de estudio con métricas claras'
+      'Buen balance entre research y ejecución'
     ]
   },
   {
     id: 'cand-010',
     name: 'Camila Suárez Ortiz',
     email: 'camila.suarez@email.com',
-    phone: '+57 316 123 4567',
+    phone: '+57 301 234 5678',
     age: 22,
     location: 'Manizales, Colombia',
     avatar: 'CS',
-    currentStage: 'para-revision',
-    status: 'rejected',
-    appliedDate: '2026-02-20',
-    expectedSalary: '$4.500.000 - $6.000.000 COP',
-    availability: 'Inmediata',
     yearsExperience: 1,
+    expectedSalary: '$3.500.000 - $4.500.000 COP',
+    availability: 'Inmediata',
+    
+    applications: [
+      {
+        id: 'app-010-1',
+        jobTitle: 'Junior UX/UI',
+        jobLocation: 'Manizales, Colombia',
+        currentStage: 'para-revision',
+        status: 'rejected',
+        appliedDate: '2026-02-20',
+        matchScore: 48,
+        confidence: 'low',
+        scores: {
+          cvScore: 48,
+          psychometricScore: 52,
+          serenaScore: 45
+        },
+        rejectionReason: 'Perfil muy junior. Aún está estudiando y no tiene experiencia profesional relevante en producto digital.'
+      }
+    ],
+
+    firstName: 'Camila',
+    lastName: 'Suárez Ortiz',
+    identificationNumber: '1053123456',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://behance.net/camilasuarez',
+    birthDate: '2002-09-18',
+    city: 'Manizales',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Medellín', 'Remote'],
+    description: 'Diseñadora Visual en formación con gran entusiasmo por el diseño de interfaces y la experiencia de usuario. Experiencia inicial en diseño gráfico y gestión de redes sociales. Buscando mi primera oportunidad formal en diseño de producto para aplicar mis conocimientos académicos y habilidades creativas.',
+    
     experience: [
       {
+        id: 'exp-010-001',
         company: 'Pasantía Universitaria',
         position: 'Diseñadora Junior',
         duration: 'Jun 2023 - Dic 2023',
-        description: 'Apoyo en diseño de material gráfico y redes sociales.'
+        description: 'Apoyo en diseño de material gráfico y redes sociales.',
+        location: 'Manizales, Colombia',
+        startDate: '2023-06',
+        endDate: '2023-12',
+        current: false,
+        achievements: [
+          'Diseñé piezas gráficas para 20+ campañas de comunicación interna de la universidad',
+          'Gestioné las redes sociales de la facultad logrando un incremento del 10% en seguidores',
+          'Colaboré en la diagramación de boletines digitales mensuales',
+          'Aprendí a usar Figma para maquetación básica de interfaces web'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad de Caldas',
         degree: 'Diseño Visual (En curso)',
-        year: '2024'
+        year: '2024',
+        description: 'Enfoque en comunicación visual, multimedia e interactividad. Actualmente cursando el último semestre.'
       }
     ],
     skills: {
-      technical: ['Figma (básico)', 'Illustrator', 'Photoshop'],
-      soft: ['Ganas de aprender', 'Entusiasmo']
+      technical: ['Figma (básico)', 'Illustrator', 'Photoshop', 'Canva', 'Layout design', 'Color theory'],
+      soft: ['Ganas de aprender', 'Entusiasmo', 'Trabajo en equipo', 'Creatividad']
     },
     portfolio: {
       url: 'https://behance.net/camilasuarez',
-      projects: []
+      projects: [
+        {
+          name: 'University Newsletter',
+          description: 'Rediseño del boletín informativo de la Facultad de Artes',
+          impact: 'Mejora en la legibilidad y tasa de apertura del 15%'
+        }
+      ]
     },
-    scores: {
-      cvScore: 48,
-      psychometricScore: 52,
-      serenaScore: 45
-    },
-    notes: [],
-    rejectionReason: 'Perfil muy junior. Aún está estudiando y no tiene experiencia profesional relevante en producto digital.'
+    documents: [
+      { id: 'doc-010-1', name: 'Camila_Suarez_Resume_Jr.pdf', type: 'PDF', size: '0.9 MB', uploadedDate: '2026-02-20', uploadedBy: 'Camila Suárez Ortiz' }
+    ],
+    notes: [
+      'Perfil muy junior con potencial académico',
+      'Aún está terminando sus estudios universitarios',
+      'Falta experiencia profesional real en entornos de producto digital',
+      'Muestra buena disposición para el aprendizaje y el crecimiento'
+    ]
   },
   {
     id: 'cand-011',
@@ -1278,168 +1801,354 @@ export const candidatesData: CandidateData[] = [
     age: 35,
     location: 'Bucaramanga, Colombia',
     avatar: 'FV',
-    currentStage: 'para-revision',
-    status: 'rejected',
-    appliedDate: '2026-02-21',
+    yearsExperience: 10,
     expectedSalary: '$12.000.000 - $15.000.000 COP',
     availability: '2 meses',
-    yearsExperience: 10,
+    
+    applications: [
+      {
+        id: 'app-011-1',
+        jobTitle: 'Senior UX Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'para-revision',
+        status: 'rejected',
+        appliedDate: '2026-02-21',
+        matchScore: 38,
+        confidence: 'low',
+        scores: {
+          cvScore: 38,
+          psychometricScore: 42,
+          serenaScore: 35
+        },
+        rejectionReason: 'Perfil enfocado en desarrollo web básico. No tiene experiencia en diseño de producto ni metodologías UX. Expectativa salarial fuera de rango.'
+      }
+    ],
+
+    firstName: 'Felipe',
+    lastName: 'Vargas Ruiz',
+    identificationNumber: '1076543210',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/felipevargas',
+    birthDate: '1989-05-18',
+    city: 'Bucaramanga',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Remote'],
+    description: 'Diseñador web con una década de experiencia en el desarrollo de sitios corporativos y plataformas personalizadas. Experto en WordPress y maquetación frontend. Enfocado en la autogestión y entrega de proyectos llave en mano para clientes nacionales e internacionales.',
+    
     experience: [
       {
+        id: 'exp-011-001',
         company: 'Freelance',
         position: 'Diseñador Web',
         duration: '2016 - Presente',
-        description: 'Desarrollo de sitios web y landing pages para diversos clientes.'
+        description: 'Desarrollo de sitios web y landing pages para diversos clientes.',
+        location: 'Remote',
+        startDate: '2016-01',
+        endDate: null,
+        current: true,
+        achievements: [
+          'He entregado más de 100 proyectos web funcionales para diferentes industrias',
+          'Implementé flujos de trabajo basados en WordPress que facilitan la administración de contenidos por el cliente',
+          'Desarrollé landing pages de alta conversión para campañas de marketing digital',
+          'Mantengo una base de 20 clientes recurrentes bajo esquemas de soporte mensual'
+        ]
       }
     ],
     education: [
       {
         institution: 'SENA',
         degree: 'Técnico en Diseño Web',
-        year: '2015'
+        year: '2015',
+        description: 'Formación técnica en maquetación HTML/CSS, diseño gráfico básico y gestión de CMS.'
       }
     ],
     skills: {
-      technical: ['HTML', 'CSS', 'WordPress', 'Photoshop'],
-      soft: ['Independencia', 'Autogestión']
+      technical: ['HTML', 'CSS', 'WordPress', 'Photoshop', 'PHP (Básico)', 'CPanel', 'SEO On-page', 'Responsive Design'],
+      soft: ['Independencia', 'Autogestión', 'Comunicación con clientes', 'Resolución de problemas']
     },
     portfolio: {
       url: 'https://felipevargas.com',
-      projects: []
+      projects: [
+        {
+          name: 'Corporate Site Rebuild',
+          description: 'Migración y rediseño de sitio corporativo a WordPress escalable',
+          impact: 'Reducción del 40% en costos de mantenimiento'
+        }
+      ]
     },
-    scores: {
-      cvScore: 38,
-      psychometricScore: 42,
-      serenaScore: 35
-    },
-    notes: [],
-    rejectionReason: 'Perfil enfocado en desarrollo web básico. No tiene experiencia en diseño de producto ni metodologías UX. Expectativa salarial fuera de rango.'
+    documents: [
+      { id: 'doc-011-1', name: 'Felipe_Vargas_Web_Resume.pdf', type: 'PDF', size: '1.2 MB', uploadedDate: '2026-02-21', uploadedBy: 'Felipe Vargas Ruiz' },
+      { id: 'doc-011-2', name: 'SENA_Technician_Degree.pdf', type: 'PDF', size: '0.7 MB', uploadedDate: '2026-02-21', uploadedBy: 'Felipe Vargas Ruiz' }
+    ],
+    notes: [
+      'Perfil altamente operativo y técnico en web tradicional',
+      'Mucha experiencia freelance pero falta de trabajo en equipos de producto complejos',
+      'No familiarizado con Figma ni metodologías de UX modernas',
+      'Expectativa salarial alta para el seniority en producto digital'
+    ]
   },
-
-  // ====== ETAPA 3: SERENA AI (2 ACTIVOS, 1 RECHAZADO) ======
   {
     id: 'cand-012',
     name: 'Patricia Daniela Ramírez',
     email: 'patricia.ramirez@email.com',
-    phone: '+57 305 567 8901',
+    phone: '+57 320 987 6543',
     age: 27,
     location: 'Bogotá, Colombia',
     avatar: 'PR',
-    currentStage: 'serena-ai',
-    status: 'active',
-    appliedDate: '2026-02-21',
-    expectedSalary: '$7.000.000 - $8.500.000 COP',
-    availability: 'Inmediata',
     yearsExperience: 4,
+    expectedSalary: '$7.500.000 - $9.000.000 COP',
+    availability: '2 semanas',
+    
+    applications: [
+      {
+        id: 'app-012-1',
+        jobTitle: 'Product Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'evaluacion-serena',
+        status: 'active',
+        appliedDate: '2026-02-22',
+        matchScore: 82,
+        confidence: 'high',
+        scores: {
+          cvScore: 82,
+          psychometricScore: 80,
+          serenaScore: 81
+        }
+      },
+      {
+        id: 'app-012-2',
+        jobTitle: 'Lead UX/UI Designer',
+        jobLocation: 'Remote',
+        currentStage: 'entrevista-tecnica',
+        status: 'active',
+        appliedDate: '2026-03-10',
+        matchScore: 88,
+        confidence: 'high',
+        scores: {
+          cvScore: 85,
+          technicalScore: 82
+        }
+      }
+    ],
+
+    firstName: 'Patricia Daniela',
+    lastName: 'Ramírez Silva',
+    identificationNumber: '1015678901',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/patriciaramirez',
+    birthDate: '1997-06-21',
+    city: 'Bogotá',
+    country: 'Colombia',
+    willingToRelocate: false,
+    interestedLocations: ['Bogotá', 'Remote'],
+    description: 'Product Designer con 4 años de experiencia especializada en productos SaaS y B2B. Actualmente en Alegra, liderando la simplificación de flujos contables y administrativos para pymes. Enfocada en la investigación de usuario continua y el diseño de interfaces que resuelven problemas de alta complejidad técnica manteniendo la facilidad de uso.',
+    
     experience: [
       {
+        id: 'exp-012-001',
         company: 'Alegra',
         position: 'Product Designer',
         duration: 'May 2022 - Presente',
-        description: 'Diseño de productos SaaS para pymes. Enfoque en simplificación de procesos contables y facturación. User research continuo.'
+        description: 'Diseño de productos SaaS para pymes. Enfoque en simplificación de procesos contables y facturación. User research continuo.',
+        location: 'Bogotá, Colombia (Remote)',
+        startDate: '2022-05',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Rediseñé el flujo de facturación electrónica reduciendo el tiempo de tarea en un 60%',
+          'Implementé un sistema de onboarding dinámico que aumentó la activación de usuarios nuevos en un 25%',
+          'Lideré el proceso de investigación cualitativa con +50 contadores para definir la arquitectura de información del módulo de reportes',
+          'Contribuí al escalamiento del sistema de diseño interno para aplicaciones web y mobile'
+        ]
       },
       {
+        id: 'exp-012-002',
         company: 'Lemontech',
         position: 'UX/UI Designer',
         duration: 'Sep 2020 - Abr 2022',
-        description: 'Diseño de herramientas legales digitales. Trabajo con usuarios B2B. Prototipado y testing de soluciones.'
+        description: 'Diseño de herramientas legales digitales. Trabajo con usuarios B2B. Prototipado y testing de soluciones.',
+        location: 'Bogotá, Colombia',
+        startDate: '2020-09',
+        endDate: '2022-04',
+        current: false,
+        achievements: [
+          'Diseñé la interfaz para el sistema de gestión de casos legales logrando una satisfacción del usuario del 4.5/5',
+          'Ejecuté pruebas de usabilidad con abogados en 3 países para validar iteraciones de producto',
+          'Colaboré en la maquetación frontend de componentes UI usando React y Tailwind CSS'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad Nacional de Colombia',
         degree: 'Diseño Industrial',
-        year: '2020'
+        year: '2020',
+        description: 'Formación en diseño de productos y sistemas complejos. Énfasis en metodologías de investigación y ergonomía cognitiva.'
       }
     ],
     skills: {
-      technical: ['Figma', 'FigJam', 'Prototyping', 'User Interviews', 'Usability Testing', 'Information Architecture'],
-      soft: ['Empatía', 'Comunicación clara', 'Trabajo remoto', 'Autonomía', 'Aprendizaje continuo']
+      technical: ['Figma', 'FigJam', 'Prototyping', 'User Interviews', 'Usability Testing', 'Information Architecture', 'SaaS Design', 'B2B UX', 'Agile Methodologies'],
+      soft: ['Empatía', 'Comunicación clara', 'Trabajo remoto', 'Autonomía', 'Aprendizaje continuo', 'Pensamiento analítico']
     },
     portfolio: {
       url: 'https://patriciaramirez.com',
       projects: [
         {
           name: 'Alegra Invoicing Flow',
-          description: 'Simplificación del flujo de facturación para pymes',
-          impact: 'Tiempo de facturación reducido en 60%'
+          description: 'Simplificación completa del proceso de facturación para pequeñas empresas',
+          impact: 'Tiempo de facturación reducido en 60%, Tasa de error -15%'
         },
         {
           name: 'Legal Management Tool',
-          description: 'Herramienta de gestión de casos legales',
-          impact: 'Satisfacción de usuarios del 4.5/5'
+          description: 'Herramienta de gestión de expedientes digitales para firmas de abogados',
+          impact: 'Satisfacción de usuarios del 4.5/5, Adopción del 80%'
         }
       ]
     },
-    scores: {
-      cvScore: 82,
-      psychometricScore: 80,
-      serenaScore: 81
-    },
+    documents: [
+      { id: 'doc-012-1', name: 'Patricia_Ramirez_SaaS_UX.pdf', type: 'PDF', size: '2.3 MB', uploadedDate: '2026-02-22', uploadedBy: 'Patricia Daniela Ramírez' },
+      { id: 'doc-012-2', name: 'Alegra_Design_Systems.pdf', type: 'PDF', size: '15.2 MB', uploadedDate: '2026-02-22', uploadedBy: 'Patricia Daniela Ramírez' }
+    ],
     notes: [
-      'Experiencia en productos B2B/SaaS',
-      'Buen enfoque en simplificación de complejidad',
-      'Portfolio con casos de uso reales'
+      'Experiencia sólida en productos B2B/SaaS de alta complejidad',
+      'Buen enfoque en simplificación de procesos administrativos complejos',
+      'Portfolio con casos de uso reales y métricas de impacto claras',
+      'Capacidad comprobada para realizar investigación de usuario profunda'
     ]
   },
   {
     id: 'cand-013',
     name: 'Juliana Ortiz Mendoza',
     email: 'juliana.ortiz@email.com',
-    phone: '+57 322 987 6543',
+    phone: '+57 318 654 3210',
     age: 28,
     location: 'Cali, Colombia',
     avatar: 'JO',
-    currentStage: 'serena-ai',
-    status: 'active',
-    appliedDate: '2026-02-22',
-    expectedSalary: '$8.000.000 - $9.500.000 COP',
-    availability: '3 semanas',
     yearsExperience: 5,
+    expectedSalary: '$8.000.000 - $9.500.000 COP',
+    availability: 'Inmediata',
+    
+    applications: [
+      {
+        id: 'app-013-1',
+        jobTitle: 'Product Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'evaluacion-serena',
+        status: 'active',
+        appliedDate: '2026-02-22',
+        matchScore: 83,
+        confidence: 'high',
+        scores: {
+          cvScore: 83,
+          psychometricScore: 79,
+          serenaScore: 80
+        }
+      },
+      {
+        id: 'app-013-2',
+        jobTitle: 'Senior UI Designer',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'entrevista-pm',
+        status: 'rejected',
+        appliedDate: '2025-05-18',
+        matchScore: 80,
+        confidence: 'high',
+        scores: {
+          cvScore: 82,
+          technicalScore: 79,
+          productManagerScore: 70
+        },
+        rejectionReason: 'Perfil demasiado enfocado en investigación cualitativa en lugar de visual UI.'
+      }
+    ],
+
+    firstName: 'Juliana',
+    lastName: 'Ortiz Mendoza',
+    identificationNumber: '1116789012',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/julianaortiz',
+    birthDate: '1996-02-14',
+    city: 'Cali',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Remote', 'Medellín'],
+    description: 'Product Designer apasionada por los Marketplaces y el diseño basado en datos. En OLX Autos, he optimizado los flujos de búsqueda y publicación, impactando directamente en la conversión de leads. Manejo un balance entre estética visual y funcionalidad técnica.',
+    
     experience: [
       {
+        id: 'exp-013-001',
         company: 'TuCarro (OLX Autos)',
         position: 'Product Designer',
         duration: 'Feb 2021 - Presente',
-        description: 'Diseño de features para marketplace de autos. Optimización de búsqueda y flujos de compra/venta.'
+        description: 'Diseño de features para marketplace de autos. Optimización de búsqueda y flujos de compra/venta.',
+        location: 'Bogotá, Colombia',
+        startDate: '2021-02',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Rediseñé el sistema de filtros logrando un incremento del 22% en la conversión de Leads a contactos',
+          'Implementé un nuevo flujo de publicación de anuncios reduciendo el tiempo de carga en un 35%',
+          'Lideré el equipo de UX para el lanzamiento de la nueva plataforma mobile de OLX Autos',
+          'Establecí procesos de QA visual que aseguraron una consistencia del 95% en producción'
+        ]
       },
       {
+        id: 'exp-013-002',
         company: 'LatAm Startups',
         position: 'UX Designer',
         duration: 'May 2019 - Ene 2021',
-        description: 'Diseño para múltiples productos digitales. Enfoque en mobile y conversión.'
+        description: 'Diseño para múltiples productos digitales. Enfoque en mobile y conversión.',
+        location: 'Cali, Colombia',
+        startDate: '2019-05',
+        endDate: '2021-01',
+        current: false,
+        achievements: [
+          'Diseñé la primera versión MVP para 3 startups del portafolio',
+          'Reduje la tasa de abandono en el checkout de una app de delivery en un 18%',
+          'Ejecuté más de 50 pruebas de usabilidad remotas para validar iteraciones de producto'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad Icesi',
         degree: 'Diseño de Medios Interactivos',
-        year: '2018'
+        year: '2018',
+        description: 'Enfoque en interacción humano-computador y diseño de experiencias digitales complejas. Proyecto de tesis premiado sobre educación financiera gamificada.'
       }
     ],
     skills: {
-      technical: ['Figma', 'Sketch', 'Prototyping', 'User Research', 'Hotjar', 'Google Analytics'],
-      soft: ['Data-driven', 'Colaboración', 'Orientación a resultados']
+      technical: ['Figma', 'Sketch', 'Prototyping', 'User Research', 'Hotjar', 'Google Analytics', 'Data Visualization', 'Storytelling', 'UI Animation'],
+      soft: ['Data-driven', 'Colaboración', 'Orientación a resultados', 'Empatía', 'Proactividad']
     },
     portfolio: {
       url: 'https://julianaortiz.design',
       projects: [
         {
           name: 'TuCarro Search Enhancement',
-          description: 'Mejora en sistema de búsqueda y filtros',
-          impact: 'Conversión de búsqueda a contacto +22%'
+          description: 'Mejora en sistema de búsqueda y filtros para marketplace transaccional',
+          impact: 'Conversión de búsqueda a contacto +22%, Tiempo de búsqueda -15%'
+        },
+        {
+          name: 'Startups LatAm Brand Kit',
+          description: 'Sistema de diseño visual para aceleradora regional',
+          impact: 'Adopción por 5 startups activas'
         }
       ]
     },
-    scores: {
-      cvScore: 83,
-      psychometricScore: 79,
-      serenaScore: 80
-    },
+    documents: [
+      { id: 'doc-013-1', name: 'Juliana_Ortiz_Marketplace_Portfolio.pdf', type: 'PDF', size: '11.4 MB', uploadedDate: '2026-02-22', uploadedBy: 'Juliana Ortiz Mendoza' },
+      { id: 'doc-013-2', name: 'Icesi_Diploma.pdf', type: 'PDF', size: '0.8 MB', uploadedDate: '2026-02-22', uploadedBy: 'Juliana Ortiz Mendoza' }
+    ],
     notes: [
       'Experiencia en marketplace relevante',
       'Enfoque en métricas y conversión',
-      'Buen portafolio con resultados medibles'
+      'Buen portafolio con resultados medibles',
+      'Excelente capacidad de comunicación y sustento de diseño'
     ]
   },
   {
@@ -1456,38 +2165,74 @@ export const candidatesData: CandidateData[] = [
     expectedSalary: '$8.000.000 - $9.500.000 COP',
     availability: '3 semanas',
     yearsExperience: 5,
+    firstName: 'Juan Camilo',
+    lastName: 'Vásquez Duque',
+    identificationNumber: '1036543210',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/juancamilovasquez',
+    birthDate: '1995-10-05',
+    city: 'Medellín',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Medellín', 'Remote'],
+    description: 'Product Designer Senior con experiencia en productos de e-commerce y delivery a gran escala. Experto en optimización de flujos de búsqueda y descubrimiento de productos mediante A/B testing y análisis de comportamiento de usuario. Enfocado en la excelencia visual y la consistencia sistémica.',
+    matchScore: 84,
+    confidence: 'high',
     experience: [
       {
+        id: 'exp-014-001',
         company: 'Cornershop by Uber',
         position: 'Product Designer',
         duration: 'Jul 2021 - Presente',
-        description: 'Diseño de experiencias para app de delivery y marketplace. Optimización de flujos de compra y navegación. A/B testing y data-driven design.'
+        description: 'Diseño de experiencias para app de delivery y marketplace. Optimización de flujos de compra y navegación. A/B testing y data-driven design.',
+        location: 'Medellín, Colombia',
+        startDate: '2021-07',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Rediseñé el motor de búsqueda interno incrementando las búsquedas exitosas en un 35%',
+          'Implementé variaciones de A/B testing para el flujo de checkout que resultaron en una mejora del 7% en conversión total',
+          'Colaboré en la integración visual de Cornershop bajo los lineamientos de Uber Design',
+          'Diseñé el nuevo sistema de suscripciones regionales para Latam'
+        ]
       },
       {
+        id: 'exp-014-002',
         company: 'S4N',
         position: 'UX Designer',
         duration: 'Mar 2019 - Jun 2021',
-        description: 'Consultoría de diseño para diversos clientes. Diseño de apps móviles y plataformas web. Workshops de co-creación.'
+        description: 'Consultoría de diseño para diversos clientes. Diseño de apps móviles y plataformas web. Workshops de co-creación.',
+        location: 'Medellín, Colombia',
+        startDate: '2019-03',
+        endDate: '2021-06',
+        current: false,
+        achievements: [
+          'Facilité workshops de co-creación con clientes del sector seguros para definir la arquitectura de información de portales corporativos',
+          'Diseñé 4 aplicaciones móviles financieras bajo estándares de seguridad y usabilidad bancaria',
+          'Lideré el equipo de UI para la modernización de la plataforma digital de una caja de compensación regional'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad Pontificia Bolivariana',
         degree: 'Comunicación Social - Énfasis Digital',
-        year: '2018'
+        year: '2018',
+        description: 'Estudios enfocados en la convergencia digital, diseño de interfaces y comunicación estratégica en entornos web.'
       }
     ],
     skills: {
-      technical: ['Figma', 'Sketch', 'Data Visualization', 'A/B Testing', 'Mobile First', 'Responsive Design'],
-      soft: ['Analítico', 'Orientado a resultados', 'Proactividad', 'Trabajo bajo presión']
+      technical: ['Figma', 'Sketch', 'Data Visualization', 'A/B Testing', 'Mobile First', 'Responsive Design', 'Design Systems', 'Micro-interactions'],
+      soft: ['Analítico', 'Orientado a resultados', 'Proactividad', 'Trabajo bajo presión', 'Pensamiento crítico']
     },
     portfolio: {
       url: 'https://juancamilovasquez.co',
       projects: [
         {
           name: 'Cornershop Search Optimization',
-          description: 'Mejora del search y descubrimiento de productos',
-          impact: 'Búsquedas exitosas +35%'
+          description: 'Mejora del search y descubrimiento de productos mediante filtrado predictivo',
+          impact: 'Búsquedas exitosas +35%, Transacciones desde búsqueda +18%'
         }
       ]
     },
@@ -1496,7 +2241,16 @@ export const candidatesData: CandidateData[] = [
       psychometricScore: 81,
       serenaScore: 68
     },
-    notes: [],
+    documents: [
+      { id: 'doc-014-1', name: 'Juan_Camilo_Vasquez_CV.pdf', type: 'PDF', size: '1.5 MB', uploadedDate: '2026-02-22', uploadedBy: 'Juan Camilo Vásquez' },
+      { id: 'doc-014-2', name: 'Cornershop_Recommendation.pdf', type: 'PDF', size: '0.9 MB', uploadedDate: '2026-02-22', uploadedBy: 'Juan Camilo Vásquez' }
+    ],
+    notes: [
+      'Perfil senior con experiencia en empresas de gran escala',
+      'Fuerte enfoque en métricas y optimización continua',
+      'Capacidad analítica sobre el promedio',
+      'Buen manejo de diseño sistémico y componentes complejos'
+    ],
     rejectionReason: 'Score de Serena AI por debajo del umbral. Mostró debilidades en pensamiento sistémico y arquitectura de información.'
   },
 
@@ -1509,55 +2263,106 @@ export const candidatesData: CandidateData[] = [
     age: 25,
     location: 'Bogotá, Colombia',
     avatar: 'DC',
-    currentStage: 'psicometrico',
-    status: 'active',
-    appliedDate: '2026-02-23',
+    yearsExperience: 3,
     expectedSalary: '$7.000.000 - $8.500.000 COP',
     availability: 'Inmediata',
-    yearsExperience: 3,
+    
+    applications: [
+      {
+        id: 'app-015-1',
+        jobTitle: 'Mid UX Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'psicometrico',
+        status: 'active',
+        appliedDate: '2026-02-23',
+        matchScore: 79,
+        confidence: 'high',
+        scores: {
+          cvScore: 79,
+          psychometricScore: 76
+        }
+      }
+    ],
+
+    firstName: 'Daniela',
+    lastName: 'Castro Pinzón',
+    identificationNumber: '1024567819',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/danielacastro',
+    birthDate: '1999-12-15',
+    city: 'Bogotá',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Medellín', 'Remote'],
+    description: 'Product Designer Mid con fuerte enfoque en Fintech. Actualmente en Nequi, diseñando funcionalidades de ahorro que impactan a millones de usuarios colombianos. Caracterizada por una adopción rápida de metodologías ágiles y un diseño centrado en la facilidad de uso para el usuario masivo.',
+
     experience: [
       {
+        id: 'exp-015-001',
         company: 'Nequi',
         position: 'UX/UI Designer',
         duration: 'Nov 2022 - Presente',
-        description: 'Diseño de features para app de banca digital. Trabajo en equipo multifuncional ágil.'
+        description: 'Diseño de features para app de banca digital. Trabajo en equipo multifuncional ágil.',
+        location: 'Bogotá, Colombia',
+        startDate: '2022-11',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Diseñé la funcionalidad "Metas de ahorro" logrando una adopción del 30% de la base activa en el primer mes',
+          'Participé en el rediseño del flujo de pagos QR mejorando la tasa de éxito en transacciones en un 15%',
+          'Contribuí a la definición de la guía de estilos visuales para la nueva interfaz adaptativa de Nequi',
+          'Lideré sesiones de ideación colectiva con el equipo de desarrollo para simplificar flujos de registro'
+        ]
       },
       {
+        id: 'exp-015-002',
         company: 'Rokk3r Labs',
         position: 'Junior Product Designer',
         duration: 'Mar 2021 - Oct 2022',
-        description: 'Diseño para startups en etapa temprana. Validación rápida de hipótesis.'
+        description: 'Diseño para startups en etapa temprana. Validación rápida de hipótesis.',
+        location: 'Bogotá, Colombia',
+        startDate: '2021-03',
+        endDate: '2022-10',
+        current: false,
+        achievements: [
+          'Diseñé 5 MVPs para diferentes verticales de negocio, desde Fintech hasta Agrotech',
+          'Implementé procesos de diseño Lean que redujeron el tiempo de prototipado de 3 a 1 semana',
+          'Validé hipótesis de usuario mediante pruebas de guerrilla y entrevistas cualitativas rápidas'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad de los Andes',
         degree: 'Diseño',
-        year: '2020'
+        year: '2020',
+        description: 'Formación académica integral con énfasis en diseño sistémico y experimental. Proyecto de grado sobre inclusión financiera.'
       }
     ],
     skills: {
-      technical: ['Figma', 'Prototyping', 'Design Thinking', 'Lean UX', 'Mobile Design'],
-      soft: ['Adaptabilidad', 'Aprendizaje rápido', 'Colaboración', 'Empatía']
+      technical: ['Figma', 'Prototyping', 'Design Thinking', 'Lean UX', 'Mobile Design', 'User Research', 'Agile Methodologies', 'User Flows'],
+      soft: ['Adaptabilidad', 'Aprendizaje rápido', 'Colaboración', 'Empatía', 'Proactividad']
     },
     portfolio: {
       url: 'https://danielacastro.design',
       projects: [
         {
           name: 'Nequi Metas Feature',
-          description: 'Feature de ahorro por metas personalizadas',
-          impact: 'Adopción del 30% en primer mes'
+          description: 'Feature de ahorro por metas personalizadas con recordatorios inteligentes',
+          impact: 'Adopción del 30% en primer mes, Satisfacción del usuario 4.7/5'
         }
       ]
     },
-    scores: {
-      cvScore: 79,
-      psychometricScore: 76
-    },
+    documents: [
+      { id: 'doc-015-1', name: 'Daniela_Castro_Fintech_UX.pdf', type: 'PDF', size: '1.2 MB', uploadedDate: '2026-02-23', uploadedBy: 'Daniela Castro Pinzón' },
+      { id: 'doc-015-2', name: 'Nequi_Ahorro_Case_Study.pdf', type: 'PDF', size: '8.4 MB', uploadedDate: '2026-02-23', uploadedBy: 'Daniela Castro Pinzón' }
+    ],
     notes: [
-      'Experiencia en fintech digital',
-      'Portfolio con proyectos recientes',
-      'Buena actitud y potencial de crecimiento'
+      'Experiencia en fintech digital masiva',
+      'Portfolio con proyectos recientes y reales',
+      'Buena actitud y potencial de crecimiento acelerado',
+      'Conocimiento sólido en metodologías Lean y Ágiles'
     ]
   },
   {
@@ -1568,55 +2373,106 @@ export const candidatesData: CandidateData[] = [
     age: 31,
     location: 'Medellín, Colombia',
     avatar: 'AG',
-    currentStage: 'psicometrico',
-    status: 'active',
-    appliedDate: '2026-02-23',
+    yearsExperience: 6,
     expectedSalary: '$8.500.000 - $10.000.000 COP',
     availability: '1 mes',
-    yearsExperience: 6,
+    
+    applications: [
+      {
+        id: 'app-016-1',
+        jobTitle: 'Senior UX Designer',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'psicometrico',
+        status: 'active',
+        appliedDate: '2026-02-23',
+        matchScore: 85,
+        confidence: 'high',
+        scores: {
+          cvScore: 85,
+          psychometricScore: 82
+        }
+      }
+    ],
+
+    firstName: 'Andrés Felipe',
+    lastName: 'Gutiérrez Paredes',
+    identificationNumber: '1017444556',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/andresgutierrez',
+    birthDate: '1992-06-15',
+    city: 'Medellín',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Remote'],
+    description: 'Senior UX Designer con 6 años de experiencia en el sector seguros y financiero. Especializado en liderar procesos de transformación digital para grandes corporaciones, enfocándose en Service Design y optimización de la experiencia del cliente a través de múltiples puntos de contacto digitales.',
+
     experience: [
       {
+        id: 'exp-016-001',
         company: 'SURA',
         position: 'Senior UX Designer',
         duration: 'Ene 2021 - Presente',
-        description: 'Diseño de experiencias digitales para seguros y pensiones. Liderazgo de iniciativas de transformación digital.'
+        description: 'Diseño de experiencias digitales para seguros y pensiones. Liderazgo de iniciativas de transformación digital.',
+        location: 'Medellín, Colombia',
+        startDate: '2021-01',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Lideré el rediseño del portal de clientes SURA incrementando las transacciones digitales en un 45%',
+          'Implementé un nuevo sistema de gestión de reclamaciones online eliminando el 30% del volumen de llamadas a soporte físico',
+          'Coordiné equipos multidisciplinarios para el lanzamiento de la nueva App de Seguros en 3 países de Latam',
+          'Establecí metodologías de Service Design que mejoraron el NPS de servicios digitales de 65 a 81'
+        ]
       },
       {
+        id: 'exp-016-002',
         company: 'Indra',
         position: 'UX Designer',
         duration: 'Jun 2018 - Dic 2020',
-        description: 'Consultoría de diseño para sector financiero y público.'
+        description: 'Consultoría de diseño para sector financiero y público.',
+        location: 'Bogotá, Colombia',
+        startDate: '2018-06',
+        endDate: '2020-12',
+        current: false,
+        achievements: [
+          'Diseñé la interfaz de usuario para 2 portales de banca electrónica bajo estándares de alta seguridad',
+          'Facilité más de 20 talleres de co-creación con entidades gubernamentales para digitalizar trámites ciudadanos',
+          'Desarrollé el sistema de componentes UI para un proyecto de modernización tecnológica estatal'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad Pontificia Bolivariana',
         degree: 'Diseño Industrial',
-        year: '2017'
+        year: '2017',
+        description: 'Enfoque en diseño de productos y servicios. Proyecto de grado sobre ergonomía digital.'
       }
     ],
     skills: {
-      technical: ['Figma', 'Axure', 'User Research', 'Service Design', 'Workshop Facilitation'],
-      soft: ['Liderazgo', 'Pensamiento estratégico', 'Comunicación ejecutiva']
+      technical: ['Figma', 'Axure', 'User Research', 'Service Design', 'Workshop Facilitation', 'Prototyping Advanced', 'Information Architecture', 'Design Strategy'],
+      soft: ['Liderazgo', 'Pensamiento estratégico', 'Comunicación ejecutiva', 'Gestión de proyectos', 'Facilitación']
     },
     portfolio: {
       url: 'https://andresgutierrez.co',
       projects: [
         {
           name: 'SURA Digital Transformation',
-          description: 'Rediseño de portal de clientes y app móvil',
-          impact: 'Transacciones digitales +45%'
+          description: 'Rediseño de portal de clientes y app móvil integral para seguros y salud',
+          impact: 'Transacciones digitales +45%, Reducción de costos operativos -15%'
         }
       ]
     },
-    scores: {
-      cvScore: 85,
-      psychometricScore: 82
-    },
+    documents: [
+      { id: 'doc-016-1', name: 'Andres_Gutierrez_Service_Design.pdf', type: 'PDF', size: '1.8 MB', uploadedDate: '2026-02-23', uploadedBy: 'Andrés Felipe Gutiérrez' },
+      { id: 'doc-016-2', name: 'SURA_Transformation_Case.pdf', type: 'PDF', size: '12.1 MB', uploadedDate: '2026-02-23', uploadedBy: 'Andrés Felipe Gutiérrez' }
+    ],
     notes: [
-      'Experiencia corporativa sólida',
-      'Conocimiento en seguros y finanzas',
-      'Liderazgo de proyectos grandes'
+      'Experiencia corporativa sólida en sectores de alta complejidad',
+      'Conocimiento profundo en seguros y procesos financieros',
+      'Liderazgo comprobado en proyectos de transformación digital de gran escala',
+      'Excelente capacidad para articular estrategias de diseño ante directivos'
     ]
   },
   {
@@ -1627,41 +2483,85 @@ export const candidatesData: CandidateData[] = [
     age: 40,
     location: 'Cartagena, Colombia',
     avatar: 'RM',
-    currentStage: 'psicometrico',
-    status: 'rejected',
-    appliedDate: '2026-02-24',
+    yearsExperience: 15,
     expectedSalary: '$10.000.000 - $12.000.000 COP',
     availability: '3 meses',
-    yearsExperience: 15,
+    
+    applications: [
+      {
+        id: 'app-017-1',
+        jobTitle: 'Senior UX Designer',
+        jobLocation: 'Medellín, Colombia',
+        currentStage: 'psicometrico',
+        status: 'rejected',
+        appliedDate: '2026-02-24',
+        matchScore: 42,
+        confidence: 'low',
+        scores: {
+          cvScore: 42,
+          psychometricScore: 38
+        },
+        rejectionReason: 'Experiencia en publicidad tradicional. No tiene experiencia en diseño digital ni producto. Perfil no alineado con la posición.'
+      }
+    ],
+
+    firstName: 'Roberto',
+    lastName: 'Muñoz León',
+    identificationNumber: '1019234567',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'No disponible',
+    birthDate: '1984-11-20',
+    city: 'Cartagena',
+    country: 'Colombia',
+    willingToRelocate: false,
+    interestedLocations: ['Cartagena'],
+    description: 'Director de Arte senior con 15 años de trayectoria en el sector de la publicidad tradicional y BTL. Amplia experiencia en el liderazgo de equipos creativos para campañas de gran alcance nacional, con enfoque en artes visuales, diseño editorial y producción de medios impresos.',
+
     experience: [
       {
+        id: 'exp-017-001',
         company: 'Empresa Tradicional',
         position: 'Director de Arte',
         duration: '2010 - Presente',
-        description: 'Dirección creativa para campañas publicitarias tradicionales y BTL.'
+        description: 'Dirección creativa para campañas publicitarias tradicionales y BTL.',
+        location: 'Colombia',
+        startDate: '2010-01',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Lideré la dirección de arte para campañas nacionales de consumo masivo con presupuestos superiores a $500M',
+          'Gestioné el equipo creativo interno de 10 personas asegurando altos estándares de calidad gráfica',
+          'Coordiné la producción y ejecución de más de 50 eventos BTL en todo el país',
+          'Logré reconocimientos locales por excelencia en diseño de piezas publicitarias impresas'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad Jorge Tadeo Lozano',
         degree: 'Publicidad',
-        year: '2008'
+        year: '2008',
+        description: 'Formación en creatividad publicitaria, redacción y artes gráficas. Énfasis en gestión de cuentas creativas.'
       }
     ],
     skills: {
-      technical: ['Photoshop', 'Illustrator', 'Dirección de arte'],
-      soft: ['Liderazgo creativo', 'Gestión de equipos']
+      technical: ['Photoshop', 'Illustrator', 'Dirección de arte', 'Diseño Editorial', 'Producción Impresa', 'Concept Development'],
+      soft: ['Liderazgo creativo', 'Gestión de equipos', 'Comunicación asertiva', 'Negociación con proveedores']
     },
     portfolio: {
       url: 'No disponible',
       projects: []
     },
-    scores: {
-      cvScore: 42,
-      psychometricScore: 38
-    },
-    notes: [],
-    rejectionReason: 'Experiencia en publicidad tradicional. No tiene experiencia en diseño digital ni producto. Perfil no alineado con la posición.'
+    documents: [
+      { id: 'doc-017-1', name: 'Roberto_Munoz_Arts_Resume.pdf', type: 'PDF', size: '2.5 MB', uploadedDate: '2026-02-24', uploadedBy: 'Roberto Muñoz León' }
+    ],
+    notes: [
+      'Perfil altamente senior en publicidad convencional',
+      'Falta de experiencia en entornos digitales y diseño de producto (SaaS/Apps)',
+      'No familiarizado con herramientas modernas de UX/UI (Figma, Sketch)',
+      'Fuerte capacidad de liderazgo pero en un área no alineada con la vacante'
+    ]
   },
   {
     id: 'cand-018',
@@ -1671,41 +2571,91 @@ export const candidatesData: CandidateData[] = [
     age: 24,
     location: 'Ibagué, Colombia',
     avatar: 'MG',
-    currentStage: 'psicometrico',
-    status: 'rejected',
-    appliedDate: '2026-02-24',
+    yearsExperience: 2,
     expectedSalary: '$5.500.000 - $7.000.000 COP',
     availability: 'Inmediata',
-    yearsExperience: 2,
+    
+    applications: [
+      {
+        id: 'app-018-1',
+        jobTitle: 'Junior UX Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'psicometrico',
+        status: 'rejected',
+        appliedDate: '2026-02-24',
+        matchScore: 50,
+        confidence: 'low',
+        scores: {
+          cvScore: 50,
+          psychometricScore: 44
+        },
+        rejectionReason: 'Perfil enfocado en diseño gráfico tradicional. No cuenta con experiencia en producto digital ni conocimientos de UX.'
+      }
+    ],
+
+    firstName: 'Mariana',
+    lastName: 'Gómez Peña',
+    identificationNumber: '1015777889',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'No disponible',
+    birthDate: '2000-05-24',
+    city: 'Ibagué',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Medellín', 'Remote'],
+    description: 'Diseñadora Junior con 2 años de experiencia en agencias creativas regionales. Enfocada en la creación de contenidos visuales para redes sociales, diseño de identidad corporativa y apoyo en iniciativas de marketing digital para pymes.',
+
     experience: [
       {
+        id: 'exp-018-001',
         company: 'Agencia Creativa Regional',
         position: 'Diseñadora Junior',
         duration: 'Ene 2022 - Presente',
-        description: 'Diseño de piezas para redes sociales y material publicitario.'
+        description: 'Diseño de piezas para redes sociales y material publicitario.',
+        location: 'Ibagué, Colombia',
+        startDate: '2022-01',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Desarrollé la línea gráfica mensual para 10 clientes locales aumentando su presencia digital',
+          'Creé identidades corporativas completas para 3 nuevas empresas de la región',
+          'Apoyé en la producción de assets de video corto para campañas de Reels y TikTok',
+          'Participé en el rediseño de materiales impresos para eventos corporativos regionales'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad de Ibagué',
         degree: 'Diseño Gráfico',
-        year: '2021'
+        year: '2021',
+        description: 'Formación en fundamentos de diseño gráfico, color y composición. Proyecto final sobre branding para emprendimientos sociales.'
       }
     ],
     skills: {
-      technical: ['Photoshop', 'Illustrator', 'Canva', 'After Effects'],
-      soft: ['Creatividad', 'Trabajo en equipo']
+      technical: ['Photoshop', 'Illustrator', 'Canva', 'After Effects', 'InDesign', 'Branding Básico', 'Social Media Design'],
+      soft: ['Creatividad', 'Trabajo en equipo', 'Orientación al detalle', 'Aprendizaje rápido']
     },
     portfolio: {
       url: 'https://behance.net/lauragomez',
-      projects: []
+      projects: [
+        {
+          name: 'Regional Branding Project',
+          description: 'Identidad visual para cooperativa agrícola local',
+          impact: 'Unificación de imagen en 5 sucursales'
+        }
+      ]
     },
-    scores: {
-      cvScore: 50,
-      psychometricScore: 44
-    },
-    notes: [],
-    rejectionReason: 'Perfil enfocado en diseño gráfico tradicional. No cuenta con experiencia en producto digital ni conocimientos de UX.'
+    documents: [
+      { id: 'doc-018-1', name: 'Mariana_Gomez_Jr_Portfolio.pdf', type: 'PDF', size: '9.2 MB', uploadedDate: '2026-02-24', uploadedBy: 'Mariana Gómez Peña' }
+    ],
+    notes: [
+      'Perfil junior con buen manejo de herramientas gráficas',
+      'Experiencia limitada a diseño gráfico tradicional y redes sociales',
+      'Sin formación ni experiencia en UX/UI o diseño de producto',
+      'Necesita desarrollar pensamiento estratégico de producto'
+    ]
   },
 
   // ====== ETAPA 1: EVALUACIÓN CV (3 ACTIVOS) ======
@@ -1717,72 +2667,138 @@ export const candidatesData: CandidateData[] = [
     age: 26,
     location: 'Sogamoso, Colombia',
     avatar: 'MS',
-    currentStage: 'evaluacion-cv',
-    status: 'active',
-    appliedDate: '2026-03-07',
+    yearsExperience: 3,
     expectedSalary: '$5.500.000 - $7.500.000 COP',
     availability: 'Inmediata (Remoto o reubicación)',
-    yearsExperience: 3,
+    
+    applications: [
+      {
+        id: 'app-019-1',
+        jobTitle: 'Backend Developer Node.js',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'evaluacion-cv',
+        status: 'active',
+        appliedDate: '2026-03-07',
+        matchScore: 78,
+        confidence: 'medium',
+        scores: {
+          cvScore: 78
+        },
+        blocker: {
+          stageId: 'evaluacion-cv',
+          reason: 'Sin respuesta a solicitud de documentos adicionales',
+          priority: 'high'
+        }
+      }
+    ],
+
+    firstName: 'Mateo',
+    lastName: 'Sánchez Rojas',
+    identificationNumber: '1052345678',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/mateosanchez',
+    birthDate: '1998-04-12',
+    city: 'Sogamoso',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Medellín', 'Remote'],
+    description: 'Ingeniero de Sistemas con 3 años de experiencia en desarrollo backend. Especializado en la creación de arquitecturas escalables con Node.js y AWS. Certificado como Solutions Architect, con fuerte enfoque en microservicios, bases de datos no relacionales y optimización de rendimiento en sistemas distribuidos.',
+
     experience: [
       {
+        id: 'exp-019-001',
         company: 'TechSolutions Latam',
         position: 'Backend Developer',
         duration: 'Ene 2024 - Presente',
-        description: 'Desarrollo de APIs RESTful con Node.js y Express. Implementación de microservicios en AWS. Trabajo con bases de datos MongoDB y PostgreSQL. Optimización de consultas y rendimiento.'
+        description: 'Desarrollo de APIs RESTful con Node.js y Express. Implementación de microservicios en AWS. Trabajo con bases de datos MongoDB y PostgreSQL.',
+        location: 'Remote',
+        startDate: '2024-01',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Diseñé e implementé una arquitectura de microservicios que procesa +100K transacciones diarias sin interrupciones',
+          'Optimicé las consultas de base de datos en PostgreSQL reduciendo los tiempos de respuesta del API en un 40%',
+          'Lideré la migración de servicios on-premise a AWS Lambda, reduciendo costos de infraestructura en un 25%',
+          'Implementé pipelines de CI/CD automáticos que aseguraron una cobertura de tests del 90%'
+        ]
       },
       {
+        id: 'exp-019-002',
         company: 'StartupCo',
         position: 'Junior Backend Developer',
         duration: 'Mar 2022 - Dic 2023',
-        description: 'Desarrollo backend con Python y Flask. Integración de servicios de terceros. Manejo de autenticación y autorización. Colaboración en arquitectura de sistemas.'
+        description: 'Desarrollo backend con Python y Flask. Integración de servicios de terceros. Manejo de autenticación y autorización.',
+        location: 'Bogotá, Colombia',
+        startDate: '2022-03',
+        endDate: '2023-12',
+        current: false,
+        achievements: [
+          'Desarrollé el módulo de pagos integrando APIs de terceros (Stripe, PSE) para un e-commerce regional',
+          'Implementé sistema de autenticación basado en JWT y OAuth2 aumentando la seguridad de la plataforma',
+          'Colaboré en la documentación técnica de las APIs usando Swagger para facilitar el consumo por el equipo frontend'
+        ]
       },
       {
+        id: 'exp-019-003',
         company: 'DevAgency',
         position: 'Trainee Developer',
         duration: 'Jun 2021 - Feb 2022',
-        description: 'Primer rol profesional en desarrollo backend. Aprendizaje de Node.js, bases de datos y APIs. Participación en proyectos de migración y mantenimiento.'
+        description: 'Primer rol profesional en desarrollo backend. Aprendizaje de Node.js, bases de datos y APIs.',
+        location: 'Medellín, Colombia',
+        startDate: '2021-06',
+        endDate: '2022-02',
+        current: false,
+        achievements: [
+          'Aprendí y apliqué patrones de diseño backend fundamentales en proyectos de mantenimiento',
+          'Corregí +50 bugs críticos en servicios legados mejorando la estabilidad del sistema',
+          'Participé activamente en revisiones de código aprendiendo mejores prácticas de legibilidad y seguridad'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad Santo Tomás',
         degree: 'Ingeniería de Sistemas',
-        year: '2021'
+        year: '2021',
+        description: 'Formación profesional con énfasis en ingeniería de software, algoritmos y redes. Proyecto de grado sobre computación en la nube.'
       },
       {
         institution: 'AWS Training',
         degree: 'AWS Certified Solutions Architect - Associate',
-        year: '2023'
+        year: '2023',
+        description: 'Certificación oficial que valida capacidades para diseñar arquitecturas escalables y resilientes en la nube de Amazon.'
       }
     ],
     skills: {
-      technical: ['Node.js', 'Express', 'Python', 'Flask', 'MongoDB', 'PostgreSQL', 'AWS', 'Docker', 'Git', 'REST APIs', 'Microservices'],
-      soft: ['Trabajo en equipo', 'Resolución de problemas', 'Aprendizaje continuo', 'Comunicación técnica', 'Adaptabilidad']
+      technical: ['Node.js', 'Express', 'Python', 'Flask', 'MongoDB', 'PostgreSQL', 'AWS', 'Docker', 'Git', 'REST APIs', 'Microservices', 'Redis', 'Kubernetes (Básico)'],
+      soft: ['Trabajo en equipo', 'Resolución de problemas', 'Aprendizaje continuo', 'Comunicación técnica', 'Adaptabilidad', 'Analítico']
     },
     portfolio: {
       url: 'https://github.com/mateosanchez',
       projects: [
         {
           name: 'E-commerce Microservices',
-          description: 'Arquitectura de microservicios para plataforma e-commerce con Node.js y AWS',
-          impact: 'Sistema escalable que maneja 10K+ peticiones diarias'
+          description: 'Arquitectura de microservicios para plataforma e-commerce de alto tráfico',
+          impact: 'Sistema escalable procesando 10K+ peticiones/seg, Disponibilidad del 99.9%'
         },
         {
           name: 'API Gateway Python',
-          description: 'Gateway de APIs con Python/Flask para integración de servicios',
-          impact: 'Reducción del 30% en tiempo de respuesta'
+          description: 'Gateway de APIs centralizado para orquestación de servicios',
+          impact: 'Reducción del 30% en latencia de red, Centralización de seguridad'
         }
       ]
     },
-    scores: {
-      cvScore: 78
-    },
+    documents: [
+      { id: 'doc-019-1', name: 'Mateo_Sanchez_Backend_CV.pdf', type: 'PDF', size: '1.2 MB', uploadedDate: '2026-03-07', uploadedBy: 'Mateo Sánchez Rojas' },
+      { id: 'doc-019-2', name: 'AWS_Solutions_Architect_Cert.pdf', type: 'PDF', size: '0.9 MB', uploadedDate: '2026-03-07', uploadedBy: 'Mateo Sánchez Rojas' }
+    ],
     notes: [
-      'Experiencia sólida de 3 años en backend',
-      'Stack técnico: Node.js, Python, AWS, MongoDB, PostgreSQL',
-      'Certificación AWS reciente',
-      'Perfil junior-mid con buen potencial de crecimiento',
-      'Disponible para remoto o reubicación desde Sogamoso'
+      'Experiencia sólida de 3 años en backend demostrable',
+      'Stack técnico moderno y demandado: Node, Python, AWS',
+      'Certificación AWS demuestra proactividad y conocimiento técnico estandarizado',
+      'Perfil junior-mid con gran potencial para evolucionar a arquitecto',
+      'Excelente disposición para reubicarse o trabajar remoto'
     ]
   },
   {
@@ -1793,53 +2809,105 @@ export const candidatesData: CandidateData[] = [
     age: 26,
     location: 'Cali, Colombia',
     avatar: 'IM',
-    currentStage: 'evaluacion-cv',
-    status: 'active',
-    appliedDate: '2026-02-25',
+    yearsExperience: 3,
     expectedSalary: '$7.000.000 - $8.500.000 COP',
     availability: '2 semanas',
-    yearsExperience: 3,
+    
+    applications: [
+      {
+        id: 'app-020-1',
+        jobTitle: 'Product Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'evaluacion-cv',
+        status: 'active',
+        appliedDate: '2026-02-25',
+        matchScore: 78,
+        confidence: 'high',
+        scores: {
+          cvScore: 78
+        }
+      }
+    ],
+
+    firstName: 'Isabella',
+    lastName: 'Moreno Cruz',
+    identificationNumber: '1118889901',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/isabellamoreno',
+    birthDate: '1998-11-20',
+    city: 'Cali',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Medellín', 'Remote'],
+    description: 'Product Designer con 3 años de experiencia en el diseño de interfaces seguras e intuitivas para procesos de verificación de identidad. Apasionada por el UX Research y el diseño sistémico, enfocada en simplificar la complejidad técnica para mejorar la experiencia del usuario final.',
+
     experience: [
       {
+        id: 'exp-020-001',
         company: 'Truora',
         position: 'Product Designer',
         duration: 'Jun 2022 - Presente',
-        description: 'Diseño de productos de verificación de identidad. UX para procesos complejos.'
+        description: 'Diseño de productos de verificación de identidad. UX para procesos complejos.',
+        location: 'Bogotá, Colombia',
+        startDate: '2022-06',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Rediseñé el flujo de vinculación (identity verification) reduciendo el tiempo de abandono en un 25%',
+          'Implementé una librería de componentes de UI unificada para los productos B2B de Truora',
+          'Conduje pruebas de usabilidad en 3 países para validar la adaptación cultural del flujo de verificación',
+          'Colaboré estrechamente con el equipo de KYC para asegurar el cumplimiento legal en el diseño de interfaces'
+        ]
       },
       {
+        id: 'exp-020-002',
         company: 'Aplyca',
         position: 'UX/UI Designer',
         duration: 'Ene 2021 - May 2022',
-        description: 'Diseño para clientes de diversos sectores.'
+        description: 'Diseño para clientes de diversos sectores.',
+        location: 'Bogotá, Colombia',
+        startDate: '2021-01',
+        endDate: '2022-05',
+        current: false,
+        achievements: [
+          'Diseñé el portal transaccional para una importante entidad pública, mejorando la satisfacción del usuario en un 15%',
+          'Desarrollé wireframes y prototipos navegables de alta fidelidad para el lanzamiento de un marketplace regional',
+          'Participó en la creación de guías de estilo para múltiples clientes corporativos'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad Icesi',
         degree: 'Diseño de Medios Interactivos',
-        year: '2020'
+        year: '2020',
+        description: 'Enfoque en interacción humano-computador y diseño digital. Proyecto destacado sobre accesibilidad en interfaces.'
       }
     ],
     skills: {
-      technical: ['Figma', 'User Research', 'Prototyping', 'Usability Testing'],
-      soft: ['Empatía', 'Problem solving', 'Colaboración']
+      technical: ['Figma', 'User Research', 'Prototyping', 'Usability Testing', 'Design Systems', 'Responsive Design', 'Wireframing', 'InVision'],
+      soft: ['Empatía', 'Problem solving', 'Colaboración', 'Comunicación asertiva', 'Adaptabilidad']
     },
     portfolio: {
       url: 'https://isabellamoreno.co',
       projects: [
         {
           name: 'Truora ID Verification',
-          description: 'Flujo de verificación de identidad simplificado',
-          impact: 'Tiempo de verificación -60%'
+          description: 'Flujo de verificación de identidad simplificado con biometría facial',
+          impact: 'Tiempo de verificación -60%, Tasa de éxito +12%'
         }
       ]
     },
-    scores: {
-      cvScore: 78
-    },
+    documents: [
+      { id: 'doc-020-1', name: 'Isabella_Moreno_Identity_UX.pdf', type: 'PDF', size: '1.5 MB', uploadedDate: '2026-02-25', uploadedBy: 'Isabella Moreno Cruz' },
+      { id: 'doc-020-2', name: 'Truora_Design_Tokens.pdf', type: 'PDF', size: '4.2 MB', uploadedDate: '2026-02-25', uploadedBy: 'Isabella Moreno Cruz' }
+    ],
     notes: [
-      'Experiencia en procesos complejos',
-      'Buen enfoque en simplificación'
+      'Experiencia en procesos complejos y de seguridad digital',
+      'Buen enfoque en simplificación de flujos extensos',
+      'Fuerte capacidad analítica y de investigación de usuario',
+      'Portfolio muestra proyectos de alto impacto transaccional'
     ]
   },
   {
@@ -1850,53 +2918,105 @@ export const candidatesData: CandidateData[] = [
     age: 29,
     location: 'Medellín, Colombia',
     avatar: 'SV',
-    currentStage: 'evaluacion-cv',
-    status: 'active',
-    appliedDate: '2026-02-26',
+    yearsExperience: 5,
     expectedSalary: '$8.000.000 - $9.500.000 COP',
     availability: '3 semanas',
-    yearsExperience: 5,
+    
+    applications: [
+      {
+        id: 'app-021-1',
+        jobTitle: 'Senior Product Designer',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'evaluacion-cv',
+        status: 'active',
+        appliedDate: '2026-02-26',
+        matchScore: 80,
+        confidence: 'high',
+        scores: {
+          cvScore: 80
+        }
+      }
+    ],
+
+    firstName: 'Santiago',
+    lastName: 'Vargas Luna',
+    identificationNumber: '1074567891',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/santiagovargas',
+    birthDate: '1995-07-28',
+    city: 'Medellín',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Bogotá', 'Remote'],
+    description: 'Product Designer Senior con 5 años de experiencia enfocados en el sector Healthtech. Actualmente en Tul, diseñando experiencias integrales para telemedicina y gestión hospitalaria digital. Experto en simplificar procesos clínicos complejos para usuarios finales y profesionales de la salud.',
+
     experience: [
       {
+        id: 'exp-021-001',
         company: 'Tul',
         position: 'Product Designer',
         duration: 'Mar 2021 - Presente',
-        description: 'Diseño para plataforma de salud digital. Telemedicina y gestión de citas.'
+        description: 'Diseño para plataforma de salud digital. Telemedicina y gestión de citas.',
+        location: 'Bogotá, Colombia',
+        startDate: '2021-03',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Diseñé el portal de telemedicina que ha procesado +100K consultas virtuales exitosas',
+          'Reduje la tasa de inasistencia a citas médicas en un 20% mediante un nuevo sistema de recordatorios y preparación pre-consulta',
+          'Implementé el sistema de diseño "HealthUI" que estandarizó la experiencia en 3 países',
+          'Coordiné con equipos médicos para validar la usabilidad de interfaces críticas en entornos de urgencias'
+        ]
       },
       {
+        id: 'exp-021-002',
         company: 'Lean Solutions Group',
         position: 'UX Designer',
         duration: 'Jul 2019 - Feb 2021',
-        description: 'Diseño de soluciones digitales para sector salud.'
+        description: 'Diseño de soluciones digitales para sector salud.',
+        location: 'Medellín, Colombia',
+        startDate: '2019-07',
+        endDate: '2021-02',
+        current: false,
+        achievements: [
+          'Optimicé el flujo de registro de pacientes reduciendo el tiempo de ingreso de 15 a 5 minutos',
+          'Diseñé dashboards de seguimiento para administradores de clínicas con visualización de ocupación en tiempo real',
+          'Conduje investigaciones etnográficas en centros de salud para entender el contexto real de uso de las herramientas digitales'
+        ]
       }
     ],
     education: [
       {
         institution: 'Universidad de Antioquia',
         degree: 'Diseño Visual',
-        year: '2018'
+        year: '2018',
+        description: 'Formación en diseño de comunicación visual con énfasis en medios interactivos y lenguajes audiovisuales.'
       }
     ],
     skills: {
-      technical: ['Figma', 'Sketch', 'InVision', 'User Research', 'Journey Mapping'],
-      soft: ['Empatía', 'Comunicación', 'Trabajo remoto']
+      technical: ['Figma', 'Sketch', 'InVision', 'User Research', 'Journey Mapping', 'Information Architecture', 'Usability Testing', 'Data Analysis'],
+      soft: ['Empatía', 'Comunicación', 'Trabajo remoto', 'Problem solving', 'Pensamiento crítico']
     },
     portfolio: {
       url: 'https://santiagovargas.design',
       projects: [
         {
           name: 'Tul Telemedicina',
-          description: 'Plataforma de consultas médicas virtuales',
-          impact: '100K+ consultas realizadas'
+          description: 'Plataforma integral de consultas médicas virtuales y seguimiento clínico',
+          impact: '100K+ consultas realizadas, NPS de 78 entre doctores y pacientes'
         }
       ]
     },
-    scores: {
-      cvScore: 80
-    },
+    documents: [
+      { id: 'doc-021-1', name: 'Santiago_Vargas_Healthtech_Resume.pdf', type: 'PDF', size: '1.3 MB', uploadedDate: '2026-02-26', uploadedBy: 'Santiago Vargas Luna' },
+      { id: 'doc-021-2', name: 'HealthUI_Design_System.pdf', type: 'PDF', size: '22.4 MB', uploadedDate: '2026-02-26', uploadedBy: 'Santiago Vargas Luna' }
+    ],
     notes: [
-      'Experiencia en healthtech',
-      'Portfolio con impacto social'
+      'Experiencia profunda en healthtech muy valiosa',
+      'Portfolio con impacto social y métricas claras de volumen',
+      'Buen balance entre diseño visual y arquitectura de información clínica',
+      'Residente en Medellín, abierto a remoto o Bogotá'
     ]
   }
 ];

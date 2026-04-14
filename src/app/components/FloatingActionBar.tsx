@@ -175,11 +175,12 @@ export function FloatingActionBar({
 
   // Calcular posición del submenu cuando se abre
   React.useEffect(() => {
-    if (isSubmenuOpen && dropdownRef.current) {
-      const rect = dropdownRef.current.getBoundingClientRect();
+    if (isSubmenuOpen && submenuTriggerRef.current && dropdownRef.current) {
+      const itemRect = submenuTriggerRef.current.getBoundingClientRect();
+      const dropdownRect = dropdownRef.current.getBoundingClientRect();
       setSubmenuPosition({
-        top: rect.top,
-        left: rect.right + 4, // 4px de margen desde el borde derecho del dropdown
+        top: itemRect.top,
+        left: dropdownRect.right + 4, // 4px de margen desde el borde derecho del dropdown
       });
     }
   }, [isSubmenuOpen]);

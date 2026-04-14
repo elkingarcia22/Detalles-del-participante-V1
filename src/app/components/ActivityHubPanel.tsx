@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Filter, List, ArrowUpDown, Sparkles, Send, MessageSquare, Activity, CheckSquare, ChevronLeft, ChevronRight, ChevronDown, Check, Pencil, Trash2, Save, X as XIcon, ExternalLink, AlertCircle } from 'lucide-react';
+import { Search, Filter, List, ArrowUpDown, Sparkles, Send, MessageSquare, Activity, CheckSquare, ChevronLeft, ChevronRight, ChevronDown, Check, Pencil, Trash2, Save, X as XIcon, ExternalLink, AlertCircle, Mail, MessageCircle, ArrowRight, PlusCircle, CheckCircle2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
@@ -86,6 +86,9 @@ export function ActivityHubPanel({
   const [selectedActivityTypes, setSelectedActivityTypes] = useState<string[]>([]);
   const [selectedActivityStatuses, setSelectedActivityStatuses] = useState<string[]>([]);
   const [selectedActivityActors, setSelectedActivityActors] = useState<string[]>([]);
+  const [executingAction, setExecutingAction] = useState<string | null>(null);
+  const [successActions, setSuccessActions] = useState<Set<string>>(new Set());
+  const [localActivities, setLocalActivities] = useState<any[]>([]);
   
   const commentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -270,7 +273,38 @@ export function ActivityHubPanel({
       setIsAITyping(false);
     }, 1500);
   };
-  
+  const handleExecuteAction = (actionId: string, label: string) => {
+    setExecutingAction(actionId);
+    
+    // Simular tiempo de ejecución
+    setTimeout(() => {
+      setExecutingAction(null);
+      setSuccessActions(prev => new Set(prev).add(actionId));
+      
+      // Agregar a actividad local
+      const newActivity = {
+        id: `local-${Date.now()}`,
+        title: label,
+        description: `Serena IA ejecutó la acción: ${label}`,
+        timestamp: 'Ahora mismo',
+        eventType: actionId.includes('email') ? 'email' : actionId.includes('whatsapp') ? 'message' : 'system',
+        status: 'success',
+        actor: { name: 'Serena IA', type: 'ai' as const, avatar: null }
+      };
+      
+      setLocalActivities(prev => [newActivity, ...prev]);
+      
+      // Limpiar éxito después de 3 segundos
+      setTimeout(() => {
+        setSuccessActions(prev => {
+          const next = new Set(prev);
+          next.delete(actionId);
+          return next;
+        });
+      }, 3000);
+    }, 1500);
+  };
+
   const getMockAIResponse = (question: string) => {
     const q = question.toLowerCase();
     if (q.includes('experiencia') || q.includes('experience')) {
@@ -288,13 +322,27 @@ export function ActivityHubPanel({
     if (q.includes('fortalezas') || q.includes('strengths')) {
       return 'Principales fortalezas: (1) Sólidos conocimientos en backend con Node.js y Python, (2) Experiencia práctica con AWS y arquitectura de microservicios, (3) Manejo de bases de datos MongoDB y PostgreSQL, (4) Progresión consistente en roles técnicos mostrando crecimiento profesional.';
     }
+    
+    // Inteligencia para sugerir acciones
+    if (q.includes('whatsapp') || q.includes('escribir')) {
+      return '¡Claro! Puedo ayudarte a contactar a Mateo por WhatsApp. He preparado un botón de acción rápida justo arriba para iniciar la conversación.';
+    }
+    if (q.includes('mover') || q.includes('etapa')) {
+      return 'La siguiente etapa lógica para Mateo es "Entrevista Técnica". He habilitado un botón de acción rápida para que lo muevas ahora mismo.';
+    }
+
     return 'Basándome en el perfil completo de Mateo Sánchez, puedo decir que es un candidato con potencial. Su experiencia de 3 años en desarrollo backend está alineada con los requisitos básicos del rol. ¿Hay algún aspecto específico sobre el que quieras profundizar? Puedo analizar su experiencia técnica, stack tecnológico, o cualquier otra área de interés.';
   };
 
   // Mock activity data
-  const activityData = candidate 
+  const baseActivityData = candidate 
     ? generateActivities(candidate, onNavigateToSection, setHighlightedStageId)
     : [];
+    
+  // Combinar actividad base con local
+  const activityData = localActivities.length > 0
+    ? [{ day: 'Hoy', events: localActivities }, ...baseActivityData]
+    : baseActivityData;
 
   // Generate Serena insights dynamically
   const serenaInsights = candidate 
@@ -432,144 +480,128 @@ export function ActivityHubPanel({
           </TabsList>
         </div>
 
-        {/* Serena Copilot Tab */}
-        <TabsContent value="serena" className="flex-1 flex flex-col m-0 overflow-hidden">
-          {/* Chat Messages */}
-          <div className="flex-1 overflow-auto p-4 space-y-4">
-            {/* Resumen inicial de Serena como primer mensaje */}
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-blue-700 flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
+        {/* Serena Copilot Tab - CHAT-FIRST REDESIGN */}
+        <TabsContent value="serena" className="flex-1 flex flex-col m-0 overflow-hidden bg-white">
+          {/* Main Chat Area - Full Height */}
+          <div className="flex-1 overflow-auto px-6 py-4 space-y-8 scrollbar-thin">
+            
+            {/* Serena Initial Diagnostic Hub */}
+            <div className="flex items-start gap-4 animate-in fade-in slide-in-from-top-4 duration-700">
+              <div className="w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center flex-shrink-0 shadow-lg border-2 border-white ring-1 ring-slate-100">
+                <Sparkles className="w-5 h-5 text-white" />
               </div>
-              <div className="flex-1 space-y-3">
-                <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg p-4 border border-slate-200 space-y-3">
-                  {/* Header del resumen */}
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="font-semibold text-sm text-gray-900">Resumen del Candidato</h3>
-                      <p className="text-xs text-gray-500">Actualizado {serenaInsights.updatedAgo.toLowerCase()}</p>
-                    </div>
-                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                      serenaInsights.confidence === 'high' ? 'bg-emerald-50 text-emerald-700' :
-                      serenaInsights.confidence === 'medium' ? 'bg-amber-50 text-amber-700' :
-                      'bg-red-50 text-red-700'
-                    }`}>
-                      Confianza: {serenaInsights.confidence === 'high' ? 'Alta' : serenaInsights.confidence === 'medium' ? 'Media' : 'Baja'}
-                    </span>
-                  </div>
+              <div className="flex-1 space-y-4">
+                <div className="bg-slate-50 rounded-2xl rounded-tl-none p-5 shadow-sm border border-slate-100 max-w-[95%]">
+                  <div className="space-y-4">
+                    <p className="text-sm text-slate-700 font-medium leading-relaxed">
+                      Hola. He analizado el perfil de <span className="font-bold text-slate-900">{candidate?.name}</span> y su estado en el proceso actual:
+                    </p>
 
-                  {/* Insights */}
-                  <div className="space-y-2">
-                    <ul className="space-y-1.5">
-                      {serenaInsights.insights.map((insight, idx) => (
-                        <li key={idx} className="text-xs text-gray-700 flex items-start gap-2">
-                          <span className="text-blue-600 mt-0.5">•</span>
-                          <span>{insight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    {/* Multi-Vacancy Diagnostic List */}
+                    <div className="space-y-4 pt-2">
+                      {candidate?.applications && candidate.applications.filter(app => app.status === 'active').map((app, appIdx) => {
+                        // Use real blocker data from the application
+                        const isBlocked = !!app.blocker;
+                        
+                        return (
+                          <div key={app.id} className="bg-white rounded-xl border border-slate-100 p-4 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{app.jobTitle}</span>
+                              {isBlocked ? (
+                                <Badge className="bg-amber-50 text-amber-600 border-amber-100 text-[10px] font-bold px-2 py-0">En riesgo</Badge>
+                              ) : (
+                                <Badge className="bg-emerald-50 text-emerald-600 border-emerald-100 text-[10px] font-bold px-2 py-0">Al día</Badge>
+                              )}
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <div className={cn(
+                                "mt-1.5 w-1.5 h-1.5 rounded-full shrink-0",
+                                isBlocked ? "bg-amber-500 animate-pulse" : "bg-emerald-500"
+                              )} />
+                              <p className="text-xs text-slate-600 font-medium leading-snug">
+                                {isBlocked 
+                                  ? (app.blocker?.reason || `Bloqueado en ${app.currentStage.replace(/-/g, ' ')}. Se requiere acción.`)
+                                  : `Activo en ${app.currentStage.replace(/-/g, ' ')}. Esperando siguiente interacción.`}
+                              </p>
+                            </div>
 
-                  {/* Evidence */}
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-medium text-gray-700">Evidencia</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => console.log('#cv')}
-                        className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 hover:underline"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        Análisis de CV
-                      </button>
-                      <span className="text-gray-300">•</span>
-                      <button
-                        onClick={() => console.log('#profile')}
-                        className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 hover:underline"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        Ver perfil completo
-                      </button>
+                            {/* Contextual Action Buttons */}
+                            <div className="flex flex-wrap gap-2 pt-1">
+                              {isBlocked && (
+                                <>
+                                  <button 
+                                    onClick={() => handleExecuteAction('whatsapp', `Enviar WhatsApp por ${app.jobTitle}`)}
+                                    className="text-[10px] font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
+                                  >
+                                    <MessageCircle className="w-3 h-3" />
+                                    WhatsApp
+                                  </button>
+                                  <button 
+                                    onClick={() => handleExecuteAction('email', `Re-enviar Seguimiento por ${app.jobTitle}`)}
+                                    className="text-[10px] font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
+                                  >
+                                    <Mail className="w-3 h-3" />
+                                    Re-enviar Email
+                                  </button>
+                                </>
+                              )}
+                              <button 
+                                onClick={() => handleExecuteAction('move', `Mover etapa en ${app.jobTitle}`)}
+                                className="text-[10px] font-bold bg-slate-50 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5"
+                              >
+                                <ArrowRight className="w-3 h-3" />
+                                Mover Etapa
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Mensajes del chat */}
-            {chatMessages.map((message) => (
-              <div key={message.text} className="space-y-2">
+            {/* AI Messages & User Responses */}
+            {chatMessages.map((message, idx) => (
+              <div key={idx} className={cn("flex flex-col gap-2", message.from === 'user' ? "items-end" : "items-start")}>
                 {message.from === 'ai' ? (
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-blue-700 flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-4 h-4 text-white" />
+                  <div className="flex items-start gap-4 w-full max-w-[95%]">
+                    <div className="w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center flex-shrink-0 shadow-md">
+                      <Sparkles className="w-5 h-5 text-white" />
                     </div>
-                    <div className="flex-1 space-y-2">
-                      {message.text && (
-                        <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg p-3 border border-slate-200">
-                          <p className="text-sm text-gray-700">{message.text}</p>
-                        </div>
-                      )}
+                    <div className="bg-slate-50 rounded-2xl rounded-tl-none p-5 shadow-sm border border-slate-100 w-full">
+                      <p className="text-sm text-slate-600 leading-relaxed font-medium">{message.text}</p>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-start gap-3 justify-end">
-                    <div className="bg-blue-600 text-white rounded-lg p-3 max-w-[80%]">
-                      <p className="text-sm">{message.text}</p>
-                    </div>
+                  <div className="bg-blue-600 text-white rounded-2xl rounded-tr-none px-5 py-3.5 shadow-md max-w-[85%] animate-in fade-in slide-in-from-right-4 duration-300">
+                    <p className="text-sm font-medium leading-relaxed">{message.text}</p>
                   </div>
                 )}
               </div>
             ))}
             
             {isAITyping && (
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-blue-700 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-4 h-4 text-white" />
+              <div className="flex items-start gap-4 w-full max-w-[95%] animate-pulse">
+                <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-5 h-5 text-slate-300" />
                 </div>
-                <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg p-3 border border-slate-200">
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                <div className="bg-slate-50/50 rounded-2xl rounded-tl-none p-5 border border-slate-100/50 w-full">
+                  <div className="flex gap-1.5 items-center">
+                    <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Suggested Questions */}
-          <div className="px-4 pb-2">
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => setChatInput('¿Cuáles son sus fortalezas principales?')}
-                className="text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
-              >
-                Fortalezas
-              </button>
-              <button
-                onClick={() => setChatInput('¿Cuánta experiencia tiene?')}
-                className="text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
-              >
-                Experiencia
-              </button>
-              <button
-                onClick={() => setChatInput('¿Cuál es su expectativa salarial?')}
-                className="text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
-              >
-                Salario
-              </button>
-              <button
-                onClick={() => setChatInput('¿Cuándo puede empezar?')}
-                className="text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
-              >
-                Disponibilidad
-              </button>
-            </div>
-          </div>
-
-          {/* Input Area */}
-          <div className="border-t border-gray-200 p-4">
-            <div className="flex gap-2">
+          {/* Chat Area & Input */}
+          <div className="border-t border-slate-100 p-5 bg-white">
+            <div className="relative group">
               <Input
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
@@ -579,18 +611,23 @@ export function ActivityHubPanel({
                     handleSendMessage();
                   }
                 }}
-                placeholder="Pregunta algo sobre este candidato..."
-                className="flex-1 text-sm"
+                placeholder={`Pregunta algo sobre ${candidate?.name}...`}
+                className="w-full bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 rounded-2xl pl-4 pr-12 py-6 text-sm transition-all"
               />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!chatInput.trim() || isAITyping}
-                size="sm"
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                <Send className="w-4 h-4" />
-              </Button>
+              <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={!chatInput.trim() || isAITyping}
+                  size="icon"
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl w-8 h-8 transition-all hover:scale-105"
+                >
+                  <Send className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
+            <p className="text-[10px] text-center text-slate-400 mt-3 font-medium">
+              Serena IA puede cometer errores. Verifica la información importante.
+            </p>
           </div>
         </TabsContent>
 
@@ -792,29 +829,6 @@ export function ActivityHubPanel({
                 />
               </div>
 
-              {/* Journey Health Indicator */}
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-900">Estado del proceso</span>
-                    <Badge className="bg-amber-100 text-amber-700">En riesgo</Badge>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-600 mb-2">
-                  Email falló y candidata no asistió a entrevista. Acción requerida.
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  <button className="text-xs px-2 py-1 bg-white border border-amber-300 rounded-full hover:bg-amber-50">
-                    Reintentar email
-                  </button>
-                  <button className="text-xs px-2 py-1 bg-white border border-amber-300 rounded-full hover:bg-amber-50">
-                    Reagendar
-                  </button>
-                  <button className="text-xs px-2 py-1 bg-white border border-amber-300 rounded-full hover:bg-amber-50">
-                    Solicitar disponibilidad
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
 

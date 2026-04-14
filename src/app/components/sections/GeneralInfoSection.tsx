@@ -4,16 +4,14 @@ import {
   MapPin,
   Mail,
   Phone,
-  Linkedin,
   Calendar,
   Briefcase,
   Clock,
   DollarSign,
   FileText,
   Globe,
-  CreditCard,
   Target,
-  TrendingUp,
+  CreditCard,
   Edit2,
 } from 'lucide-react';
 
@@ -61,82 +59,8 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
     setEditedData(prev => ({ ...prev, [field]: value }));
   };
 
-  const getConfidenceColor = (confidence: string) => {
-    switch (confidence) {
-      case 'high':
-        return 'text-emerald-700 bg-emerald-50 border-emerald-200';
-      case 'medium':
-        return 'text-amber-700 bg-amber-50 border-amber-200';
-      case 'low':
-        return 'text-red-700 bg-red-50 border-red-200';
-      default:
-        return 'text-gray-700 bg-gray-50 border-gray-200';
-    }
-  };
-
-  const getConfidenceLabel = (confidence: string) => {
-    switch (confidence) {
-      case 'high':
-        return 'Alta';
-      case 'medium':
-        return 'Media';
-      case 'low':
-        return 'Baja';
-      default:
-        return 'N/A';
-    }
-  };
-
   return (
     <div className="space-y-6">
-      {/* Match Score Card - Solo visible si NO está en modo edición */}
-      {!isEditMode && (
-        <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg border border-slate-200 p-6">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">Match con la Vacante</h2>
-                <p className="text-sm text-gray-600">Análisis de compatibilidad del candidato</p>
-              </div>
-            </div>
-            <div
-              className={`px-3 py-1 rounded-full text-xs font-semibold border ${getConfidenceColor(
-                candidateData.confidence
-              )}`}
-            >
-              Confianza: {getConfidenceLabel(candidateData.confidence)}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex-1 bg-white rounded-full h-4 shadow-inner">
-              <div
-                className="bg-gradient-to-r from-slate-600 to-blue-600 h-4 rounded-full transition-all flex items-center justify-end pr-2"
-                style={{ width: `${candidateData.matchScore}%` }}
-              >
-                {candidateData.matchScore >= 20 && (
-                  <span className="text-xs font-bold text-white">{candidateData.matchScore}%</span>
-                )}
-              </div>
-            </div>
-            {candidateData.matchScore < 20 && (
-              <span className="text-2xl font-bold text-blue-600">{candidateData.matchScore}%</span>
-            )}
-          </div>
-
-          <div className="mt-4 flex items-center gap-2 text-sm text-gray-700">
-            <TrendingUp className="w-4 h-4 text-emerald-600" />
-            <span>
-              Este candidato tiene un <strong>excelente match</strong> con los requisitos de la
-              vacante
-            </span>
-          </div>
-        </div>
-      )}
-
       {/* Descripción del Candidato - Solo visible si NO está en modo edición */}
       {!isEditMode && candidateData.description && (
         <div className="bg-white rounded-lg border border-gray-200 p-6">
@@ -317,33 +241,6 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
             </div>
           </div>
 
-          {/* LinkedIn */}
-          <div className="flex items-start gap-3 col-span-2">
-            <Linkedin className="w-5 h-5 text-gray-400 mt-2" />
-            <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">LinkedIn</label>
-              {isEditMode ? (
-                <input
-                  type="url"
-                  value={editedData.linkedin || ''}
-                  onChange={(e) => handleInputChange('linkedin', e.target.value)}
-                  placeholder="https://www.linkedin.com/in/..."
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              ) : editedData.linkedin ? (
-                <a
-                  href={editedData.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-blue-600 hover:text-blue-700 hover:underline truncate block"
-                >
-                  Ver perfil
-                </a>
-              ) : (
-                <p className="text-sm text-gray-400">No especificado</p>
-              )}
-            </div>
-          </div>
         </div>
       </div>
 
@@ -442,6 +339,27 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
                 />
               ) : (
                 <p className="text-sm text-gray-900">{editedData.birthDate}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Edad */}
+          <div className="flex items-start gap-3">
+            <Calendar className="w-5 h-5 text-gray-400 mt-2" />
+            <div className="flex-1 min-w-0">
+              <label className="text-xs font-medium text-gray-500 mb-1 block">Edad</label>
+              {isEditMode ? (
+                <input
+                  type="number"
+                  value={editedData.age}
+                  onChange={(e) => handleInputChange('age', parseInt(e.target.value))}
+                  min="0"
+                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              ) : (
+                <p className="text-sm text-gray-900">
+                  {editedData.age} años
+                </p>
               )}
             </div>
           </div>
