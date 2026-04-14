@@ -159,8 +159,7 @@ export function CandidateDetailDrawer({
 
   // Resetear sección y generar datos cuando el candidato cambia
   useEffect(() => {
-    // Siempre volver a Información General al cambiar de candidato
-    setActiveSection('generalInfo');
+    // Al cambiar de candidato, mantenemos la sección activa
     setHighlightedStageId(null);
 
     if (mockCandidate && 'notes' in mockCandidate) {

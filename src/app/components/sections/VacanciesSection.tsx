@@ -28,6 +28,11 @@ export function VacanciesSection({
   const [activeTab, setActiveTab] = useState<string>('summary');
   const [selectedVacancyId, setSelectedVacancyId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    setActiveTab('summary');
+    setSelectedVacancyId(null);
+  }, [candidate?.id]);
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeftState, setScrollLeftState] = useState(0);
