@@ -313,7 +313,12 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
                           <div className="flex items-center gap-1 opacity-0 group-hover/c:opacity-100 transition-opacity flex-shrink-0">
                             {editComment && (
                               <button
-                                onClick={() => { setEditingCommentId(comment.id); setEditingText(comment.text); }}
+                                onClick={(e) => { 
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setEditingCommentId(comment.id); 
+                                  setEditingText(comment.text); 
+                                }}
                                 className="p-1.5 rounded hover:bg-blue-50 text-gray-400 hover:text-blue-600 transition-colors"
                                 title="Editar comentario"
                               >
@@ -322,10 +327,14 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
                             )}
                             {deleteComment && (
                               <button
-                                onClick={() => {
-                                  if (window.confirm('¿Eliminar este comentario?')) {
-                                    deleteComment(comment.id);
-                                  }
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setTimeout(() => {
+                                    if (window.confirm('¿Eliminar este comentario?')) {
+                                      deleteComment(comment.id);
+                                    }
+                                  }, 10);
                                 }}
                                 className="p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-600 transition-colors"
                                 title="Eliminar comentario"
