@@ -359,7 +359,7 @@ interface StagesSectionProps {
   candidate?: any;
 }
 
-export function StagesSection({ comments, addComment, openCommentPanel, highlightedStageId, activeApplication, candidate }: StagesSectionProps) {
+export function StagesSection({ comments, addComment, editComment, deleteComment, openCommentPanel, highlightedStageId, activeApplication, candidate }: StagesSectionProps) {
   const [openStages, setOpenStages] = useState<Set<string>>(new Set(['screening-talent']));
   const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
