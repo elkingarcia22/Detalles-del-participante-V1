@@ -298,30 +298,32 @@ export function CandidateDetailDrawer({
               </div>
             </div>
 
-            {/* Floating Action Bar + Serena IA Button - same level */}
+            {/* Floating Action Bar - Fixed at bottom center */}
             <div className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-6">
-              <div className="flex items-end justify-center gap-3 pointer-events-none">
+              <div className="flex justify-center pointer-events-none">
                 {isEditMode ? (
                   <EditModeBar
                     onSave={handleSaveChanges}
                     onCancel={handleCancelEdit}
                   />
                 ) : (
-                  <>
-                    <FloatingActionBar
-                      onReject={() => console.log('Reject')}
-                      onNextStage={() => console.log('Next stage')}
-                      onComment={() => {}}
-                      onAddTodo={() => {}}
-                      onMessage={() => console.log('Message')}
-                      candidatePhone={mockCandidate.phone}
-                      onAddDocument={handleAddDocument}
-                      onEditProfile={handleEditProfile}
-                    />
-                    <SerenaIAChatButton candidate={mockCandidate as any} />
-                  </>
+                  <FloatingActionBar
+                    onReject={() => console.log('Reject')}
+                    onNextStage={() => console.log('Next stage')}
+                    onComment={() => {}}
+                    onAddTodo={() => {}}
+                    onMessage={() => console.log('Message')}
+                    candidatePhone={mockCandidate.phone}
+                    onAddDocument={handleAddDocument}
+                    onEditProfile={handleEditProfile}
+                  />
                 )}
               </div>
+            </div>
+
+            {/* Serena IA Button - Fixed at bottom right */}
+            <div className="absolute bottom-6 right-6 z-40">
+              <SerenaIAChatButton candidate={mockCandidate as any} />
             </div>
           </div>
         </div>
