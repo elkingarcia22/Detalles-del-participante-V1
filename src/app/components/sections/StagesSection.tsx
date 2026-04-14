@@ -55,6 +55,7 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState('');
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
   
   const stageComments = comments.filter(comment => comment.stageId === id);
 
@@ -310,37 +311,62 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
                             <p className="text-sm text-gray-700 mt-1 break-words">{comment.text}</p>
                           </div>
                           {/* Edit / Delete actions */}
-                          <div className="flex items-center gap-1 opacity-0 group-hover/c:opacity-100 transition-opacity flex-shrink-0">
-                            {editComment && (
-                              <button
-                                onClick={(e) => { 
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setEditingCommentId(comment.id); 
-                                  setEditingText(comment.text); 
-                                }}
-                                className="p-1.5 rounded hover:bg-blue-50 text-gray-400 hover:text-blue-600 transition-colors"
-                                title="Editar comentario"
-                              >
-                                <Pencil className="w-3.5 h-3.5" />
-                              </button>
-                            )}
-                            {deleteComment && (
-                              <button
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setTimeout(() => {
-                                    if (window.confirm('¿Eliminar este comentario?')) {
-                                      deleteComment(comment.id);
-                                    }
-                                  }, 10);
-                                }}
-                                className="p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-600 transition-colors"
-                                title="Eliminar comentario"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
+                          <div className={cn("flex items-center gap-1 transition-opacity flex-shrink-0", deletingCommentId === comment.id ? "opacity-100" : "opacity-0 group-hover/c:opacity-100")}>
+                            {deletingCommentId === comment.id ? (
+                              <div className="flex items-center gap-2 px-2 py-1 bg-red-50 rounded-md border border-red-100">
+                                <span className="text-[10px] font-bold text-red-600 uppercase tracking-wider">¿Eliminar?</span>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    if (deleteComment) deleteComment(comment.id);
+                                    setDeletingCommentId(null);
+                                  }}
+                                  className="px-2 py-0.5 text-[10px] bg-red-600 text-white rounded font-medium hover:bg-red-700 transition-colors"
+                                >
+                                  Sí
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setDeletingCommentId(null);
+                                  }}
+                                  className="px-2 py-0.5 text-[10px] bg-white text-gray-600 rounded border border-gray-200 font-medium hover:bg-gray-50 transition-colors"
+                                >
+                                  No
+                                </button>
+                              </div>
+                            ) : (
+                              <>
+                                {editComment && (
+                                  <button
+                                    onClick={(e) => { 
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      setEditingCommentId(comment.id); 
+                                      setEditingText(comment.text); 
+                                    }}
+                                    className="p-1.5 rounded hover:bg-blue-50 text-gray-400 hover:text-blue-600 transition-colors"
+                                    title="Editar comentario"
+                                  >
+                                    <Pencil className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                                {deleteComment && (
+                                  <button
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      setDeletingCommentId(comment.id);
+                                    }}
+                                    className="p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-600 transition-colors"
+                                    title="Eliminar comentario"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </>
                             )}
                           </div>
                         </div>
