@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, UserCheck, FileText, Bot, Brain, Lightbulb, Users, Shield, CheckCircle, MessageSquare, Send, Circle, CheckCircle2, Ban, Target, TrendingUp, BriefcaseBusiness, AlertCircle } from 'lucide-react';
+import { ChevronDown, UserCheck, FileText, Bot, Brain, Lightbulb, Users, Shield, CheckCircle, MessageSquare, Send, Circle, CheckCircle2, Ban, Target, TrendingUp, BriefcaseBusiness, AlertCircle, Pencil, Trash2 } from 'lucide-react';
 import { cn } from '../ui/utils';
 import { ScreeningSection } from './ScreeningSection';
 import { InterviewsSection } from './InterviewsSection';
@@ -42,15 +42,19 @@ interface StageAccordionProps {
   children?: React.ReactNode;
   comments: Comment[];
   addComment: (text: string, stageId: string, stageName: string, isPrivate: boolean) => void;
+  editComment?: (id: string, newText: string) => void;
+  deleteComment?: (id: string) => void;
   openCommentPanel?: (stageId: string) => void;
   status?: StageStatus;
   blockerReason?: string;
 }
 
-function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onToggle, children, comments, addComment, openCommentPanel, status = 'completed', blockerReason }: StageAccordionProps) {
+function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onToggle, children, comments, addComment, editComment, deleteComment, openCommentPanel, status = 'completed', blockerReason }: StageAccordionProps) {
   const [commentText, setCommentText] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [showCommentInput, setShowCommentInput] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState('');
   
   const stageComments = comments.filter(comment => comment.stageId === id);
 
@@ -156,12 +160,10 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
             variant="ghost"
             onClick={(e) => {
               e.stopPropagation();
-              if (openCommentPanel) {
-                openCommentPanel(id);
-              }
+              setShowCommentInput(prev => !prev);
             }}
-            className="flex-shrink-0"
-            title="Comentar en el panel derecho"
+            className={cn("flex-shrink-0", showCommentInput && "bg-blue-50 text-blue-600")}
+            title="Agregar comentario"
           >
             <MessageSquare className="w-4 h-4" />
           </Button>
@@ -248,31 +250,92 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
                   <MessageSquare className="w-4 h-4" />
                   Comentarios en esta etapa
                 </h4>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {stageComments.map((comment) => (
-                    <div key={comment.id} className="bg-white rounded-lg p-3 border border-gray-200">
-                      <div className="flex items-start gap-2">
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
-                          {comment.authorInitials}
+                    <div key={comment.id} className="group/c bg-white rounded-lg p-3 border border-gray-200 hover:border-gray-300 transition-colors">
+                      {editingCommentId === comment.id ? (
+                        // Edit mode
+                        <div className="space-y-2">
+                          <Textarea
+                            value={editingText}
+                            onChange={e => setEditingText(e.target.value)}
+                            className="resize-none text-sm bg-gray-50"
+                            rows={3}
+                            autoFocus
+                          />
+                          <div className="flex gap-2 justify-end">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => { setEditingCommentId(null); setEditingText(''); }}
+                            >
+                              Cancelar
+                            </Button>
+                            <Button
+                              size="sm"
+                              disabled={!editingText.trim()}
+                              onClick={() => {
+                                if (editComment && editingText.trim()) {
+                                  editComment(comment.id, editingText);
+                                  setEditingCommentId(null);
+                                  setEditingText('');
+                                }
+                              }}
+                            >
+                              Guardar
+                            </Button>
+                          </div>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-sm font-medium text-gray-900">{comment.author}</span>
-                            <span className="text-xs text-gray-500">
-                              {new Date(comment.timestamp).toLocaleDateString('es-ES', { 
-                                day: 'numeric', 
-                                month: 'short',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                              })}
-                            </span>
-                            {comment.isPrivate && (
-                              <Badge variant="outline" className="text-xs">Privado</Badge>
+                      ) : (
+                        // Read mode
+                        <div className="flex items-start gap-2">
+                          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                            {comment.authorInitials}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-sm font-medium text-gray-900">{comment.author}</span>
+                              <span className="text-xs text-gray-500">
+                                {new Date(comment.timestamp).toLocaleDateString('es-ES', { 
+                                  day: 'numeric', 
+                                  month: 'short',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </span>
+                              {comment.isPrivate && (
+                                <Badge variant="outline" className="text-xs">Privado</Badge>
+                              )}
+                            </div>
+                            <p className="text-sm text-gray-700 mt-1 break-words">{comment.text}</p>
+                          </div>
+                          {/* Edit / Delete actions */}
+                          <div className="flex items-center gap-1 opacity-0 group-hover/c:opacity-100 transition-opacity flex-shrink-0">
+                            {editComment && (
+                              <button
+                                onClick={() => { setEditingCommentId(comment.id); setEditingText(comment.text); }}
+                                className="p-1.5 rounded hover:bg-blue-50 text-gray-400 hover:text-blue-600 transition-colors"
+                                title="Editar comentario"
+                              >
+                                <Pencil className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                            {deleteComment && (
+                              <button
+                                onClick={() => {
+                                  if (window.confirm('¿Eliminar este comentario?')) {
+                                    deleteComment(comment.id);
+                                  }
+                                }}
+                                className="p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-600 transition-colors"
+                                title="Eliminar comentario"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
                             )}
                           </div>
-                          <p className="text-sm text-gray-700 mt-1 break-words">{comment.text}</p>
                         </div>
-                      </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -288,6 +351,8 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
 interface StagesSectionProps {
   comments: Comment[];
   addComment: (text: string, stageId: string, stageName: string, isPrivate: boolean) => void;
+  editComment?: (id: string, newText: string) => void;
+  deleteComment?: (id: string) => void;
   openCommentPanel?: (stageId: string) => void;
   highlightedStageId?: string | null;
   activeApplication?: any;
@@ -643,6 +708,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('screening-talent')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['screening-talent']}
           blockerReason={activeApplication?.blocker?.stageId === 'screening-talent' ? activeApplication.blocker.reason : undefined}
@@ -666,6 +733,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('evaluacion-cv')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['evaluacion-cv']}
           blockerReason={activeApplication?.blocker?.stageId === 'evaluacion-cv' ? activeApplication.blocker.reason : undefined}
@@ -744,6 +813,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('evaluacion-serena')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['evaluacion-serena']}
           blockerReason={activeApplication?.blocker?.stageId === 'evaluacion-serena' ? activeApplication.blocker.reason : undefined}
@@ -763,6 +834,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('evaluacion-psicometrica')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['evaluacion-psicometrica']}
           blockerReason={activeApplication?.blocker?.stageId === 'evaluacion-psicometrica' ? activeApplication.blocker.reason : undefined}
@@ -786,6 +859,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('entrevista-tecnica')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['entrevista-tecnica']}
           blockerReason={activeApplication?.blocker?.stageId === 'entrevista-tecnica' ? activeApplication.blocker.reason : undefined}
@@ -805,6 +880,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('entrevista-pm')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['entrevista-pm']}
           blockerReason={activeApplication?.blocker?.stageId === 'entrevista-pm' ? activeApplication.blocker.reason : undefined}
@@ -828,6 +905,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('entrevista-hiring')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['entrevista-hiring']}
           blockerReason={activeApplication?.blocker?.stageId === 'entrevista-hiring' ? activeApplication.blocker.reason : undefined}
@@ -851,6 +930,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('antecedentes')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['antecedentes']}
           blockerReason={activeApplication?.blocker?.stageId === 'antecedentes' ? activeApplication.blocker.reason : undefined}
@@ -870,6 +951,8 @@ export function StagesSection({ comments, addComment, openCommentPanel, highligh
           onToggle={() => toggleStage('seleccionado')}
           comments={comments}
           addComment={addComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           openCommentPanel={openCommentPanel}
           status={stageStatuses['seleccionado']}
           blockerReason={activeApplication?.blocker?.stageId === 'seleccionado' ? activeApplication.blocker.reason : undefined}

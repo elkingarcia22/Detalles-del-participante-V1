@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ActivityHubPanel } from './ActivityHubPanel';
+import React, { useState, useEffect } from 'react';
+import { SerenaIAChatButton } from './SerenaIAChatButton';
 import { CandidateHeader } from './CandidateHeader';
 import { CandidateSidebar } from './CandidateSidebar';
 import { GeneralInfoSection } from './sections/GeneralInfoSection';
@@ -14,12 +13,7 @@ import { EditModeBar } from './EditModeBar';
 import { Toaster, toast } from 'sonner';
 import { Comment } from '../types/comments';
 import { candidatesData } from '../data/candidatesData';
-import { 
-  notesToComments, 
-  generateTasks, 
-  generateActivities,
-  generateSerenaInsights
-} from '../utils/candidateHelpers';
+import { notesToComments, generateTasks } from '../utils/candidateHelpers';
 
 // Definir tipo de tarea
 export interface Task {
@@ -60,14 +54,6 @@ export function CandidateDetailDrawer({
   const [triggerDocumentUpload, setTriggerDocumentUpload] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [activeApplicationId, setActiveApplicationId] = useState<string | null>(null);
-  
-  // Estados para controlar el ActivityHubPanel desde las etapas
-  const [activityHubTab, setActivityHubTab] = useState('serena');
-  const [selectedStageForComment, setSelectedStageForComment] = useState('general');
-  const [isActivityHubCollapsed, setIsActivityHubCollapsed] = useState(false);
-  const [isCreatingTask, setIsCreatingTask] = useState(false);
-  const [focusTaskNameInput, setFocusTaskNameInput] = useState(false);
-  const [highlightedTaskId, setHighlightedTaskId] = useState<string | null>(null);
   const [highlightedStageId, setHighlightedStageId] = useState<string | null>(null);
   
   // Estado para comentarios compartido entre StagesSection y ActivityHubPanel
@@ -112,30 +98,8 @@ export function CandidateDetailDrawer({
     toast.success('Comentario eliminado');
   };
 
-  // Función para abrir el panel de comentarios con una etapa pre-seleccionada
-  const openCommentPanel = (stageId: string) => {
-    setActivityHubTab('comments');
-    setSelectedStageForComment(stageId);
-    // Abrir el panel si está cerrado
-    if (isActivityHubCollapsed) {
-      setIsActivityHubCollapsed(false);
-    }
-  };
-
-  // Función para abrir el panel de tareas en modo creación
-  const openTodosPanel = () => {
-    setActivityHubTab('todos');
-    setIsCreatingTask(true);
-    setFocusTaskNameInput(true);
-    // Abrir el panel si está cerrado
-    if (isActivityHubCollapsed) {
-      setIsActivityHubCollapsed(false);
-    }
-    // Reset focus flag después de un delay
-    setTimeout(() => {
-      setFocusTaskNameInput(false);
-    }, 500);
-  };
+  // Los comentarios se hacen directamente en cada etapa (inline)
+  const openCommentPanel = (_stageId: string) => {};
 
   // Función para navegar a documentos y abrir selector de archivos
   const handleAddDocument = () => {
@@ -261,6 +225,8 @@ export function CandidateDetailDrawer({
             applications={candidate.applications || []}
             comments={comments}
             addComment={addComment}
+            editComment={editComment}
+            deleteComment={deleteComment}
             openCommentPanel={openCommentPanel}
             highlightedStageId={highlightedStageId}
           />
@@ -332,54 +298,35 @@ export function CandidateDetailDrawer({
               </div>
             </div>
 
-            {/* Floating Action Bar o Edit Mode Bar - Fixed at bottom, constrained to content width */}
+            {/* Floating Action Bar + Serena IA Button - same level */}
             <div className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-6">
-              <div className="flex justify-center pointer-events-none">
+              <div className="flex items-end justify-center gap-3 pointer-events-none">
                 {isEditMode ? (
                   <EditModeBar
                     onSave={handleSaveChanges}
                     onCancel={handleCancelEdit}
                   />
                 ) : (
-                  <FloatingActionBar
-                    onReject={() => console.log('Reject')}
-                    onNextStage={() => console.log('Next stage')}
-                    onComment={() => openCommentPanel('general')}
-                    onAddTodo={() => openTodosPanel()}
-                    onMessage={() => console.log('Message')}
-                    candidatePhone={mockCandidate.phone}
-                    onAddDocument={handleAddDocument}
-                    onEditProfile={handleEditProfile}
-                  />
+                  <>
+                    <FloatingActionBar
+                      onReject={() => console.log('Reject')}
+                      onNextStage={() => console.log('Next stage')}
+                      onComment={() => {}}
+                      onAddTodo={() => {}}
+                      onMessage={() => console.log('Message')}
+                      candidatePhone={mockCandidate.phone}
+                      onAddDocument={handleAddDocument}
+                      onEditProfile={handleEditProfile}
+                    />
+                    <SerenaIAChatButton candidate={mockCandidate as any} />
+                  </>
                 )}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Panel - Activity Hub */}
-        <ActivityHubPanel 
-          comments={comments} 
-          addComment={addComment} 
-          editComment={editComment}
-          deleteComment={deleteComment}
-          activeTab={activityHubTab}
-          onTabChange={setActivityHubTab}
-          selectedStage={selectedStageForComment}
-          onStageChange={setSelectedStageForComment}
-          isCollapsed={isActivityHubCollapsed}
-          onCollapsedChange={setIsActivityHubCollapsed}
-          isCreatingTask={isCreatingTask}
-          onCreatingTaskChange={setIsCreatingTask}
-          focusTaskNameInput={focusTaskNameInput}
-          tasks={tasks}
-          setTasks={setTasks}
-          highlightedTaskId={highlightedTaskId}
-          setHighlightedTaskId={setHighlightedTaskId}
-          onNavigateToSection={setActiveSection}
-          setHighlightedStageId={setHighlightedStageId}
-          candidate={mockCandidate as any}
-        />
+
       </div>
     </div>
   );

@@ -9,6 +9,8 @@ interface VacanciesSectionProps {
   applications: any[];
   comments: any[];
   addComment: any;
+  editComment?: any;
+  deleteComment?: any;
   openCommentPanel: any;
   highlightedStageId: any;
 }
@@ -18,6 +20,8 @@ export function VacanciesSection({
   applications, 
   comments, 
   addComment, 
+  editComment,
+  deleteComment,
   openCommentPanel, 
   highlightedStageId 
 }: VacanciesSectionProps) {
@@ -95,6 +99,8 @@ export function VacanciesSection({
               <StagesSection 
                 comments={comments} 
                 addComment={addComment} 
+                editComment={editComment}
+                deleteComment={deleteComment}
                 openCommentPanel={openCommentPanel} 
                 highlightedStageId={highlightedStageId} 
                 activeApplication={applications.find(app => app.id === selectedVacancyId)} 
