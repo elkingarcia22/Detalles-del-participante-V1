@@ -28,6 +28,7 @@ interface EducationSectionProps {
     institution: string;
     degree: string;
     year: string;
+    current?: boolean;
     description?: string;
   }>;
   certificates?: Certificate[];
@@ -88,7 +89,7 @@ export function EducationSection({
       field: edu.degree, // Usar degree como field por defecto
       startDate: edu.year,
       endDate: edu.year,
-      current: false,
+      current: edu.current || false,
       description: edu.description
     }));
   }, [education]);
@@ -462,6 +463,11 @@ export function EducationSection({
                       <div className="flex items-center gap-2 text-sm mb-2">
                         <BookOpen className="w-4 h-4 text-gray-400" />
                         <span className="font-medium text-gray-900">{edu.institution}</span>
+                        {edu.current && (
+                          <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-medium">
+                            Actual
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">

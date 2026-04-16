@@ -23,6 +23,23 @@ export interface Application {
     reason: string;
     priority: 'high' | 'medium';
   };
+  serenaInterview?: {
+    transcript: Array<{
+      role: 'serena' | 'candidate';
+      text: string;
+      timestamp?: string;
+    }>;
+    questionScores: Array<{
+      objective: string;
+      question: string;
+      score: number;
+    }>;
+    overallFeedback: {
+      summary: string;
+      strengths: string[];
+      improvements: string[];
+    };
+  };
 }
 
 export interface CandidateData {
@@ -82,6 +99,7 @@ export interface CandidateData {
     institution: string;
     degree: string;
     year: string;
+    current?: boolean;
     description?: string;
   }>;
   
@@ -310,6 +328,50 @@ export const candidatesData: CandidateData[] = [
           technicalScore: 95,
           productManagerScore: 91,
           hiringManagerScore: 94
+        },
+        blocker: {
+          stageId: 'antecedentes',
+          reason: 'Documentación incompleta: Falta certificado de la última empresa internacional.',
+          priority: 'high'
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Valentina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en Accenture Interactive. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstica al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño de Accenture?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Valentina demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -419,6 +481,13 @@ export const candidatesData: CandidateData[] = [
       }
     ],
     education: [
+      {
+        institution: 'MIT Professional Education',
+        degree: 'Digital Transformation: Strategist in AI & Cloud',
+        year: '2026',
+        current: true,
+        description: 'Programa ejecutivo sobre tecnologías emergentes y su impacto estratégico en el diseño de productos.'
+      },
       {
         institution: 'Universidad de los Andes',
         degree: 'Diseño',
@@ -647,16 +716,17 @@ export const candidatesData: CandidateData[] = [
     ],
     education: [
       {
+        institution: 'Platzi',
+        degree: 'Master en Desarrollo Frontend y Diseño UX',
+        year: '2025',
+        current: true,
+        description: 'Especialización avanzada en arquitectura de aplicaciones modernas, micro-frontends y estrategias complejas de experiencia de usuario.'
+      },
+      {
         institution: 'Universidad del Magdalena',
         degree: 'Ingeniería de Sistemas',
         year: '2015',
         description: 'Título profesional en Ingeniería de Sistemas con énfasis en desarrollo web y bases de datos. Proyecto de grado sobre sistemas de información para pymes locales.'
-      },
-      {
-        institution: 'Platzi',
-        degree: 'Curso de Diseño Web y UX/UI',
-        year: '2017',
-        description: 'Especialización en diseño web moderno, maquetación avanzada con CSS Grid/Flexbox y fundamentos de arquitectura de información.'
       }
     ],
     skills: {

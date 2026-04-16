@@ -69,8 +69,11 @@ const mockExperiences: Experience[] = [
 ];
 
 export function ExperienceSection({ experiences = mockExperiences, isEditMode = false }: ExperienceSectionProps) {
+  // Defensive check to ensure experiences is an array
+  const safeExperiences = Array.isArray(experiences) ? experiences : [];
+  
   // Ensure all experiences have IDs
-  const experiencesWithIds = experiences.map((exp, index) => ({
+  const experiencesWithIds = safeExperiences.map((exp, index) => ({
     ...exp,
     id: exp.id || `exp-${index}-${Date.now()}`
   }));

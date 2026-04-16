@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Search, ChevronDown, MoreVertical, MapPin, Calendar } from 'lucide-react';
+import { Search, ChevronDown, MoreVertical, MapPin, Calendar, Sparkles, X, ExternalLink } from 'lucide-react';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Badge } from './ui/badge';
+import { Tooltip } from './ui/tooltip';
+import { SerenaIAPanel } from './SerenaIAPanel';
 import { candidatesData } from '../data/candidatesData';
-
-interface JobViewProps {
-  onCandidateClick: (candidateId: string) => void;
-}
+import { cn } from './ui/utils';
 
 // Configuración de etapas del proceso (8 etapas del proceso + etapa final)
 const stages = [
@@ -22,9 +21,10 @@ const stages = [
   { id: 'seleccionado', name: 'Seleccionado', order: 9 }
 ];
 
-export function JobView({ onCandidateClick }: JobViewProps) {
+export function JobView({ onCandidateClick }: { onCandidateClick: (id: string) => void }) {
   const [activeTab, setActiveTab] = useState<'info' | 'candidates' | 'cvs'>('candidates');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSerenaOpen, setIsSerenaOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<string, { active: boolean; discarded: boolean }>>({
     'screening-talent': { active: true, discarded: false },
     'evaluacion-cv': { active: true, discarded: false },
@@ -39,40 +39,21 @@ export function JobView({ onCandidateClick }: JobViewProps) {
 
   // Agrupar candidatos por etapa usando sus aplicaciones
   const candidatesByStage = stages.map(stage => {
-    // Encuentra candidatos que tienen al menos una aplicación en esta etapa
     const stageCandidates = candidatesData.map(c => {
       const appInStage = c.applications?.find(app => app.currentStage === stage.id);
       if (appInStage) {
-        return {
-          ...c,
-          _activeApp: appInStage
-        };
+        return { ...c, _activeApp: appInStage };
       }
       return null;
-    }).filter(Boolean) as (typeof candidatesData[0] & { _activeApp: any })[];
+    }).filter(Boolean) as (any)[];
 
     const active = stageCandidates.filter(c => c._activeApp.status === 'active' || c._activeApp.status === 'hired');
     const discarded = stageCandidates.filter(c => c._activeApp.status === 'rejected');
     
-    return {
-      ...stage,
-      active,
-      discarded,
-      total: stageCandidates.length
-    };
+    return { ...stage, active, discarded, total: stageCandidates.length };
   });
 
-  const toggleSection = (stageId: string, section: 'active' | 'discarded') => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [stageId]: {
-        ...prev[stageId],
-        [section]: !prev[stageId]?.[section]
-      }
-    }));
-  };
-
-  const renderCandidateCard = (candidate: typeof candidatesData[0] & { _activeApp?: any }, isCompact = false) => {
+  const renderCandidateCard = (candidate: any) => {
     const app = candidate._activeApp || candidate.applications?.[0] || {} as any;
     const daysSinceApplied = app.appliedDate 
       ? Math.floor((new Date().getTime() - new Date(app.appliedDate).getTime()) / (1000 * 60 * 60 * 24))
@@ -90,261 +71,166 @@ export function JobView({ onCandidateClick }: JobViewProps) {
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-xs text-gray-900 truncate">{candidate.name}</h4>
-            <p className="text-xs text-gray-500">{candidate.age} años</p>
           </div>
           <button className="p-0.5 hover:bg-gray-100 rounded flex-shrink-0">
             <MoreVertical className="w-3 h-3 text-gray-400" />
           </button>
         </div>
 
-        {!isCompact && (
-          <div className="space-y-1.5 mb-2">
-            <div className="flex items-center gap-1 text-xs text-gray-600">
-              <MapPin className="w-3 h-3 flex-shrink-0" />
-              <span className="truncate">{candidate.location.split(',')[0]}</span>
-            </div>
-            <div className="flex items-center gap-1 text-xs text-gray-600">
-              <Calendar className="w-3 h-3 flex-shrink-0" />
-              <span>Hace {daysSinceApplied}d</span>
-            </div>
-          </div>
-        )}
-
-        {app.status === 'hired' && (
-          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-xs w-full justify-center">
-            ✓ Contratado
+        <div className="flex items-center gap-2 mb-2">
+          <Badge variant="outline" className={cn(
+             "text-[10px] px-1.5 py-0",
+             app.status === 'hired' ? "bg-green-50 text-green-700 border-green-100" :
+             app.status === 'rejected' ? "bg-red-50 text-red-700 border-red-100" :
+             "bg-blue-50 text-blue-700 border-blue-100"
+          )}>
+            {app.status === 'hired' ? 'Contratado' : app.status === 'rejected' ? 'Descartado' : 'En proceso'}
           </Badge>
-        )}
-        {app.status === 'rejected' && (
-          <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 text-xs w-full justify-center">
-            Descartado
-          </Badge>
-        )}
-        {app.status === 'active' && (
-          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-xs w-full justify-center">
-            En proceso
-          </Badge>
-        )}
+          <span className="text-[10px] text-gray-400 uppercase font-bold">Hace {daysSinceApplied}d</span>
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-6">
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-          <span>🔗 Ir a la vacante</span>
+    <div className="h-screen flex flex-col bg-gray-50 overflow-hidden font-sans">
+      {/* Optimized Compact Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <div className="flex flex-col">
+               <h1 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                  16 <span className="text-gray-400 font-normal">Aplicaciones</span>
+               </h1>
+               <div className="flex items-center gap-2 mt-0.5">
+                  <Badge variant="outline" className="bg-blue-50/50 text-blue-700 border-blue-100 text-[9px] px-1.5 py-0 flex items-center gap-1">
+                    <MapPin className="w-2.5 h-2.5" /> Bogotá
+                  </Badge>
+                  <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 text-[9px] px-1.5 py-0">+1 año exp.</Badge>
+               </div>
+            </div>
+            <div className="h-8 w-px bg-slate-100" />
+            <button className="text-[10px] text-blue-600 font-bold hover:underline flex items-center gap-1">
+               <ExternalLink className="w-2.5 h-2.5" /> Ir a la vacante
+            </button>
+          </div>
+
+          <div className="flex items-center gap-5">
+            {/* Serena IA - Ultra Compact Toggle */}
+            <Tooltip content={isSerenaOpen ? "Cerrar Asistente" : "Abrir Serena IA"}>
+              <button 
+                onClick={() => setIsSerenaOpen(!isSerenaOpen)}
+                className={cn(
+                  "flex items-center gap-2 px-4 py-1.5 rounded-full transition-all group",
+                  isSerenaOpen 
+                    ? "bg-slate-800 text-white shadow-lg shadow-slate-200" 
+                    : "bg-gradient-to-r from-blue-600 via-indigo-600 to-fuchsia-600 text-white hover:scale-105 shadow-md shadow-indigo-100"
+                )}
+              >
+                <Sparkles className={cn("w-3.5 h-3.5", !isSerenaOpen && "animate-pulse")} />
+                <span className="text-[11px] font-bold uppercase tracking-wider">
+                  {isSerenaOpen ? 'Cerrar' : 'Serena IA'}
+                </span>
+              </button>
+            </Tooltip>
+
+            {/* Stats - Compact Row */}
+            <div className="flex items-center gap-4 bg-slate-50/50 px-3 py-1.5 rounded-lg border border-slate-100">
+              <div className="flex items-center gap-2">
+                <div className="text-right">
+                  <p className="text-[8px] text-slate-400 font-bold uppercase leading-tight">Entrevistas</p>
+                  <p className="text-xs font-bold text-slate-700 leading-tight">48/80</p>
+                </div>
+                <div className="w-12 h-1 bg-slate-200 rounded-full overflow-hidden truncate">
+                   <div className="h-full bg-blue-500 w-[60%]" />
+                </div>
+              </div>
+              <div className="h-4 w-px bg-slate-200" />
+              <div className="flex items-center gap-2">
+                <div className="text-right">
+                  <p className="text-[8px] text-slate-400 font-bold uppercase leading-tight">Psicométricas</p>
+                  <p className="text-xs font-bold text-slate-700 leading-tight">28/60</p>
+                </div>
+                <div className="w-12 h-1 bg-slate-200 rounded-full overflow-hidden truncate">
+                   <div className="h-full bg-blue-500 w-[47%]" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex items-center gap-3 mb-4">
-          <button className="px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
-            Bogotá
-          </button>
-          <button className="px-4 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-            + 1 años exp.
-          </button>
-        </div>
-        <div className="flex items-baseline gap-4 mb-2">
-          <h1 className="text-3xl font-bold text-gray-900">16</h1>
-          <span className="text-gray-600">Aplicaciones</span>
-        </div>
-        <p className="text-sm text-gray-500">8 en la última semana</p>
       </div>
 
-      {/* Tabs */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="flex gap-6 px-6">
-          <button
-            onClick={() => setActiveTab('info')}
-            className={`py-3 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === 'info'
-                ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            Info Vacante
-          </button>
-          <button
-            onClick={() => setActiveTab('candidates')}
-            className={`py-3 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === 'candidates'
-                ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            Candidatos
-          </button>
-          <button
-            onClick={() => setActiveTab('cvs')}
-            className={`py-3 text-sm font-medium border-b-2 transition-colors ${
-              activeTab === 'cvs'
-                ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            CVs Importados
-          </button>
+      {/* Tabs Row - Compact */}
+      <div className="bg-white border-b border-gray-200 px-6">
+        <div className="flex gap-4">
+          {['Info Vacante', 'Candidatos', 'CVs Importados'].map((tab, idx) => {
+            const isTabActive = (tab === 'Candidatos' && activeTab === 'candidates') || 
+                               (tab === 'Info Vacante' && activeTab === 'info') ||
+                               (tab === 'CVs Importados' && activeTab === 'cvs');
+            const tabKey = tab === 'Candidatos' ? 'candidates' : tab === 'Info Vacante' ? 'info' : 'cvs';
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tabKey as any)}
+                className={cn(
+                  "py-2 text-[11px] font-bold border-b-2 transition-all px-1",
+                  isTabActive ? "border-blue-600 text-blue-600" : "border-transparent text-slate-400 hover:text-slate-600"
+                )}
+              >
+                {tab}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Content */}
-      {activeTab === 'candidates' && (
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Filters */}
-          <div className="bg-white border-b border-gray-200 p-4">
-            <div className="flex gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {activeTab === 'candidates' && (
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Search Bar - Thin */}
+            <div className="bg-white border-b border-gray-100 px-6 py-2 flex items-center">
+              <div className="relative flex-1 max-w-sm">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Buscar candidatos..."
-                  className="pl-10 text-sm"
+                  className="pl-8 h-8 text-[11px] border-gray-200 focus:ring-1"
                 />
               </div>
-              <Select defaultValue="ninguno">
-                <SelectTrigger className="w-80">
-                  <SelectValue placeholder="Filtros" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ninguno">Todos los candidatos</SelectItem>
-                  <SelectItem value="activos">Solo activos</SelectItem>
-                  <SelectItem value="rechazados">Solo rechazados</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
-          </div>
 
-          {/* Kanban Board - Horizontal Scrollable Stages */}
-          <div className="flex-1 overflow-x-auto overflow-y-hidden bg-gray-50 p-6">
-            <div className="flex gap-4 h-full min-w-max">
-              {candidatesByStage.map(stage => {
-                const activeExpanded = expandedSections[stage.id]?.active ?? true;
-                const discardedExpanded = expandedSections[stage.id]?.discarded ?? false;
-                
-                return (
-                  <div key={stage.id} className="flex-shrink-0 w-80 flex flex-col">
-                    {/* Stage Header */}
-                    <div className="bg-white rounded-t-lg border border-gray-200 p-4">
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-semibold text-sm text-gray-900">
-                          {stage.order}. {stage.name}
-                        </h3>
-                        <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
-                          {stage.total}
-                        </span>
+            {/* Kanban Board */}
+            <div className="flex-1 flex overflow-hidden">
+              <div className="flex-1 overflow-x-auto bg-slate-50/30 p-4 scrollbar-hide">
+                <div className="flex gap-4 h-full min-w-max">
+                  {candidatesByStage.map(stage => (
+                    <div key={stage.id} className="w-72 flex flex-col">
+                      <div className="bg-white border border-slate-200 p-3 rounded-t-lg shadow-sm">
+                        <h3 className="text-xs font-bold text-slate-800">{stage.order}. {stage.name}</h3>
+                        <div className="flex gap-2 text-[9px] text-slate-400 mt-1 font-bold uppercase">
+                          <span className="text-green-600">{stage.active.length} activos</span>
+                          <span>{stage.total} total</span>
+                        </div>
                       </div>
-                      <div className="flex gap-2 text-xs text-gray-500">
-                        <span className="text-green-600">{stage.active.length} activos</span>
-                        {stage.discarded.length > 0 && (
-                          <>
-                            <span>•</span>
-                            <span className="text-red-600">{stage.discarded.length} descartados</span>
-                          </>
-                        )}
+                      <div className="flex-1 bg-slate-100/20 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
+                        {stage.active.map(c => renderCandidateCard(c))}
                       </div>
                     </div>
+                  ))}
+                </div>
+              </div>
 
-                    {/* Stage Content - Scrollable */}
-                    <div className="flex-1 bg-gray-50 border-l border-r border-b border-gray-200 rounded-b-lg overflow-y-auto p-3">
-                      {/* Active Candidates */}
-                      {stage.active.length > 0 && (
-                        <div className="mb-3">
-                          <button
-                            onClick={() => toggleSection(stage.id, 'active')}
-                            className="w-full flex items-center justify-between px-2 py-1.5 bg-green-50 hover:bg-green-100 rounded transition-colors mb-2"
-                          >
-                            <span className="text-xs font-medium text-green-700">
-                              Activos ({stage.active.length})
-                            </span>
-                            <ChevronDown className={`w-3 h-3 text-green-700 transition-transform ${
-                              activeExpanded ? '' : '-rotate-90'
-                            }`} />
-                          </button>
-                          {activeExpanded && (
-                            <div className="space-y-2">
-                              {stage.active.map(candidate => renderCandidateCard(candidate))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Rejected Candidates */}
-                      {stage.discarded.length > 0 && (
-                        <div>
-                          <button
-                            onClick={() => toggleSection(stage.id, 'discarded')}
-                            className="w-full flex items-center justify-between px-2 py-1.5 bg-red-50 hover:bg-red-100 rounded transition-colors mb-2"
-                          >
-                            <span className="text-xs font-medium text-red-700">
-                              Descartados ({stage.discarded.length})
-                            </span>
-                            <ChevronDown className={`w-3 h-3 text-red-700 transition-transform ${
-                              discardedExpanded ? '' : '-rotate-90'
-                            }`} />
-                          </button>
-                          {discardedExpanded && (
-                            <div className="space-y-2">
-                              {stage.discarded.map(candidate => renderCandidateCard(candidate))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Empty State */}
-                      {stage.total === 0 && (
-                        <div className="text-center py-8 text-xs text-gray-400">
-                          Sin candidatos
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+              <SerenaIAPanel 
+                isOpen={isSerenaOpen} 
+                onClose={() => setIsSerenaOpen(false)}
+                mode="global"
+                allCandidates={candidatesData}
+              />
             </div>
           </div>
-        </div>
-      )}
-
-      {activeTab === 'info' && (
-        <div className="flex-1 overflow-auto p-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-6 max-w-3xl">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Product Designer Senior</h2>
-            <p className="text-gray-700 mb-6">
-              Buscamos un Product Designer Senior apasionado por crear experiencias digitales excepcionales.
-              Trabajarás en el diseño de productos que impactan a millones de usuarios en Latinoamérica.
-            </p>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">Requisitos</h3>
-                <ul className="list-disc list-inside text-gray-700 space-y-1">
-                  <li>5+ años de experiencia en diseño de producto digital</li>
-                  <li>Dominio de Figma y herramientas de diseño modernas</li>
-                  <li>Experiencia en Design Systems</li>
-                  <li>Portfolio que demuestre impacto medible</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">Ofrecemos</h3>
-                <ul className="list-disc list-inside text-gray-700 space-y-1">
-                  <li>Salario competitivo ($8M - $12M COP)</li>
-                  <li>Trabajo remoto o híbrido</li>
-                  <li>Crecimiento profesional</li>
-                  <li>Beneficios adicionales</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeTab === 'cvs' && (
-        <div className="flex-1 overflow-auto p-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-            <p className="text-gray-500">No hay CVs importados</p>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

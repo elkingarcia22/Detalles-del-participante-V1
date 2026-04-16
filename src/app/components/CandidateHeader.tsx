@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, MapPin, Mail, Phone, Calendar, Check, Copy, CreditCard, Linkedin } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, MapPin, Mail, Phone, Calendar, Check, Copy, CreditCard, Linkedin, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { Avatar } from './ui/avatar';
 import { Tooltip } from './ui/tooltip';
@@ -20,6 +20,7 @@ interface CandidateHeaderProps {
   onBack: () => void;
   onPrevious: () => void;
   onNext: () => void;
+  onSerenaClick?: () => void;
 }
 
 export function CandidateHeader({
@@ -29,6 +30,7 @@ export function CandidateHeader({
   onBack,
   onPrevious,
   onNext,
+  onSerenaClick,
 }: CandidateHeaderProps) {
   const hasPrevious = currentIndex > 1;
   const hasNext = currentIndex < totalCandidates;
@@ -216,7 +218,18 @@ export function CandidateHeader({
           </div>
 
           {/* Right Section: Navigation */}
-          <div className="flex-shrink-0 pt-1 flex items-center gap-3">
+          <div className="flex-shrink-0 pt-1 flex items-center gap-4">
+            {/* Serena IA Header Button */}
+            <Tooltip content="Análisis Serena IA">
+              <button 
+                onClick={onSerenaClick}
+                className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-fuchsia-600 rounded-full transition-all group shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:scale-105 active:scale-95"
+              >
+                <Sparkles className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
+                <span className="text-sm font-bold text-white">Serena IA</span>
+              </button>
+            </Tooltip>
+
             <div className="flex items-center gap-1 px-2 py-1 bg-white rounded-lg border border-gray-200">
               <Tooltip content="Anterior">
                 <Button

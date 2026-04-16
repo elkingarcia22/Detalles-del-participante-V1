@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SerenaIAChatButton } from './SerenaIAChatButton';
+import { SerenaIAPanel } from './SerenaIAPanel';
 import { CandidateHeader } from './CandidateHeader';
 import { CandidateSidebar } from './CandidateSidebar';
 import { GeneralInfoSection } from './sections/GeneralInfoSection';
@@ -55,6 +55,7 @@ export function CandidateDetailDrawer({
   const [isEditMode, setIsEditMode] = useState(false);
   const [activeApplicationId, setActiveApplicationId] = useState<string | null>(null);
   const [highlightedStageId, setHighlightedStageId] = useState<string | null>(null);
+  const [isSerenaPanelOpen, setIsSerenaPanelOpen] = useState(false);
   
   // Estado para comentarios compartido entre StagesSection y ActivityHubPanel
   const [comments, setComments] = useState<Comment[]>([]);
@@ -146,7 +147,8 @@ export function CandidateDetailDrawer({
     age: 0,
     identificationNumber: 'N/A',
     linkedin: '',
-    experience: 'N/A',
+    experience: [],
+    education: [],
     salaryRange: 'N/A',
     availability: 'N/A',
     noticePeriod: 'N/A',
@@ -272,12 +274,13 @@ export function CandidateDetailDrawer({
         onBack={onClose || (() => {})}
         onPrevious={handlePrevious}
         onNext={handleNext}
+        onSerenaClick={() => setIsSerenaPanelOpen(!isSerenaPanelOpen)}
       />
 
       {/* Main Container */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
         {/* Left Column - Candidate Information */}
-        <div className="flex-1 flex">
+        <div className="flex-1 flex transition-all duration-300 overflow-hidden">
           {/* Sidebar */}
           <CandidateSidebar
             activeSection={activeSection}
@@ -319,15 +322,15 @@ export function CandidateDetailDrawer({
                 )}
               </div>
             </div>
-
-            {/* Serena IA Button - Fixed at bottom right */}
-            <div className="absolute bottom-6 right-6 z-40">
-              <SerenaIAChatButton candidate={mockCandidate as any} />
-            </div>
           </div>
         </div>
 
-
+        {/* Serena IA Side Panel - Now anchored to the main container below header */}
+        <SerenaIAPanel 
+          isOpen={isSerenaPanelOpen} 
+          onClose={() => setIsSerenaPanelOpen(false)} 
+          candidate={mockCandidate} 
+        />
       </div>
     </div>
   );

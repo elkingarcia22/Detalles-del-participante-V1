@@ -75,8 +75,6 @@ export function FloatingActionBar({
     { key: 'verCV', width: 55, label: 'Ver CV' },
     { key: 'email', width: 55, label: 'Email' },
     { key: 'llamar', width: 55, label: 'Llamar' },
-    { key: 'comentar', width: 65, label: 'Comentar' },
-    { key: 'tareas', width: 55, label: 'Tareas' },
   ];
 
   // Detectar el ancho disponible del contenedor padre
@@ -368,31 +366,7 @@ export function FloatingActionBar({
               </Button>
             )}
 
-            {/* Comment Button - Dynamic visibility */}
-            {visibleButtons.comentar && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onComment}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[56px] flex-shrink-0"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span className="text-[9px]">Comentar</span>
-              </Button>
-            )}
 
-            {/* Todo Button - Dynamic visibility */}
-            {visibleButtons.tareas && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onAddTodo}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[50px] flex-shrink-0"
-              >
-                <ListTodo className="w-4 h-4" />
-                <span className="text-[9px]">Tareas</span>
-              </Button>
-            )}
 
             {/* WhatsApp Button - Dynamic visibility */}
             {visibleButtons.whatsapp && (
@@ -505,34 +479,10 @@ export function FloatingActionBar({
                     </div>
                   )}
 
-                  {!visibleButtons.comentar && (
-                    <div
-                      className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                      onClick={() => {
-                        onComment();
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      <MessageSquare className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span>Comentar</span>
-                    </div>
-                  )}
 
-                  {!visibleButtons.tareas && (
-                    <div
-                      className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                      onClick={() => {
-                        onAddTodo();
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      <ListTodo className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span>Tareas</span>
-                    </div>
-                  )}
 
                   {/* Separador si hay botones ocultos */}
-                  {(!visibleButtons.verCV || !visibleButtons.llamar || !visibleButtons.email || !visibleButtons.comentar || !visibleButtons.tareas) && (
+                  {(!visibleButtons.verCV || !visibleButtons.llamar || !visibleButtons.email) && (
                     <div className="h-px bg-gray-700 my-1" />
                   )}
 

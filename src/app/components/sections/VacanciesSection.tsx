@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StagesSection } from './StagesSection';
-import { Sparkles, Building2, ChevronRight, ChevronLeft, BriefcaseBusiness, AlertCircle } from 'lucide-react';
+import { ChevronRight, ChevronLeft, BriefcaseBusiness, AlertCircle } from 'lucide-react';
 import { cn } from '../ui/utils';
 import { Tooltip } from '../ui/tooltip';
 
@@ -25,12 +25,10 @@ export function VacanciesSection({
   openCommentPanel, 
   highlightedStageId 
 }: VacanciesSectionProps) {
-  const [activeTab, setActiveTab] = useState<string>('summary');
   const [selectedVacancyId, setSelectedVacancyId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    setActiveTab('summary');
     setSelectedVacancyId(null);
   }, [candidate?.id]);
   const [isDown, setIsDown] = useState(false);
@@ -196,72 +194,6 @@ export function VacanciesSection({
     );
   };
 
-  // Sub-componente: Vista de Vacantes Sugeridas (Mockup)
-  const renderSuggestionsView = () => {
-    const suggestions = [
-      { id: 'sug-1', role: 'Lead UX Researcher', match: 92, date: 'Abierta hace 2 días', location: 'Remoto' },
-      { id: 'sug-2', role: 'Product Manager Senior', match: 85, date: 'Abierta hace 1 semana', location: 'Bogotá, Colombia' },
-      { id: 'sug-3', role: 'Head of Product Design', match: 78, date: 'Abierta hace 3 días', location: 'Híbrido' }
-    ];
-
-    return (
-      <div className="space-y-6">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-6 text-white shadow-lg relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-10">
-            <Sparkles className="w-32 h-32" />
-          </div>
-          <div className="relative z-10 max-w-2xl">
-            <div className="flex items-center gap-2 text-blue-100 mb-2">
-              <Sparkles className="w-5 h-5" />
-              <span className="text-sm font-semibold tracking-wider uppercase">Motor de Recomendación Ubits IA</span>
-            </div>
-            <h2 className="text-2xl font-bold mb-2">Vacantes Sugeridas para {candidate?.firstName || 'el candidato'}</h2>
-            <p className="text-blue-100 text-sm">
-              Con base en sus años de experiencia, habilidades técnicas extraídas de su CV y evaluaciones psicométricas previas, hemos encontrado estas posiciones abiertas que podrían hacer match con su perfil.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-4">
-          {suggestions.map(sug => (
-            <div key={sug.id} className="bg-white rounded-xl border border-gray-200 p-5 flex items-center justify-between hover:shadow-md transition-shadow">
-              <div className="flex gap-4 items-center">
-                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100">
-                  <Building2 className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-gray-900">{sug.role}</h4>
-                  <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
-                    <span>{sug.location}</span>
-                    <span className="w-1 h-1 rounded-full bg-gray-300" />
-                    <span>{sug.date}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="text-right">
-                  <div className="flex items-center gap-1.5 justify-end mb-1">
-                    <span className="text-xl font-black text-emerald-600">{sug.match}%</span>
-                    <span className="text-xs font-bold text-gray-400 mt-1 uppercase">Match</span>
-                  </div>
-                  <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${sug.match}%` }} />
-                  </div>
-                </div>
-                <button className="px-4 py-2 bg-white text-gray-700 text-sm font-semibold rounded-lg border border-gray-200 hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
-                  Invitar
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  // Identificar qué aplicación mostrar si estamas en un Tab de vacante individual
-  const activeApplication = applications?.find(app => app.id === activeTab);
-  
   // Ordenar aplicaciones: las activas primero
   const sortedApplications = applications ? [...applications].sort((a, b) => {
     if (a.status === 'active' && b.status !== 'active') return -1;
@@ -271,56 +203,7 @@ export function VacanciesSection({
 
   return (
     <div className="space-y-6">
-      {/* Scrollable Tabs Header */}
-      <div className="border-b border-gray-200 mt-2">
-        <div 
-          ref={scrollRef}
-          onMouseDown={handleMouseDown}
-          onMouseLeave={handleMouseLeave}
-          onMouseUp={handleMouseUp}
-          onMouseMove={handleMouseMove}
-          className={cn(
-            "flex px-2 space-x-1 overflow-x-auto pb-1 scrollbar-hide cursor-grab active:cursor-grabbing select-none",
-            isDown && "cursor-grabbing"
-          )}
-        >
-          <button
-            onClick={() => {
-              setActiveTab('summary');
-              setSelectedVacancyId(null);
-            }}
-            className={cn(
-              "flex whitespace-nowrap items-center px-4 py-2.5 text-sm font-semibold rounded-t-lg transition-colors border-b-2 gap-2",
-              activeTab === 'summary' 
-                ? "border-blue-600 text-blue-600 bg-blue-50/50" 
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-            )}
-          >
-            Historial de Vacantes
-          </button>
-
-          <button
-            onClick={() => {
-              setActiveTab('suggestions');
-              setSelectedVacancyId(null);
-            }}
-            className={cn(
-              "flex whitespace-nowrap items-center px-4 py-2.5 text-sm font-semibold rounded-t-lg transition-colors border-b-2 gap-2",
-              activeTab === 'suggestions' 
-                ? "border-amber-500 text-amber-600 bg-amber-50/50" 
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50 hover:border-gray-300"
-            )}
-          >
-            Vacantes Sugeridas
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div>
-        {activeTab === 'summary' && renderSummaryView()}
-        {activeTab === 'suggestions' && renderSuggestionsView()}
-      </div>
+      {renderSummaryView()}
     </div>
   );
 }

@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { ArrowLeft, Search, ChevronDown, Clock } from 'lucide-react';
+import { ArrowLeft, Search, ChevronDown, Clock, AlertCircle, Sparkles, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Drawer } from '../components/ui/drawer';
 import { CandidateDetailDrawer } from '../components/CandidateDetailDrawer';
-import { DrawerNavigation } from '../components/DrawerNavigation';
+import { SerenaIAPanel } from '../components/SerenaIAPanel';
+import { Badge } from '../components/ui/badge';
+import { Tooltip } from '../components/ui/tooltip';
+import { candidatesData } from '../data/candidatesData';
+import { cn } from '../components/ui/utils';
 
 export function CandidateListPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
+  const [isSerenaOpen, setIsSerenaOpen] = useState(false);
 
-  // Sync drawer state with URL
   useEffect(() => {
     if (id) {
       setSelectedCandidateId(id);
@@ -21,331 +25,273 @@ export function CandidateListPage() {
   }, [id]);
 
   const candidates = [
-    {
-      id: 1,
-      name: 'Jhoana Mercedes Martín...',
-      cvScore: 85,
-      experience: '5 años',
-      appliedTime: 'Aplicó hace 5 meses',
-      status: 'En progreso',
-    },
-    {
-      id: 2,
-      name: 'Carlos Alberto González ...',
-      cvScore: 78,
-      experience: '3 años',
-      appliedTime: 'Aplicó hace 3 semanas',
-      status: 'En progreso',
-    },
-    {
-      id: 3,
-      name: 'Diana Paola Rodríguez Suárez',
-      cvScore: 82,
-      experience: '4 años',
-      appliedTime: 'Aplicó hace 1 mes',
-      status: 'En progreso',
-    },
-    {
-      id: 4,
-      name: 'María Fernanda López To...',
-      cvScore: 82,
-      experience: '4 años',
-      appliedTime: 'Aplicó hace 1 mes',
-      status: 'En progreso',
-    },
-    {
-      id: 5,
-      name: 'José Antonio Ramírez Sá...',
-      cvScore: 76,
-      experience: '6 años',
-      appliedTime: 'Aplicó hace 2 meses',
-      status: 'En progreso',
-    },
-    {
-      id: 6,
-      name: 'Ana Gabriela Morales Cruz',
-      cvScore: 88,
-      experience: '5 años',
-      appliedTime: 'Aplicó hace 3 semanas',
-      status: 'En progreso',
-    },
+    { id: 1, name: 'Jhoana Mercedes Martín...', cvScore: 85, experience: '5 años', appliedTime: 'Aplicó hace 5 meses', status: 'En progreso' },
+    { id: 2, name: 'Carlos Alberto González ...', cvScore: 78, experience: '3 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
+    { id: 3, name: 'Diana Paola Rodríguez Suárez', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
+    { id: 'cand-002', name: 'Valentina Herrera Castro', cvScore: 94, experience: '8 años', appliedTime: 'Aplicó hace 3 meses', status: 'En progreso', hasBlocker: true, blockerReason: 'Documentación incompleta: Referencias laborales pendientes de validación.' },
+    { id: 4, name: 'María Fernanda López To...', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
+    { id: 5, name: 'José Antonio Ramírez Sá...', cvScore: 76, experience: '6 años', appliedTime: 'Aplicó hace 2 meses', status: 'En progreso' },
+    { id: 6, name: 'Ana Gabriela Morales Cruz', cvScore: 88, experience: '5 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
   ];
 
-  const handleCandidateClick = (candidateId: number) => {
+  const handleCandidateClick = (candidateId: string | number) => {
     navigate(`/candidatos/candidato/${candidateId}`);
   };
 
   const handlePrevious = () => {
-    if (selectedCandidateId && parseInt(selectedCandidateId, 10) > 1) {
-      navigate(`/candidatos/candidato/${parseInt(selectedCandidateId, 10) - 1}`);
+    if (selectedCandidateId) {
+      const idx = candidates.findIndex(c => c.id.toString() === selectedCandidateId.toString());
+      if (idx > 0) {
+        navigate(`/candidatos/candidato/${candidates[idx - 1].id}`);
+      }
     }
   };
 
   const handleNext = () => {
-    if (selectedCandidateId && parseInt(selectedCandidateId, 10) < 74) {
-      navigate(`/candidatos/candidato/${parseInt(selectedCandidateId, 10) + 1}`);
+    if (selectedCandidateId) {
+      const idx = candidates.findIndex(c => c.id.toString() === selectedCandidateId.toString());
+      if (idx < candidates.length - 1) {
+        navigate(`/candidatos/candidato/${candidates[idx + 1].id}`);
+      }
     }
   };
 
+  const CandidateCard = ({ candidate }: { candidate: any }) => (
+    <div
+      onClick={() => handleCandidateClick(candidate.id)}
+      className={cn(
+        "bg-white rounded-lg border p-4 hover:shadow-md cursor-pointer transition-shadow",
+        candidate.hasBlocker ? "border-amber-200 bg-amber-50/40" : "border-gray-200"
+      )}
+    >
+      <div className="flex items-start justify-between mb-2">
+        <h4 className={cn(
+          "font-medium text-sm",
+          candidate.hasBlocker ? "text-amber-900" : "text-gray-900"
+        )}>{candidate.name}</h4>
+        <button className="text-gray-400">⋯</button>
+      </div>
+      
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-2xl font-bold mb-1">{candidate.cvScore}</div>
+          <div className="text-xs text-gray-500 mb-2">CV Score</div>
+        </div>
+        
+        {candidate.hasBlocker && (
+          <div className="px-2 py-1 rounded bg-amber-50 border border-amber-200 text-[9px] font-bold text-amber-700 uppercase tracking-tighter">
+            ACCIÓN REQUERIDA
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 mb-2">
+        <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+          {candidate.experience}
+        </span>
+        <span className="text-xs text-gray-500">{candidate.appliedTime}</span>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1 text-xs text-blue-600">
+          <Clock className="w-3 h-3" />
+          {candidate.status}
+        </div>
+        {candidate.hasBlocker && <AlertCircle className="w-4 h-4 text-amber-500 animate-pulse" />}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Top Navigation */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="px-6 py-4">
-          <div className="flex items-center gap-4 mb-4">
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      {/* Optimized Ultra-Compact Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               size="sm"
-              className="gap-2 text-gray-600 hover:text-gray-900"
+              className="gap-1 text-slate-500 hover:text-slate-900 h-8 px-2"
+              onClick={() => navigate('/')}
             >
-              <ArrowLeft className="w-4 h-4" />
-              Volver a vacantes
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span className="text-xs font-bold">Volver</span>
             </Button>
-            <span className="px-3 py-1 bg-gray-700 text-white text-xs rounded">
-              Preview
-            </span>
-            <div className="ml-auto flex items-center gap-6">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Entrevistas:</span>
-                <span className="font-medium">48 / 80</span>
-                <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-600" style={{ width: '60%' }} />
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Psicométricas:</span>
-                <span className="font-medium">28 / 60</span>
-                <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-600" style={{ width: '47%' }} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Job Title */}
-          <div className="mb-4">
-            <h1 className="text-2xl font-semibold mb-2">
-              Especialista de reclutamiento y selección
-            </h1>
-            <div className="flex items-center gap-3 text-sm text-gray-600">
-              <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded">
-                Bogotá
-              </span>
-              <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded">
-                + 4 años exp.
-              </span>
-            </div>
-          </div>
-
-          {/* Stats and Status */}
-          <div className="flex items-center justify-between">
+            <div className="h-6 w-px bg-slate-100" />
             <div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold">74</span>
-                <span className="text-gray-600">Aplicaciones</span>
-                <span className="text-sm text-gray-500">0 en la última semana</span>
-              </div>
+               <h1 className="text-sm font-bold text-slate-800 leading-tight">Especialista de reclutamiento</h1>
+               <div className="flex items-center gap-2 mt-0.5">
+                  <Badge variant="outline" className="bg-blue-50/50 text-blue-700 border-blue-100 text-[9px] px-1.5 py-0 flex items-center gap-1">
+                    <MapPin className="w-2.5 h-2.5" /> Bogotá
+                  </Badge>
+                  <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 text-[9px] px-1.5 py-0">+ 4 años exp.</Badge>
+                  <span className="text-[10px] text-slate-400 font-bold ml-1 uppercase tracking-wider">74 APLICACIONES</span>
+               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
-                Cerrada
-                <ChevronDown className="w-4 h-4 ml-2" />
-              </Button>
+          </div>
+
+          <div className="flex items-center gap-5">
+            {/* Serena IA Button */}
+            <Tooltip content="Asistente Serena IA">
+              <button 
+                onClick={() => setIsSerenaOpen(!isSerenaOpen)}
+                className={cn(
+                  "flex items-center gap-2 px-4 py-1.5 rounded-full transition-all group",
+                  isSerenaOpen 
+                    ? "bg-slate-800 text-white shadow-lg" 
+                    : "bg-gradient-to-r from-blue-600 via-indigo-600 to-fuchsia-600 text-white shadow-md hover:scale-105"
+                )}
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span className="text-[11px] font-bold uppercase tracking-wider">
+                  {isSerenaOpen ? 'Cerrar' : 'Serena IA'}
+                </span>
+              </button>
+            </Tooltip>
+
+            {/* Stats - Compact Row */}
+            <div className="flex items-center gap-4 bg-slate-50/50 px-3 py-1.5 rounded-lg border border-slate-100">
+               <div className="flex items-center gap-2">
+                  <div className="text-right">
+                    <p className="text-[8px] text-slate-400 font-bold uppercase leading-tight">Entrevistas</p>
+                    <p className="text-xs font-bold text-slate-700 leading-tight">48/80</p>
+                  </div>
+                  <div className="w-12 h-1 bg-slate-200 rounded-full overflow-hidden truncate">
+                    <div className="h-full bg-blue-600" style={{ width: '60%' }} />
+                  </div>
+               </div>
+               <div className="h-4 w-px bg-slate-200" />
+               <div className="flex items-center gap-2">
+                  <div className="text-right">
+                    <p className="text-[8px] text-slate-400 font-bold uppercase leading-tight">Psicométricas</p>
+                    <p className="text-xs font-bold text-slate-700 leading-tight">28/60</p>
+                  </div>
+                  <div className="w-12 h-1 bg-slate-200 rounded-full overflow-hidden truncate">
+                    <div className="h-full bg-blue-600" style={{ width: '47%' }} />
+                  </div>
+               </div>
             </div>
+            
+
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="px-6">
-          <div className="flex gap-1 border-b border-gray-200">
-            <button className="px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900">
-              Info Vacante
+        {/* Ultra-Compact Tabs */}
+        <div className="flex gap-4 mt-2">
+          {['Info Vacante', 'Candidatos', 'CVs Importados'].map((tab) => (
+            <button
+              key={tab}
+              className={cn(
+                "pb-1 text-[11px] font-bold border-b-2 transition-all px-1",
+                tab === 'Candidatos' ? "border-blue-600 text-blue-600" : "border-transparent text-slate-400 hover:text-slate-600"
+              )}
+            >
+              {tab}
             </button>
-            <button className="px-4 py-3 text-sm font-medium text-blue-600 border-b-2 border-blue-600">
-              Candidatos
-            </button>
-            <button className="px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900">
-              CVs Importados
-            </button>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="p-6">
-        {/* Search and Filters */}
-        <div className="mb-6">
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Buscar"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+      {/* Main Content Area with Serena Panel */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Board Content */}
+        <div className="flex-1 flex flex-col overflow-hidden bg-slate-50/30">
+          {/* Search Bar - Thin */}
+          <div className="bg-white border-b border-gray-100 px-6 py-2 flex items-center justify-between">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Buscar candidatos..."
+                className="w-full pl-8 pr-4 h-8 text-[11px] border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+            <div className="flex items-center gap-2 text-[10px] text-slate-500 font-medium">
+               <span>Anteriormente en la compañía:</span>
+               <button className="flex items-center gap-1 text-slate-800 font-bold">
+                 Selecciona una opción
+                 <ChevronDown className="w-3 h-3" />
+               </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <span>Candidatos que han trabajado en la compañía anteriormente:</span>
-            <button className="flex items-center gap-1 text-gray-900">
-              Selecciona una opción
-              <ChevronDown className="w-4 h-4" />
-            </button>
+
+          {/* Candidate Columns - Grid with limited heights */}
+          <div className="flex-1 overflow-x-auto p-4 scrollbar-hide">
+            <div className="grid grid-cols-4 gap-4 h-full min-w-[800px]">
+              {/* Column 1: Evaluación CV */}
+              <div className="flex flex-col h-full">
+                <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
+                  <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Evaluación CV</h3>
+                  <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
+                     <span className="text-green-600">8 ACTIVOS</span>
+                     <span className="text-slate-400">16 TOTAL</span>
+                  </div>
+                </div>
+                <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
+                  {candidates.slice(0, 3).map((candidate) => (
+                    <CandidateCard key={candidate.id} candidate={candidate} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 2: Serena AI */}
+              <div className="flex flex-col h-full">
+                <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
+                  <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Serena AI</h3>
+                  <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
+                     <span className="text-green-600">6 ACTIVOS</span>
+                     <span className="text-slate-400">8 TOTAL</span>
+                  </div>
+                </div>
+                <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
+                  {candidates.slice(0, 2).map((candidate) => (
+                    <CandidateCard key={candidate.id} candidate={candidate} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 3: Psicométrica */}
+              <div className="flex flex-col h-full">
+                <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
+                  <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Psicométrica</h3>
+                  <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
+                     <span className="text-green-600">5 ACTIVOS</span>
+                     <span className="text-slate-400">6 TOTAL</span>
+                  </div>
+                </div>
+                <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
+                  {candidates.slice(1, 4).map((candidate) => (
+                    <CandidateCard key={candidate.id} candidate={candidate} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 4: Para Revisión */}
+              <div className="flex flex-col h-full">
+                <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
+                  <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Para Revisión</h3>
+                  <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
+                     <span className="text-green-600">5 ACTIVOS</span>
+                     <span className="text-slate-400">5 TOTAL</span>
+                  </div>
+                </div>
+                <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
+                  {candidates.filter(c => c.hasBlocker || c.name.includes('María') || c.name.includes('José')).map((candidate) => (
+                    <CandidateCard key={candidate.id} candidate={candidate} />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Candidate Columns */}
-        <div className="grid grid-cols-4 gap-4">
-          {/* Column 1: Evaluación CV */}
-          <div>
-            <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
-              <h3 className="font-semibold mb-1">Evaluación CV: 16</h3>
-              <button className="flex items-center gap-1 text-sm text-green-600">
-                Activos: 8
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {candidates.slice(0, 3).map((candidate) => (
-                <div
-                  key={candidate.id}
-                  onClick={() => handleCandidateClick(candidate.id)}
-                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-medium text-sm">{candidate.name}</h4>
-                    <button className="text-gray-400">⋯</button>
-                  </div>
-                  <div className="text-2xl font-bold mb-1">{candidate.cvScore}</div>
-                  <div className="text-xs text-gray-500 mb-2">CV Score</div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                      {candidate.experience}
-                    </span>
-                    <span className="text-xs text-gray-500">{candidate.appliedTime}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-blue-600">
-                    <Clock className="w-3 h-3" />
-                    {candidate.status}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 2: Serena AI */}
-          <div>
-            <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
-              <h3 className="font-semibold mb-1">Serena AI: 8</h3>
-              <button className="flex items-center gap-1 text-sm text-green-600">
-                Activos: 6
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {candidates.slice(0, 2).map((candidate) => (
-                <div
-                  key={`serena-${candidate.id}`}
-                  onClick={() => handleCandidateClick(candidate.id)}
-                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-medium text-sm">{candidate.name}</h4>
-                    <button className="text-gray-400">⋯</button>
-                  </div>
-                  <div className="text-2xl font-bold mb-1">{candidate.cvScore}</div>
-                  <div className="text-xs text-gray-500 mb-2">CV Score</div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                      {candidate.experience}
-                    </span>
-                    <span className="text-xs text-gray-500">{candidate.appliedTime}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-blue-600">
-                    <Clock className="w-3 h-3" />
-                    {candidate.status}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 3: Psicométrica */}
-          <div>
-            <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
-              <h3 className="font-semibold mb-1">Psicométrica: 6</h3>
-              <button className="flex items-center gap-1 text-sm text-green-600">
-                Activos: 5
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {candidates.slice(1, 4).map((candidate) => (
-                <div
-                  key={`psi-${candidate.id}`}
-                  onClick={() => handleCandidateClick(candidate.id)}
-                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-medium text-sm">{candidate.name}</h4>
-                    <button className="text-gray-400">⋯</button>
-                  </div>
-                  <div className="text-2xl font-bold mb-1">{candidate.cvScore}</div>
-                  <div className="text-xs text-gray-500 mb-2">CV Score</div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                      {candidate.experience}
-                    </span>
-                    <span className="text-xs text-gray-500">{candidate.appliedTime}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-blue-600">
-                    <Clock className="w-3 h-3" />
-                    {candidate.status}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 4: Para Revisión */}
-          <div>
-            <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
-              <h3 className="font-semibold mb-1">Para Revisión: 5</h3>
-              <button className="flex items-center gap-1 text-sm text-green-600">
-                Activos: 5
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {candidates.slice(2, 5).map((candidate) => (
-                <div
-                  key={`review-${candidate.id}`}
-                  onClick={() => handleCandidateClick(candidate.id)}
-                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-medium text-sm">{candidate.name}</h4>
-                    <button className="text-gray-400">⋯</button>
-                  </div>
-                  <div className="text-2xl font-bold mb-1">{candidate.cvScore}</div>
-                  <div className="text-xs text-gray-500 mb-2">CV Score</div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                      {candidate.experience}
-                    </span>
-                    <span className="text-xs text-gray-500">{candidate.appliedTime}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-blue-600">
-                    <Clock className="w-3 h-3" />
-                    {candidate.status}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* Global Serena Panel */}
+        <SerenaIAPanel 
+          isOpen={isSerenaOpen} 
+          onClose={() => setIsSerenaOpen(false)}
+          mode="global"
+          allCandidates={candidatesData}
+        />
       </div>
 
       {/* Candidate Detail Drawer */}
@@ -353,17 +299,6 @@ export function CandidateListPage() {
         open={selectedCandidateId !== null}
         onClose={() => navigate('/candidatos')}
         width="90%"
-        navigationButtons={
-          selectedCandidateId ? (
-            <DrawerNavigation
-              currentIndex={parseInt(selectedCandidateId, 10)}
-              totalCandidates={74}
-              onClose={() => navigate('/candidatos')}
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-            />
-          ) : null
-        }
       >
         <CandidateDetailDrawer
           candidateId={selectedCandidateId!}

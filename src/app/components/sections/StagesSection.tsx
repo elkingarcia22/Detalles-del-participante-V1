@@ -98,8 +98,8 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
       badge: <Badge variant="outline" className="text-xs text-red-700 border-red-300 bg-red-50">Descartado</Badge>
     },
     blocked: {
-      bgColor: 'bg-amber-50/40',
-      borderColor: 'border-amber-200',
+      bgColor: 'bg-white',
+      borderColor: 'border-gray-200',
       numberBg: 'bg-amber-100',
       numberBorder: 'border-amber-400',
       numberText: 'text-amber-700',
@@ -854,7 +854,10 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           status={stageStatuses['evaluacion-serena']}
           blockerReason={activeApplication?.blocker?.stageId === 'evaluacion-serena' ? activeApplication.blocker.reason : undefined}
         >
-          <SerenaAIInterviewSection />
+          <SerenaAIInterviewSection 
+            interviewData={activeApplication?.serenaInterview} 
+            score={activeApplication?.scores?.serenaScore}
+          />
         </StageAccordion>
       </div>
 

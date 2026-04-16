@@ -84,39 +84,16 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
             <h3 className="text-lg font-semibold text-gray-900">Habilidades</h3>
           </div>
           
-          {/* Habilidades Técnicas */}
-          {candidateData.skills.technical && candidateData.skills.technical.length > 0 && (
-            <div className="mb-4">
-              <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Técnicas</h4>
-              <div className="flex flex-wrap gap-2">
-                {candidateData.skills.technical.map((skill: string, index: number) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {/* Habilidades Soft */}
-          {candidateData.skills.soft && candidateData.skills.soft.length > 0 && (
-            <div>
-              <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Soft Skills</h4>
-              <div className="flex flex-wrap gap-2">
-                {candidateData.skills.soft.map((skill: string, index: number) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-full text-sm font-medium hover:bg-slate-100 transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+          <div className="flex flex-wrap gap-2">
+            {[...(candidateData.skills.technical || []), ...(candidateData.skills.soft || [])].map((skill: string, index: number) => (
+              <span
+                key={index}
+                className="px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
       )}
 

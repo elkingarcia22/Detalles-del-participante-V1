@@ -7,10 +7,9 @@ interface DrawerProps {
   onClose: () => void;
   children: React.ReactNode;
   width?: string;
-  navigationButtons?: React.ReactNode;
 }
 
-export function Drawer({ open, onClose, children, width = '80%', navigationButtons }: DrawerProps) {
+export function Drawer({ open, onClose, children, width = '80%' }: DrawerProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -69,18 +68,6 @@ export function Drawer({ open, onClose, children, width = '80%', navigationButto
         )}
         onClick={onClose}
       />
-
-      {/* Navigation Buttons - Outside the drawer */}
-      {navigationButtons && (
-        <div className={cn(
-          'fixed top-6 z-50 transition-all duration-300 ease-out',
-          isAnimating ? 'right-[calc(var(--drawer-width))]' : 'right-[-5rem]'
-        )}
-        style={{ '--drawer-width': width } as React.CSSProperties}
-        >
-          {navigationButtons}
-        </div>
-      )}
 
       {/* Drawer */}
       <div

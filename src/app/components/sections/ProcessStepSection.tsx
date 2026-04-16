@@ -45,13 +45,13 @@ export function ProcessStepSection({ title, description, steps }: ProcessStepSec
   const getStatusColor = (status: StepData['status']) => {
     switch (status) {
       case 'completed':
-        return 'bg-green-50 border-green-200';
+        return 'bg-white border-gray-200 shadow-sm';
       case 'in-progress':
-        return 'bg-blue-50 border-blue-200';
+        return 'bg-blue-50/30 border-blue-200';
       case 'failed':
-        return 'bg-red-50 border-red-200';
+        return 'bg-white border-gray-200';
       default:
-        return 'bg-gray-50 border-gray-200';
+        return 'bg-white border-gray-200';
     }
   };
 
