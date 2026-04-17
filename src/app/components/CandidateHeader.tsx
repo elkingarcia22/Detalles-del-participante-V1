@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, MapPin, Mail, Phone, Calendar, Check, Copy, CreditCard, Linkedin, Sparkles } from 'lucide-react';
+import { cn } from './ui/utils';
 import { Button } from './ui/button';
 import { Avatar } from './ui/avatar';
 import { Tooltip } from './ui/tooltip';
@@ -21,6 +22,7 @@ interface CandidateHeaderProps {
   onPrevious: () => void;
   onNext: () => void;
   onSerenaClick?: () => void;
+  isDisabled?: boolean;
 }
 
 export function CandidateHeader({
@@ -31,6 +33,7 @@ export function CandidateHeader({
   onPrevious,
   onNext,
   onSerenaClick,
+  isDisabled = false
 }: CandidateHeaderProps) {
   const hasPrevious = currentIndex > 1;
   const hasNext = currentIndex < totalCandidates;
@@ -133,8 +136,12 @@ export function CandidateHeader({
                 {candidate.identificationNumber && (
                   <Tooltip content={copiedField === 'id' ? '¡Copiado!' : 'Click para copiar'}>
                     <button
-                      onClick={() => copyToClipboard(candidate.identificationNumber!, 'id')}
-                      className="flex items-center gap-1.5 text-sm group hover:bg-white px-1.5 py-1.5 -ml-1.5 rounded-md transition-colors min-w-0"
+                      onClick={() => !isDisabled && copyToClipboard(candidate.identificationNumber!, 'id')}
+                      disabled={isDisabled}
+                      className={cn(
+                        "flex items-center gap-1.5 text-sm group hover:bg-white px-1.5 py-1.5 -ml-1.5 rounded-md transition-all min-w-0",
+                        isDisabled && "opacity-50 cursor-not-allowed grayscale"
+                      )}
                     >
                       <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0 group-hover:bg-gray-200 transition-colors">
                         <CreditCard className="w-3 h-3 text-gray-600" />
@@ -155,8 +162,12 @@ export function CandidateHeader({
                 {/* Phone */}
                 <Tooltip content={copiedField === 'phone' ? '¡Copiado!' : 'Click para copiar'}>
                   <button
-                    onClick={() => copyToClipboard(candidate.phone, 'phone')}
-                    className="flex items-center gap-1.5 text-sm group hover:bg-white px-1.5 py-1.5 -ml-1.5 rounded-md transition-colors min-w-0"
+                    onClick={() => !isDisabled && copyToClipboard(candidate.phone, 'phone')}
+                    disabled={isDisabled}
+                    className={cn(
+                      "flex items-center gap-1.5 text-sm group hover:bg-white px-1.5 py-1.5 -ml-1.5 rounded-md transition-all min-w-0",
+                      isDisabled && "opacity-50 cursor-not-allowed grayscale"
+                    )}
                   >
                     <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0 group-hover:bg-gray-200 transition-colors">
                       <Phone className="w-3 h-3 text-gray-600" />
@@ -176,8 +187,12 @@ export function CandidateHeader({
                 {/* Email */}
                 <Tooltip content={copiedField === 'email' ? '¡Copiado!' : 'Click para copiar'}>
                   <button
-                    onClick={() => copyToClipboard(candidate.email, 'email')}
-                    className="flex items-center gap-1.5 text-sm group hover:bg-white px-1.5 py-1.5 -ml-1.5 rounded-md transition-colors min-w-0"
+                    onClick={() => !isDisabled && copyToClipboard(candidate.email, 'email')}
+                    disabled={isDisabled}
+                    className={cn(
+                      "flex items-center gap-1.5 text-sm group hover:bg-white px-1.5 py-1.5 -ml-1.5 rounded-md transition-all min-w-0",
+                      isDisabled && "opacity-50 cursor-not-allowed grayscale"
+                    )}
                   >
                     <div className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0 group-hover:bg-gray-200 transition-colors">
                       <Mail className="w-3 h-3 text-gray-600" />
@@ -236,8 +251,8 @@ export function CandidateHeader({
                   variant="ghost"
                   size="sm"
                   onClick={onPrevious}
-                  disabled={!hasPrevious}
-                  className="h-7 w-7 p-0 hover:bg-gray-100 disabled:opacity-40"
+                  disabled={isDisabled || !hasPrevious}
+                  className="h-7 w-7 p-0 hover:bg-gray-100 disabled:opacity-30"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </Button>
@@ -256,8 +271,8 @@ export function CandidateHeader({
                   variant="ghost"
                   size="sm"
                   onClick={onNext}
-                  disabled={!hasNext}
-                  className="h-7 w-7 p-0 hover:bg-gray-100 disabled:opacity-40"
+                  disabled={isDisabled || !hasNext}
+                  className="h-7 w-7 p-0 hover:bg-gray-100 disabled:opacity-30"
                 >
                   <ChevronRight className="w-3.5 h-3.5" />
                 </Button>
@@ -265,12 +280,16 @@ export function CandidateHeader({
             </div>
             
             {/* Close Button */}
-            <Tooltip content="Cerrar">
+            <Tooltip content={isDisabled ? "Guarda los cambios primero" : "Cerrar"}>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={onBack}
-                className="h-8 w-8 p-0 flex-shrink-0 text-gray-500 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
+                disabled={isDisabled}
+                className={cn(
+                  "h-8 w-8 p-0 flex-shrink-0 text-gray-500 hover:text-gray-900 bg-white border border-gray-200 rounded-lg transition-all",
+                  isDisabled ? "opacity-30 cursor-not-allowed" : "hover:bg-gray-50"
+                )}
               >
                 <X className="w-4 h-4" />
               </Button>

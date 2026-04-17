@@ -468,14 +468,22 @@ export function ExperienceSection({ experiences = mockExperiences, isEditMode = 
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleEdit(exp)}
-                        className="p-1.5 rounded hover:bg-blue-50 transition-colors"
+                        disabled={editingId !== null}
+                        className={cn(
+                          "p-1.5 rounded transition-all",
+                          editingId !== null ? "opacity-30 cursor-not-allowed" : "hover:bg-blue-50"
+                        )}
                         title="Editar experiencia"
                       >
                         <Edit2 className="w-4 h-4 text-gray-500 hover:text-blue-600" />
                       </button>
                       <button
                         onClick={() => handleDelete(exp.id!)}
-                        className="p-1.5 rounded hover:bg-red-50 transition-colors"
+                        disabled={editingId !== null}
+                        className={cn(
+                          "p-1.5 rounded transition-all",
+                          editingId !== null ? "opacity-30 cursor-not-allowed" : "hover:bg-red-50"
+                        )}
                         title="Eliminar experiencia"
                       >
                         <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-600" />

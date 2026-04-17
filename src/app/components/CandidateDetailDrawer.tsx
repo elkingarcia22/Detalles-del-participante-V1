@@ -121,8 +121,12 @@ export function CandidateDetailDrawer({
     setEditedCandidateData({ ...mockCandidate });
     setValidationErrors([]);
     setIsEditMode(true);
-    // Navegar a la primera sección editable
-    setActiveSection('generalInfo');
+    
+    // Solo navegar a información general si no estamos en una sección ya editable
+    if (!['experience', 'education'].includes(activeSection)) {
+      setActiveSection('generalInfo');
+    }
+    
     toast.info('Modo de edición activado');
   };
 
@@ -322,23 +326,15 @@ export function CandidateDetailDrawer({
       <Toaster position="top-center" />
       
       {/* Candidate Header */}
-      <CandidateHeader
-        candidate={{
-          name: mockCandidate.name,
-          location: mockCandidate.location,
-          email: mockCandidate.email,
-          phone: mockCandidate.phone,
-          age: mockCandidate.age,
-          identificationNumber: mockCandidate.identificationNumber,
-          avatar: mockCandidate.avatar,
-          linkedin: mockCandidate.linkedin,
-        }}
+      <CandidateHeader 
+        candidate={mockCandidate} 
         currentIndex={currentIndex}
         totalCandidates={totalCandidates}
         onBack={onClose || (() => {})}
         onPrevious={handlePrevious}
         onNext={handleNext}
-        onSerenaClick={() => setIsSerenaPanelOpen(!isSerenaPanelOpen)}
+        onSerenaClick={() => setIsSerenaPanelOpen(true)}
+        isDisabled={isSectionEditing}
       />
 
       {/* Main Container */}
@@ -346,13 +342,14 @@ export function CandidateDetailDrawer({
         {/* Left Column - Candidate Information */}
         <div className="flex-1 flex transition-all duration-300 overflow-hidden">
           {/* Sidebar */}
-          <CandidateSidebar
-            activeSection={activeSection}
-            onSectionChange={setActiveSection}
+          <CandidateSidebar 
+            activeSection={activeSection} 
+            onSectionChange={setActiveSection} 
             isEditMode={isEditMode}
-            applications={mockCandidate?.applications}
+            applications={mockCandidate.applications}
             activeApplicationId={activeApplicationId}
             onApplicationChange={setActiveApplicationId}
+            isDisabled={isSectionEditing}
           />
 
           {/* Center Column - Content Area */}

@@ -299,6 +299,19 @@ export function EducationSection({
                       <span className="text-sm font-medium text-slate-600">Actualmente estudio aquí</span>
                     </label>
                   </div>
+
+                  <div className="col-span-2 md:col-span-1">
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">GPA / Promedio (Opcional)</label>
+                    <input type="text" value={editEducationForm.gpa || ''} onChange={e => setEditEducationForm({...editEducationForm, gpa: e.target.value})} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="ej. 4.5/5.0" />
+                  </div>
+                  <div className="col-span-2 md:col-span-1">
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Honores (Opcional)</label>
+                    <input type="text" value={editEducationForm.honors || ''} onChange={e => setEditEducationForm({...editEducationForm, honors: e.target.value})} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="ej. Summa Cum Laude" />
+                  </div>
+                  <div className="col-span-2">
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Descripción (Opcional)</label>
+                    <textarea value={editEducationForm.description || ''} onChange={e => setEditEducationForm({...editEducationForm, description: e.target.value})} rows={3} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Describe tu especialización o logros académicos" />
+                  </div>
                 </div>
               </div>
             ) : (
@@ -315,15 +328,33 @@ export function EducationSection({
                 </div>
                 {isEditMode && (
                   <div className="flex gap-1">
-                    <button onClick={() => handleEditEducation(edu)} className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-blue-600 transition-all"><Edit2 className="w-4 h-4" /></button>
-                    <button onClick={() => setDeletingEducationId(edu.id)} className="p-2 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-600 transition-all"><Trash2 className="w-4 h-4" /></button>
+                    <button 
+                      onClick={() => handleEditEducation(edu)} 
+                      disabled={editingEducationId !== null || editingCertId !== null}
+                      className={cn(
+                        "p-2 rounded-lg transition-all",
+                        (editingEducationId !== null || editingCertId !== null) ? "opacity-30 cursor-not-allowed" : "hover:bg-slate-100 text-slate-400 hover:text-blue-600"
+                      )}
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => setDeletingEducationId(edu.id)}
+                      disabled={editingEducationId !== null || editingCertId !== null}
+                      className={cn(
+                        "p-2 rounded-lg transition-all",
+                        (editingEducationId !== null || editingCertId !== null) ? "opacity-30 cursor-not-allowed" : "hover:bg-red-50 text-slate-400 hover:text-red-600"
+                      )}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 )}
               </div>
             )}
           </div>
         ))}
-        {isEditMode && !editingEducationId && (
+        {isEditMode && !editingEducationId && !editingCertId && (
           <button onClick={handleAddEducation} className="w-full bg-white rounded-lg border-2 border-dashed border-slate-200 p-8 hover:border-slate-400 hover:bg-slate-50 transition-all group flex flex-col items-center justify-center gap-3">
             <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-white border group-hover:border-slate-200 transition-colors">
               <Plus className="w-6 h-6 text-slate-400 group-hover:text-slate-600" />
@@ -398,6 +429,15 @@ export function EducationSection({
                       <span className="text-sm font-medium text-slate-600">Actualmente realizando</span>
                     </label>
                   </div>
+
+                  <div className="col-span-2 md:col-span-1">
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">ID de Credencial (Opcional)</label>
+                    <input type="text" value={editCertForm.credentialId || ''} onChange={e => setEditCertForm({...editCertForm, credentialId: e.target.value})} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="ej. ABC-123-XYZ" />
+                  </div>
+                  <div className="col-span-2 md:col-span-1">
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">URL del Certificado (Opcional)</label>
+                    <input type="text" value={editCertForm.url || ''} onChange={e => setEditCertForm({...editCertForm, url: e.target.value})} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="ej. https://ejemplo.com/cert" />
+                  </div>
                 </div>
               </div>
             ) : (
@@ -412,15 +452,33 @@ export function EducationSection({
                 </div>
                 {isEditMode && (
                   <div className="flex gap-1">
-                    <button onClick={() => handleEditCertificate(cert)} className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-blue-600 transition-all"><Edit2 className="w-4 h-4" /></button>
-                    <button onClick={() => setDeletingCertId(cert.id)} className="p-2 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-600 transition-all"><Trash2 className="w-4 h-4" /></button>
+                    <button 
+                      onClick={() => handleEditCertificate(cert)}
+                      disabled={editingEducationId !== null || editingCertId !== null}
+                      className={cn(
+                        "p-2 rounded-lg transition-all",
+                        (editingEducationId !== null || editingCertId !== null) ? "opacity-30 cursor-not-allowed" : "hover:bg-slate-100 text-slate-400 hover:text-blue-600"
+                      )}
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => setDeletingCertId(cert.id)}
+                      disabled={editingEducationId !== null || editingCertId !== null}
+                      className={cn(
+                        "p-2 rounded-lg transition-all",
+                        (editingEducationId !== null || editingCertId !== null) ? "opacity-30 cursor-not-allowed" : "hover:bg-red-50 text-slate-400 hover:text-red-600"
+                      )}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 )}
               </div>
             )}
           </div>
         ))}
-        {isEditMode && !editingCertId && (
+        {isEditMode && !editingCertId && !editingEducationId && (
           <button onClick={handleAddCertificate} className="w-full bg-white rounded-lg border-2 border-dashed border-slate-200 p-8 hover:border-slate-400 hover:bg-slate-50 transition-all group flex flex-col items-center justify-center gap-3">
              <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-white border group-hover:border-slate-200 transition-colors">
               <Plus className="w-6 h-6 text-slate-400 group-hover:text-slate-600" />
