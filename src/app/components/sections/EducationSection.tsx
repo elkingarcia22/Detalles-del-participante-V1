@@ -38,6 +38,7 @@ interface EducationSectionProps {
   certificates?: Certificate[];
   isEditMode?: boolean;
   onEditingChange?: (isEditing: boolean) => void;
+  isValentina?: boolean;
 }
 
 const mockEducation: Education[] = [
@@ -70,7 +71,8 @@ export function EducationSection({
   education, 
   certificates = mockCertificates,
   isEditMode = false,
-  onEditingChange
+  onEditingChange,
+  isValentina = false
 }: EducationSectionProps) {
   // ... existing code ...
   // Convertir education simple a formato completo
@@ -132,6 +134,10 @@ export function EducationSection({
 
   // Education Handlers
   const handleEditEducation = (edu: Education) => {
+    if (isValentina) {
+      toast.error('Estamos presentando inconvenientes para editar la información académica. Inténtalo más tarde.');
+      return;
+    }
     setEditingEducationId(edu.id);
     setEditEducationForm({ ...edu });
     setEduFormErrors([]);
@@ -158,6 +164,10 @@ export function EducationSection({
   };
 
   const handleAddEducation = () => {
+    if (isValentina) {
+      toast.error('No se ha podido habilitar la creación de un nuevo registro académico. Por favor, inténtalo más tarde.');
+      return;
+    }
     const newEdu: Education = {
       id: Date.now().toString(),
       degree: '', institution: '', field: '', startDate: '', endDate: null, current: false, description: ''
@@ -171,6 +181,10 @@ export function EducationSection({
 
   // Certificate Handlers
   const handleEditCertificate = (cert: Certificate) => {
+    if (isValentina) {
+      toast.error('Estamos presentando inconvenientes para acceder a la edición de certificados. Inténtalo de nuevo en unos minutos.');
+      return;
+    }
     setEditingCertId(cert.id);
     setEditCertForm({ ...cert });
     setCertFormErrors([]);
@@ -197,6 +211,10 @@ export function EducationSection({
   };
 
   const handleAddCertificate = () => {
+    if (isValentina) {
+      toast.error('Por el momento no podemos registrar nuevas certificaciones. Inténtalo más tarde.');
+      return;
+    }
     const newCert: Certificate = {
       id: Date.now().toString(),
       name: '', issuer: '', date: '', endDate: null, current: false
@@ -338,9 +356,15 @@ export function EducationSection({
                     >
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button 
-                      onClick={() => setDeletingEducationId(edu.id)}
-                      disabled={editingEducationId !== null || editingCertId !== null}
+                      <button 
+                        onClick={() => {
+                          if (isValentina) {
+                            toast.error('No ha sido posible procesar la eliminación del registro de formación. Inténtalo más tarde.');
+                            return;
+                          }
+                          setDeletingEducationId(edu.id);
+                        }}
+                        disabled={editingEducationId !== null || editingCertId !== null}
                       className={cn(
                         "p-2 rounded-lg transition-all",
                         (editingEducationId !== null || editingCertId !== null) ? "opacity-30 cursor-not-allowed" : "hover:bg-red-50 text-slate-400 hover:text-red-600"
@@ -463,7 +487,13 @@ export function EducationSection({
                       <Edit2 className="w-4 h-4" />
                     </button>
                     <button 
-                      onClick={() => setDeletingCertId(cert.id)}
+                      onClick={() => {
+                        if (isValentina) {
+                          toast.error('Estamos presentando inconvenientes para eliminar certificados del perfil. Por favor, inténtalo más tarde.');
+                          return;
+                        }
+                        setDeletingCertId(cert.id);
+                      }}
                       disabled={editingEducationId !== null || editingCertId !== null}
                       className={cn(
                         "p-2 rounded-lg transition-all",

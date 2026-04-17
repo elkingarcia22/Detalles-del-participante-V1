@@ -21,6 +21,7 @@ interface ExperienceSectionProps {
   experiences?: Experience[];
   isEditMode?: boolean;
   onEditingChange?: (isEditing: boolean) => void;
+  isValentina?: boolean;
 }
 
 const mockExperiences: Experience[] = [
@@ -68,8 +69,7 @@ const formatDateString = (dateStr: string | null | undefined) => {
   }
 };
 
-export function ExperienceSection({ experiences = mockExperiences, isEditMode = false, onEditingChange }: ExperienceSectionProps) {
-  // ... existing code ...
+export function ExperienceSection({ experiences = mockExperiences, isEditMode = false, onEditingChange, isValentina = false }: ExperienceSectionProps) {
   // Defensive check to ensure experiences is an array
   const safeExperiences = Array.isArray(experiences) ? experiences : [];
   
@@ -107,6 +107,10 @@ export function ExperienceSection({ experiences = mockExperiences, isEditMode = 
   }, [editingId, onEditingChange]);
 
   const handleEdit = (exp: Experience) => {
+    if (isValentina) {
+      toast.error('Estamos presentando inconvenientes para editar la información laboral. Inténtalo más tarde.');
+      return;
+    }
     setEditingId(exp.id!);
     setEditForm({ ...exp });
     setFormErrors([]);
@@ -167,6 +171,10 @@ export function ExperienceSection({ experiences = mockExperiences, isEditMode = 
   };
 
   const handleAdd = () => {
+    if (isValentina) {
+      toast.error('No se ha podido habilitar la creación de una nueva experiencia. Por favor, inténtalo más tarde.');
+      return;
+    }
     const newExp: Experience = {
       id: Date.now().toString(),
       title: '',
@@ -478,7 +486,13 @@ export function ExperienceSection({ experiences = mockExperiences, isEditMode = 
                         <Edit2 className="w-4 h-4 text-gray-500 hover:text-blue-600" />
                       </button>
                       <button
-                        onClick={() => handleDelete(exp.id!)}
+                        onClick={() => {
+                          if (isValentina) {
+                            toast.error('No se ha podido procesar la eliminación de este registro. Inténtalo de nuevo más tarde.');
+                            return;
+                          }
+                          handleDelete(exp.id!);
+                        }}
                         disabled={editingId !== null}
                         className={cn(
                           "p-1.5 rounded transition-all",
