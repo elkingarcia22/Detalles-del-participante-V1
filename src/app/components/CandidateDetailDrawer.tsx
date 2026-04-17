@@ -53,6 +53,7 @@ export function CandidateDetailDrawer({
   const [activeSection, setActiveSection] = useState('generalInfo');
   const [triggerDocumentUpload, setTriggerDocumentUpload] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isSectionEditing, setIsSectionEditing] = useState(false);
   const [activeApplicationId, setActiveApplicationId] = useState<string | null>(null);
   const [highlightedStageId, setHighlightedStageId] = useState<string | null>(null);
   const [isSerenaPanelOpen, setIsSerenaPanelOpen] = useState(false);
@@ -62,6 +63,11 @@ export function CandidateDetailDrawer({
 
   // Estado para tareas compartido entre ActivityHubPanel y ToDoTab
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  // Estado para edición sincronizada
+  const [editedCandidateData, setEditedCandidateData] = useState<any>(null);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+
 
   // Función para agregar un nuevo comentario
   const addComment = (
@@ -112,6 +118,8 @@ export function CandidateDetailDrawer({
 
   // Funciones para manejar el modo de edición
   const handleEditProfile = () => {
+    setEditedCandidateData({ ...mockCandidate });
+    setValidationErrors([]);
     setIsEditMode(true);
     // Navegar a la primera sección editable
     setActiveSection('generalInfo');
@@ -119,17 +127,43 @@ export function CandidateDetailDrawer({
   };
 
   const handleSaveChanges = () => {
+    // Definir campos obligatorios
+    const mandatoryFields = [
+      { key: 'firstName', label: 'Nombre' },
+      { key: 'lastName', label: 'Apellido' },
+      { key: 'email', label: 'Correo electrónico' },
+      { key: 'phone', label: 'Teléfono' },
+      { key: 'identificationNumber', label: 'Número de identificación' },
+      { key: 'city', label: 'Ciudad' },
+      { key: 'country', label: 'País' }
+    ];
+
+    const errors: string[] = [];
+    mandatoryFields.forEach(field => {
+      if (!editedCandidateData[field.key] || editedCandidateData[field.key].toString().trim() === '') {
+        errors.push(field.key);
+      }
+    });
+
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      toast.error('Por favor completa todos los campos obligatorios');
+      return;
+    }
+
+    // Si pasa la validación
     setIsEditMode(false);
-    // Aquí se guardarían los cambios
+    setValidationErrors([]);
+    // Aquí se guardarían los cambios realmente (en una DB u estado global persistente)
     toast.success('Cambios guardados exitosamente');
-    console.log('Guardando cambios del perfil...');
+    console.log('Guardando cambios del perfil...', editedCandidateData);
   };
 
   const handleCancelEdit = () => {
     setIsEditMode(false);
-    // Aquí se descartarían los cambios
+    setValidationErrors([]);
+    setEditedCandidateData(null);
     toast.info('Edición cancelada');
-    console.log('Cancelando edición...');
   };
 
   const mockCandidate = candidatesData.find(candidate => candidate.id === candidateId) || candidatesData.find(candidate => {
@@ -218,7 +252,14 @@ export function CandidateDetailDrawer({
     
     switch (activeSection) {
       case 'generalInfo':
-        return <GeneralInfoSection candidate={candidate} isEditMode={isEditMode} />;
+        return (
+          <GeneralInfoSection 
+            candidate={isEditMode ? editedCandidateData : candidate} 
+            isEditMode={isEditMode} 
+            onDataChange={(newData: any) => setEditedCandidateData(newData)}
+            validationErrors={validationErrors}
+          />
+        );
       case 'application':
         return <ApplicationSection />;
       case 'vacancies':
@@ -236,22 +277,35 @@ export function CandidateDetailDrawer({
           />
         );
       case 'experience':
-        return <ExperienceSection experiences={candidate.experience} isEditMode={isEditMode} />;
+        return <ExperienceSection experiences={candidate.experience} isEditMode={isEditMode} onEditingChange={setIsSectionEditing} />;
       case 'education':
-        return <EducationSection education={candidate.education} isEditMode={isEditMode} />;
+        return <EducationSection education={candidate.education} isEditMode={isEditMode} onEditingChange={setIsSectionEditing} />;
       case 'documents':
         return <DocumentsSection triggerUpload={triggerDocumentUpload} documents={(candidate as any).documents} />;
       default:
-        return <GeneralInfoSection candidate={candidate} isEditMode={isEditMode} />;
+        return (
+          <GeneralInfoSection 
+            candidate={isEditMode ? editedCandidateData : candidate} 
+            isEditMode={isEditMode}
+            onDataChange={(newData: any) => setEditedCandidateData(newData)}
+            validationErrors={validationErrors}
+          />
+        );
     }
   };
 
-  // Resetear isInsideVacancy al cambiar de sección
+  // Resetear estados al cambiar de sección
   useEffect(() => {
-    if (activeSection !== 'vacancies') {
-      setIsInsideVacancy(false);
-    }
+    setIsInsideVacancy(false);
+    setIsSectionEditing(false);
   }, [activeSection]);
+
+  // Resetear isSectionEditing al salir de modo edición general
+  useEffect(() => {
+    if (!isEditMode) {
+      setIsSectionEditing(false);
+    }
+  }, [isEditMode]);
 
   // Reset trigger when section changes
   React.useEffect(() => {
@@ -317,6 +371,7 @@ export function CandidateDetailDrawer({
                   <EditModeBar
                     onSave={handleSaveChanges}
                     onCancel={handleCancelEdit}
+                    hideButtons={isSectionEditing}
                   />
                 ) : (
                   <FloatingActionBar

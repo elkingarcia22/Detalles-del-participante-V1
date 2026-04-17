@@ -13,14 +13,23 @@ import {
   Target,
   CreditCard,
   Edit2,
+  AlertCircle,
 } from 'lucide-react';
+import { cn } from '../ui/utils';
 
 interface GeneralInfoSectionProps {
   candidate?: any; // CandidateData from candidatesData
   isEditMode?: boolean;
+  onDataChange?: (newData: any) => void;
+  validationErrors?: string[];
 }
 
-export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInfoSectionProps) {
+export function GeneralInfoSection({ 
+  candidate, 
+  isEditMode = false,
+  onDataChange,
+  validationErrors = []
+}: GeneralInfoSectionProps) {
   // Si no hay candidato, usar datos por defecto
   const defaultCandidate = {
     firstName: 'Nombre',
@@ -49,15 +58,32 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
   };
   
   const candidateData = candidate || defaultCandidate;
-  const [editedData, setEditedData] = React.useState(candidateData);
+  const [localEditedData, setLocalEditedData] = React.useState(candidateData);
 
   React.useEffect(() => {
-    setEditedData(candidateData);
+    setLocalEditedData(candidateData);
   }, [candidateData]);
 
   const handleInputChange = (field: string, value: any) => {
-    setEditedData(prev => ({ ...prev, [field]: value }));
+    const newData = { ...localEditedData, [field]: value };
+    setLocalEditedData(newData);
+    if (onDataChange) {
+      onDataChange(newData);
+    }
   };
+
+  const isFieldError = (field: string) => validationErrors.includes(field);
+
+  // Helper para renderizar etiqueta con asterisco si es obligatorio
+  const Label = ({ children, required = false, field }: { children: React.ReactNode, required?: boolean, field?: string }) => (
+    <label className={cn(
+      "text-xs font-medium mb-1 block transition-colors",
+      isFieldError(field || '') ? "text-red-600" : "text-gray-500"
+    )}>
+      {children}
+      {required && isEditMode && <span className="text-red-500 ml-1">*</span>}
+    </label>
+  );
 
   return (
     <div className="space-y-6">
@@ -98,84 +124,119 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
       )}
 
       {/* Información de Contacto */}
-      <div className={`bg-white rounded-lg border p-6 ${isEditMode ? 'border-blue-300 shadow-md' : 'border-gray-200'}`}>
+      <div className={cn(
+        "bg-white rounded-lg border p-6 transition-all",
+        isEditMode ? 'border-blue-300 shadow-md scale-[1.01]' : 'border-gray-200'
+      )}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Información de Contacto</h3>
           {isEditMode && (
             <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
-              Editando
+              Campos obligatorios marcados con *
             </span>
           )}
         </div>
         <div className="grid grid-cols-2 gap-4">
           {/* Nombre */}
           <div className="flex items-start gap-3">
-            <User className="w-5 h-5 text-gray-400 mt-2" />
+            <User className={cn("w-5 h-5 mt-2", isFieldError('firstName') ? "text-red-400" : "text-gray-400")} />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Nombre</label>
+              <Label required field="firstName">Nombre</Label>
               {isEditMode ? (
-                <input
-                  type="text"
-                  value={editedData.firstName}
-                  onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={localEditedData.firstName}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    className={cn(
+                      "w-full px-3 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 transition-all",
+                      isFieldError('firstName') 
+                        ? "border-red-500 bg-red-50 focus:ring-red-200" 
+                        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+                    )}
+                  />
+                  {isFieldError('firstName') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2" />}
+                </div>
               ) : (
-                <p className="text-sm text-gray-900 font-medium">{editedData.firstName}</p>
+                <p className="text-sm text-gray-900 font-medium">{localEditedData.firstName}</p>
               )}
             </div>
           </div>
 
           {/* Apellido */}
           <div className="flex items-start gap-3">
-            <User className="w-5 h-5 text-gray-400 mt-2" />
+            <User className={cn("w-5 h-5 mt-2", isFieldError('lastName') ? "text-red-400" : "text-gray-400")} />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Apellido</label>
+              <Label required field="lastName">Apellido</Label>
               {isEditMode ? (
-                <input
-                  type="text"
-                  value={editedData.lastName}
-                  onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={localEditedData.lastName}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    className={cn(
+                      "w-full px-3 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 transition-all",
+                      isFieldError('lastName') 
+                        ? "border-red-500 bg-red-50 focus:ring-red-200" 
+                        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+                    )}
+                  />
+                  {isFieldError('lastName') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2" />}
+                </div>
               ) : (
-                <p className="text-sm text-gray-900 font-medium">{editedData.lastName}</p>
+                <p className="text-sm text-gray-900 font-medium">{localEditedData.lastName}</p>
               )}
             </div>
           </div>
 
           {/* Email */}
           <div className="flex items-start gap-3">
-            <Mail className="w-5 h-5 text-gray-400 mt-2" />
+            <Mail className={cn("w-5 h-5 mt-2", isFieldError('email') ? "text-red-400" : "text-gray-400")} />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Correo electrónico</label>
+              <Label required field="email">Correo electrónico</Label>
               {isEditMode ? (
-                <input
-                  type="email"
-                  value={editedData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={localEditedData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className={cn(
+                      "w-full px-3 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 transition-all",
+                      isFieldError('email') 
+                        ? "border-red-500 bg-red-50 focus:ring-red-200" 
+                        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+                    )}
+                  />
+                  {isFieldError('email') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2" />}
+                </div>
               ) : (
-                <p className="text-sm text-gray-900 truncate">{editedData.email}</p>
+                <p className="text-sm text-gray-900 truncate">{localEditedData.email}</p>
               )}
             </div>
           </div>
 
           {/* Teléfono */}
           <div className="flex items-start gap-3">
-            <Phone className="w-5 h-5 text-gray-400 mt-2" />
+            <Phone className={cn("w-5 h-5 mt-2", isFieldError('phone') ? "text-red-400" : "text-gray-400")} />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Teléfono</label>
+              <Label required field="phone">Teléfono</Label>
               {isEditMode ? (
-                <input
-                  type="tel"
-                  value={editedData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                <div className="relative">
+                  <input
+                    type="tel"
+                    value={localEditedData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className={cn(
+                      "w-full px-3 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 transition-all",
+                      isFieldError('phone') 
+                        ? "border-red-500 bg-red-50 focus:ring-red-200" 
+                        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+                    )}
+                  />
+                  {isFieldError('phone') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2" />}
+                </div>
               ) : (
-                <p className="text-sm text-gray-900">{editedData.phone}</p>
+                <p className="text-sm text-gray-900">{localEditedData.phone}</p>
               )}
             </div>
           </div>
@@ -184,35 +245,44 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3">
             <Globe className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Nacionalidad</label>
+              <Label>Nacionalidad</Label>
               {isEditMode ? (
                 <input
                   type="text"
-                  value={editedData.nationality}
+                  value={localEditedData.nationality}
                   onChange={(e) => handleInputChange('nationality', e.target.value)}
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               ) : (
-                <p className="text-sm text-gray-900">{editedData.nationality}</p>
+                <p className="text-sm text-gray-900">{localEditedData.nationality}</p>
               )}
             </div>
           </div>
 
           {/* Identificación */}
           <div className="flex items-start gap-3">
-            <CreditCard className="w-5 h-5 text-gray-400 mt-2" />
+            <CreditCard className={cn("w-5 h-5 mt-2", isFieldError('identificationNumber') ? "text-red-400" : "text-gray-400")} />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Número de identificación</label>
+              <Label required field="identificationNumber">Número de identificación</Label>
               {isEditMode ? (
-                <input
-                  type="text"
-                  value={editedData.identificationNumber}
-                  onChange={(e) => handleInputChange('identificationNumber', e.target.value)}
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={localEditedData.identificationNumber}
+                    onChange={(e) => handleInputChange('identificationNumber', e.target.value)}
+                    className={cn(
+                      "w-full px-3 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 transition-all",
+                      isFieldError('identificationNumber') 
+                        ? "border-red-500 bg-red-50 focus:ring-red-200" 
+                        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+                    )}
+                    placeholder="Ej: 1234567890"
+                  />
+                  {isFieldError('identificationNumber') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2" />}
+                </div>
               ) : (
                 <p className="text-sm text-gray-900">
-                  {editedData.identificationType} • {editedData.identificationNumber}
+                  {localEditedData.identificationType} • {localEditedData.identificationNumber}
                 </p>
               )}
             </div>
@@ -222,48 +292,62 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
       </div>
 
       {/* Ubicación */}
-      <div className={`bg-white rounded-lg border p-6 ${isEditMode ? 'border-blue-300 shadow-md' : 'border-gray-200'}`}>
+      <div className={cn(
+        "bg-white rounded-lg border p-6 transition-all",
+        isEditMode ? 'border-blue-300 shadow-md scale-[1.01]' : 'border-gray-200'
+      )}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Ubicación</h3>
-          {isEditMode && (
-            <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
-              Editando
-            </span>
-          )}
         </div>
         <div className="grid grid-cols-2 gap-4">
           {/* Ciudad */}
           <div className="flex items-start gap-3">
-            <MapPin className="w-5 h-5 text-gray-400 mt-2" />
+            <MapPin className={cn("w-5 h-5 mt-2", isFieldError('city') ? "text-red-400" : "text-gray-400")} />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Ciudad</label>
+              <Label required field="city">Ciudad</Label>
               {isEditMode ? (
-                <input
-                  type="text"
-                  value={editedData.city}
-                  onChange={(e) => handleInputChange('city', e.target.value)}
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={localEditedData.city}
+                    onChange={(e) => handleInputChange('city', e.target.value)}
+                    className={cn(
+                      "w-full px-3 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 transition-all",
+                      isFieldError('city') 
+                        ? "border-red-500 bg-red-50 focus:ring-red-200" 
+                        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+                    )}
+                  />
+                  {isFieldError('city') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2" />}
+                </div>
               ) : (
-                <p className="text-sm text-gray-900">{editedData.city}</p>
+                <p className="text-sm text-gray-900">{localEditedData.city}</p>
               )}
             </div>
           </div>
 
           {/* País */}
           <div className="flex items-start gap-3">
-            <MapPin className="w-5 h-5 text-gray-400 mt-2" />
+            <MapPin className={cn("w-5 h-5 mt-2", isFieldError('country') ? "text-red-400" : "text-gray-400")} />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">País</label>
+              <Label required field="country">País</Label>
               {isEditMode ? (
-                <input
-                  type="text"
-                  value={editedData.country}
-                  onChange={(e) => handleInputChange('country', e.target.value)}
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={localEditedData.country}
+                    onChange={(e) => handleInputChange('country', e.target.value)}
+                    className={cn(
+                      "w-full px-3 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 transition-all",
+                      isFieldError('country') 
+                        ? "border-red-500 bg-red-50 focus:ring-red-200" 
+                        : "border-gray-300 focus:ring-blue-500 focus:border-transparent"
+                    )}
+                  />
+                  {isFieldError('country') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2" />}
+                </div>
               ) : (
-                <p className="text-sm text-gray-900">{editedData.country}</p>
+                <p className="text-sm text-gray-900">{localEditedData.country}</p>
               )}
             </div>
           </div>
@@ -272,10 +356,10 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3 col-span-2">
             <MapPin className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Disponible para reubicarse</label>
+              <Label>Disponible para reubicarse</Label>
               {isEditMode ? (
                 <select
-                  value={editedData.willingToRelocate ? 'yes' : 'no'}
+                  value={localEditedData.willingToRelocate ? 'yes' : 'no'}
                   onChange={(e) => handleInputChange('willingToRelocate', e.target.value === 'yes')}
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
@@ -283,7 +367,7 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
                   <option value="no">No</option>
                 </select>
               ) : (
-                <p className="text-sm text-gray-900">{editedData.willingToRelocate ? 'Sí' : 'No'}</p>
+                <p className="text-sm text-gray-900">{localEditedData.willingToRelocate ? 'Sí' : 'No'}</p>
               )}
             </div>
           </div>
@@ -291,31 +375,29 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
       </div>
 
       {/* Información Adicional */}
-      <div className={`bg-white rounded-lg border p-6 ${isEditMode ? 'border-blue-300 shadow-md' : 'border-gray-200'}`}>
+      <div className={cn(
+        "bg-white rounded-lg border p-6 transition-all",
+        isEditMode ? 'border-blue-300 shadow-md scale-[1.01]' : 'border-gray-200'
+      )}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Información Adicional</h3>
-          {isEditMode && (
-            <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
-              Editando
-            </span>
-          )}
         </div>
         <div className="grid grid-cols-2 gap-4">
           {/* Fecha de nacimiento */}
           <div className="flex items-start gap-3">
             <Calendar className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Fecha de nacimiento</label>
+              <Label>Fecha de nacimiento</Label>
               {isEditMode ? (
                 <input
                   type="text"
-                  value={editedData.birthDate}
+                  value={localEditedData.birthDate}
                   onChange={(e) => handleInputChange('birthDate', e.target.value)}
                   placeholder="DD/MM/AAAA"
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               ) : (
-                <p className="text-sm text-gray-900">{editedData.birthDate}</p>
+                <p className="text-sm text-gray-900">{localEditedData.birthDate}</p>
               )}
             </div>
           </div>
@@ -324,18 +406,18 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3">
             <Calendar className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Edad</label>
+              <Label>Edad</Label>
               {isEditMode ? (
                 <input
                   type="number"
-                  value={editedData.age}
+                  value={localEditedData.age}
                   onChange={(e) => handleInputChange('age', parseInt(e.target.value))}
                   min="0"
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               ) : (
                 <p className="text-sm text-gray-900">
-                  {editedData.age} años
+                  {localEditedData.age} años
                 </p>
               )}
             </div>
@@ -345,18 +427,18 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3">
             <Briefcase className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Años de experiencia</label>
+              <Label>Años de experiencia</Label>
               {isEditMode ? (
                 <input
                   type="number"
-                  value={editedData.yearsExperience}
+                  value={localEditedData.yearsExperience}
                   onChange={(e) => handleInputChange('yearsExperience', parseInt(e.target.value))}
                   min="0"
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               ) : (
                 <p className="text-sm text-gray-900">
-                  {editedData.yearsExperience} {editedData.yearsExperience === 1 ? 'año' : 'años'}
+                  {localEditedData.yearsExperience} {localEditedData.yearsExperience === 1 ? 'año' : 'años'}
                 </p>
               )}
             </div>
@@ -366,10 +448,10 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3">
             <Clock className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Disponibilidad</label>
+              <Label>Disponibilidad</Label>
               {isEditMode ? (
                 <select
-                  value={editedData.availability}
+                  value={localEditedData.availability}
                   onChange={(e) => handleInputChange('availability', e.target.value)}
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
@@ -379,7 +461,7 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
                   <option value="Freelance">Freelance</option>
                 </select>
               ) : (
-                <p className="text-sm text-gray-900">{editedData.availability}</p>
+                <p className="text-sm text-gray-900">{localEditedData.availability}</p>
               )}
             </div>
           </div>
@@ -388,18 +470,18 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3">
             <Clock className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Preaviso</label>
+              <Label>Preaviso</Label>
               {isEditMode ? (
                 <div className="flex gap-2">
                   <input
                     type="number"
-                    value={editedData.noticePeriod}
+                    value={localEditedData.noticePeriod}
                     onChange={(e) => handleInputChange('noticePeriod', e.target.value)}
                     min="0"
                     className="w-20 px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                   <select
-                    value={editedData.noticePeriodUnit}
+                    value={localEditedData.noticePeriodUnit}
                     onChange={(e) => handleInputChange('noticePeriodUnit', e.target.value)}
                     className="flex-1 px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
@@ -410,7 +492,7 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
                 </div>
               ) : (
                 <p className="text-sm text-gray-900">
-                  {editedData.noticePeriod} {editedData.noticePeriodUnit}
+                  {localEditedData.noticePeriod} {localEditedData.noticePeriodUnit}
                 </p>
               )}
             </div>
@@ -420,17 +502,17 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3">
             <DollarSign className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Salario esperado</label>
+              <Label>Salario esperado</Label>
               {isEditMode ? (
                 <input
                   type="text"
-                  value={editedData.expectedSalary}
+                  value={localEditedData.expectedSalary}
                   onChange={(e) => handleInputChange('expectedSalary', e.target.value)}
                   placeholder="$18.000.000 - $22.000.000 COP"
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               ) : (
-                <p className="text-sm text-gray-900">{editedData.expectedSalary}</p>
+                <p className="text-sm text-gray-900">{localEditedData.expectedSalary}</p>
               )}
             </div>
           </div>
@@ -439,10 +521,10 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
           <div className="flex items-start gap-3">
             <DollarSign className="w-5 h-5 text-gray-400 mt-2" />
             <div className="flex-1 min-w-0">
-              <label className="text-xs font-medium text-gray-500 mb-1 block">Moneda</label>
+              <Label>Moneda</Label>
               {isEditMode ? (
                 <select
-                  value={editedData.currency}
+                  value={localEditedData.currency}
                   onChange={(e) => handleInputChange('currency', e.target.value)}
                   className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
@@ -453,7 +535,7 @@ export function GeneralInfoSection({ candidate, isEditMode = false }: GeneralInf
                   <option value="Sol peruano (PEN)">Sol peruano (PEN)</option>
                 </select>
               ) : (
-                <p className="text-sm text-gray-900">{editedData.currency}</p>
+                <p className="text-sm text-gray-900">{localEditedData.currency}</p>
               )}
             </div>
           </div>
