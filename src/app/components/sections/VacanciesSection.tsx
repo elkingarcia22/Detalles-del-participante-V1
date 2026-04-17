@@ -13,6 +13,7 @@ interface VacanciesSectionProps {
   deleteComment?: any;
   openCommentPanel: any;
   highlightedStageId: any;
+  onVacancySelect?: (isSelected: boolean) => void;
 }
 
 export function VacanciesSection({ 
@@ -23,14 +24,22 @@ export function VacanciesSection({
   editComment,
   deleteComment,
   openCommentPanel, 
-  highlightedStageId 
+  highlightedStageId,
+  onVacancySelect
 }: VacanciesSectionProps) {
   const [selectedVacancyId, setSelectedVacancyId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     setSelectedVacancyId(null);
+    if (onVacancySelect) onVacancySelect(false);
   }, [candidate?.id]);
+
+  React.useEffect(() => {
+    if (onVacancySelect) {
+      onVacancySelect(!!selectedVacancyId);
+    }
+  }, [selectedVacancyId, onVacancySelect]);
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeftState, setScrollLeftState] = useState(0);

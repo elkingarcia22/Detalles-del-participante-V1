@@ -211,6 +211,8 @@ export function CandidateDetailDrawer({
     }
   };
 
+  const [isInsideVacancy, setIsInsideVacancy] = useState(false);
+
   const renderSection = () => {
     const candidate = mockCandidate;
     
@@ -230,6 +232,7 @@ export function CandidateDetailDrawer({
             deleteComment={deleteComment}
             openCommentPanel={openCommentPanel}
             highlightedStageId={highlightedStageId}
+            onVacancySelect={setIsInsideVacancy}
           />
         );
       case 'experience':
@@ -242,6 +245,13 @@ export function CandidateDetailDrawer({
         return <GeneralInfoSection candidate={candidate} isEditMode={isEditMode} />;
     }
   };
+
+  // Resetear isInsideVacancy al cambiar de sección
+  useEffect(() => {
+    if (activeSection !== 'vacancies') {
+      setIsInsideVacancy(false);
+    }
+  }, [activeSection]);
 
   // Reset trigger when section changes
   React.useEffect(() => {
@@ -310,6 +320,7 @@ export function CandidateDetailDrawer({
                   />
                 ) : (
                   <FloatingActionBar
+                    mode={isInsideVacancy ? 'vacancy' : 'general'}
                     onReject={() => console.log('Reject')}
                     onNextStage={() => console.log('Next stage')}
                     onComment={() => {}}

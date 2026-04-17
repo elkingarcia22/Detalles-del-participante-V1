@@ -26,6 +26,7 @@ import {
 import { Button } from './ui/button';
 import { Tooltip } from './ui/tooltip';
 import { toast } from 'sonner';
+import { cn } from './ui/utils';
 
 // WhatsApp Icon Component
 const WhatsAppIcon = ({ className }: { className?: string }) => (
@@ -40,6 +41,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 );
 
 interface FloatingActionBarProps {
+  mode: 'vacancy' | 'general';
   onReject: () => void;
   onNextStage: () => void;
   onComment: () => void;
@@ -51,6 +53,7 @@ interface FloatingActionBarProps {
 }
 
 export function FloatingActionBar({
+  mode,
   onReject,
   onNextStage,
   onComment,
@@ -63,90 +66,47 @@ export function FloatingActionBar({
   // Estado para dropdown personalizado
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = React.useState(false);
-  const [submenuPosition, setSubmenuPosition] = React.useState({ top: 0, left: 0 });
+  const [submenuPosition, setSubmenuPosition] = React.useState({ top: 0, left: 0, fromBar: false });
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const submenuTriggerRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const [availableWidth, setAvailableWidth] = React.useState(0);
 
-  // Lista de botones en orden de prioridad (después de Descartar y Siguiente que siempre están)
-  const buttonPriority = [
-    { key: 'verCV', width: 55, label: 'Ver CV' },
-    { key: 'email', width: 55, label: 'Email' },
-    { key: 'llamar', width: 55, label: 'Llamar' },
+  // Definición de acciones base
+  const vacancyActions = [
+    { key: 'reject', label: 'Descartar', icon: Ban, onClick: onReject, variant: 'reject' as const },
+    { key: 'next', label: 'Siguiente', icon: ArrowRight, onClick: onNextStage, variant: 'primary' as const },
+    { key: 'skip', label: 'Omitir etapa', icon: SkipForward, onClick: () => toast.success('Omitiendo etapa actual...') },
+    { key: 'move_sep', label: 'Mover a etapa', icon: Layers, isSpecial: true }, // Marcado para renderizado especial
+    { key: 'interview', label: 'Agregar entrevista', icon: Video, onClick: () => toast.success('Abriendo formulario para agregar entrevista...') },
+    { key: 'shield', label: 'Verificación Antecedentes', icon: Shield, onClick: () => toast.success('Solicitando verificación de antecedentes...') },
+    { key: 'copyAppId', label: 'Copiar Application ID', icon: FileText, onClick: () => {
+        const appId = 'APP-2024-001234';
+        navigator.clipboard.writeText(appId).then(() => toast.success('Application ID copiado'));
+    }},
   ];
 
-  // Detectar el ancho disponible del contenedor padre
-  React.useEffect(() => {
-    if (!containerRef.current) return;
+  const generalActions = [
+    { key: 'viewCV', label: 'Ver CV', icon: Eye, onClick: () => toast.success('Abriendo visor de CV...') },
+    { key: 'call', label: 'Llamar', icon: Phone, onClick: () => candidatePhone ? window.location.href = `tel:${candidatePhone}` : toast.error('Teléfono no disponible') },
+    { key: 'email', label: 'Email', icon: Mail, onClick: onMessage },
+    { key: 'editProfile', label: 'Editar perfil', icon: Edit, onClick: onEditProfile },
+    { key: 'addDoc', label: 'Agregar documento', icon: FileText, onClick: onAddDocument },
+    { key: 'downloadCV', label: 'Descargar CV', icon: Download, onClick: () => toast.success('Descargando CV...') },
+    { key: 'print', label: 'Imprimir perfil', icon: Printer, onClick: () => window.print() },
+  ];
 
-    const updateAvailableWidth = () => {
-      const parent = containerRef.current?.parentElement;
-      if (parent) {
-        const parentWidth = parent.offsetWidth;
-        // Restar padding y márgenes
-        setAvailableWidth(parentWidth - 32); // 32px = padding left + right
-      }
-    };
+  // Determinar qué se muestra en la barra (los primeros 4 items disponibles)
+  let visibleActions: any[] = [];
+  let extraActions: any[] = [];
 
-    updateAvailableWidth();
-
-    // Usar ResizeObserver para detectar cambios en el tamaño
-    const resizeObserver = new ResizeObserver(() => {
-      updateAvailableWidth();
-    });
-
-    const parent = containerRef.current.parentElement;
-    if (parent) {
-      resizeObserver.observe(parent);
-    }
-
-    window.addEventListener('resize', updateAvailableWidth);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', updateAvailableWidth);
-    };
-  }, []);
-
-  // Calcular qué botones mostrar según el espacio disponible
-  const getVisibleButtons = () => {
-    // Espacio base: Descartar (55) + Siguiente (55) + Más (50) + gaps y padding
-    const baseWidth = 55 + 55 + 50 + 60; // 220px base
-    let remainingWidth = availableWidth - baseWidth;
-
-    const visible: Record<string, boolean> = {
-      verCV: false,
-      llamar: false,
-      email: false,
-      comentar: false,
-      tareas: false,
-      whatsapp: false,
-      compartir: false,
-      descargarCV: false,
-      agregarEntrevista: false,
-    };
-
-    // Si no tenemos ancho disponible aún, mostrar configuración mínima
-    if (availableWidth === 0) {
-      return visible;
-    }
-
-    // Agregar botones según el espacio disponible en orden de prioridad
-    for (const button of buttonPriority) {
-      if (remainingWidth >= button.width + 10) { // +10 para gap
-        visible[button.key as keyof typeof visible] = true;
-        remainingWidth -= (button.width + 10);
-      } else {
-        break;
-      }
-    }
-
-    return visible;
-  };
-
-  const visibleButtons = getVisibleButtons();
+  if (mode === 'vacancy') {
+    visibleActions = vacancyActions.slice(0, 4);
+    extraActions = [...vacancyActions.slice(4), ...generalActions];
+  } else {
+    visibleActions = generalActions.slice(0, 4);
+    extraActions = generalActions.slice(4);
+  }
 
   // Cerrar dropdown al hacer click fuera
   React.useEffect(() => {
@@ -162,567 +122,180 @@ export function FloatingActionBar({
       }
     };
 
-    if (isDropdownOpen) {
+    if (isDropdownOpen || isSubmenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, [isDropdownOpen, isSubmenuOpen]);
 
-  // Calcular posición del submenu cuando se abre
-  React.useEffect(() => {
-    if (isSubmenuOpen && submenuTriggerRef.current && dropdownRef.current) {
-      const itemRect = submenuTriggerRef.current.getBoundingClientRect();
-      const dropdownRect = dropdownRef.current.getBoundingClientRect();
+  // Función para manejar el toggle del submenú con posicionamiento inteligente
+  const handleSubmenuToggle = (e: React.MouseEvent, fromBar: boolean) => {
+    e.stopPropagation();
+    const trigger = e.currentTarget as HTMLElement;
+    const rect = trigger.getBoundingClientRect();
+    
+    // Si viene de la barra (abajo), posicionar arriba
+    // Si viene del menú (dropdown), posicionar a la derecha
+    if (fromBar) {
       setSubmenuPosition({
-        top: itemRect.top,
-        left: dropdownRect.right + 4, // 4px de margen desde el borde derecho del dropdown
-      });
-    }
-  }, [isSubmenuOpen]);
-
-  const handleDownloadCV = () => {
-    // Por el momento, este botón no hace nada
-    // toast.success('Descargando CV...');
-    // console.log('Download CV');
-  };
-
-  const handlePrint = () => {
-    window.print();
-  };
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Candidato - UBITS ATS',
-        text: 'Compartir perfil de candidato',
-        url: window.location.href,
-      }).catch(() => {
-        toast.error('No se pudo compartir');
+        top: rect.top - 330, // Aproximadamente el alto del menú de etapas
+        left: rect.left,
+        fromBar: true
       });
     } else {
-      const url = window.location.href;
-      const textArea = document.createElement('textarea');
-      textArea.value = url;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        toast.success('Link copiado al portapapeles');
-      } catch (err) {
-        toast.error('No se pudo copiar');
-      } finally {
-        textArea.remove();
-      }
+      setSubmenuPosition({
+        top: rect.top,
+        left: rect.right + 4,
+        fromBar: false
+      });
     }
-  };
-
-  const handleWhatsApp = () => {
-    if (candidatePhone) {
-      const phoneNumber = candidatePhone.replace(/[^0-9]/g, '');
-      window.open(`https://wa.me/${phoneNumber}`, '_blank');
+    
+    setIsSubmenuOpen(!isSubmenuOpen);
+    if (!fromBar) {
+      // Si es desde el menú, no cerramos el dropdown principal aún
     } else {
-      toast.error('Número de teléfono no disponible');
-    }
-  };
-
-  const handleCall = () => {
-    if (candidatePhone) {
-      window.location.href = `tel:${candidatePhone}`;
-    } else {
-      toast.error('Número de teléfono no disponible');
-    }
-  };
-
-  const handleSendEmail = () => {
-    onMessage();
-  };
-
-  const handleSerenaLink = () => {
-    toast.success('Abriendo entrevista con Serena IA...');
-    console.log('Open Serena AI interview');
-  };
-
-  const handleReApply = () => {
-    toast.success('Re-aplicando candidato a la etapa...');
-    console.log('Re-apply candidate to stage');
-  };
-
-  const handleCopyApplicationId = () => {
-    const applicationId = 'APP-2024-001234';
-    
-    // Método más robusto para copiar
-    const textArea = document.createElement('textarea');
-    textArea.value = applicationId;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    textArea.style.top = '-999999px';
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    
-    try {
-      document.execCommand('copy');
-      toast.success('Application ID copiado al portapapeles');
-    } catch (err) {
-      toast.error('No se pudo copiar');
-    } finally {
-      textArea.remove();
-    }
-  };
-
-  const handleCopyCandidateId = () => {
-    const candidateId = 'CAN-2024-567890';
-    
-    // Método más robusto para copiar
-    const textArea = document.createElement('textarea');
-    textArea.value = candidateId;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    textArea.style.top = '-999999px';
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    
-    try {
-      document.execCommand('copy');
-      toast.success('Candidate ID copiado al portapapeles');
-    } catch (err) {
-      toast.error('No se pudo copiar');
-    } finally {
-      textArea.remove();
+      setIsDropdownOpen(false);
     }
   };
 
   return (
-    <div 
-      ref={containerRef} 
-      className="pointer-events-auto"
-    >
+    <div ref={containerRef} className="pointer-events-auto">
       <div className="bg-gray-900 border border-gray-700 shadow-2xl rounded-2xl backdrop-blur-sm bg-opacity-95 inline-flex">
         <div className="px-2 sm:px-3 py-2.5">
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Reject Button - Always visible */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onReject}
-              className="h-auto flex-col gap-0.5 px-2 py-1.5 text-red-400 hover:text-red-300 hover:bg-red-950 border-red-800 bg-transparent min-w-[50px] flex-shrink-0"
-            >
-              <Ban className="w-4 h-4" />
-              <span className="text-[9px]">Descartar</span>
-            </Button>
+            
+            {visibleActions.map((action) => {
+              if (action.isSpecial && action.key === 'move_sep') {
+                return (
+                  <div key={action.key} className="relative">
+                     <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => handleSubmenuToggle(e, true)}
+                      className={cn(
+                        "h-auto flex-col gap-0.5 px-1 py-1.5 w-[80px] flex-shrink-0 text-gray-300 hover:text-white hover:bg-gray-800 transition-all",
+                        isSubmenuOpen && submenuPosition.fromBar && "bg-gray-800 text-white"
+                      )}
+                    >
+                      <action.icon className="w-4 h-4" />
+                      <span className="text-[9px] text-center">{action.label}</span>
+                    </Button>
+                  </div>
+                );
+              }
 
-            {/* Next Stage Button - Always visible */}
-            <Button
-              size="sm"
-              onClick={onNextStage}
-              className="h-auto flex-col gap-0.5 px-2 py-1.5 bg-blue-600 hover:bg-blue-700 text-white min-w-[50px] flex-shrink-0"
-            >
-              <ArrowRight className="w-4 h-4" />
-              <span className="text-[9px]">Siguiente</span>
-            </Button>
+              return (
+                <Button
+                  key={action.key}
+                  variant={action.variant === 'reject' ? 'outline' : action.variant === 'primary' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={action.onClick}
+                  className={cn(
+                    "h-auto flex-col gap-0.5 px-1 py-1.5 w-[80px] flex-shrink-0 transition-colors",
+                    action.variant === 'reject' ? "text-red-400 hover:text-red-300 hover:bg-red-950 border-red-800 bg-transparent" :
+                    action.variant === 'primary' ? "bg-blue-600 hover:bg-blue-700 text-white border-transparent" :
+                    "text-gray-300 hover:text-white hover:bg-gray-800"
+                  )}
+                >
+                  <action.icon className="w-4 h-4" />
+                  <span className="text-[9px] text-center">{action.label}</span>
+                </Button>
+              );
+            })}
 
-            {/* View CV Button - Dynamic visibility */}
-            {visibleButtons.verCV && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleDownloadCV}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[50px] flex-shrink-0"
-              >
-                <Eye className="w-4 h-4" />
-                <span className="text-[9px]">Ver CV</span>
-              </Button>
-            )}
-
-            {/* Call Button - Dynamic visibility */}
-            {visibleButtons.llamar && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCall}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[50px] flex-shrink-0"
-              >
-                <Phone className="w-4 h-4" />
-                <span className="text-[9px]">Llamar</span>
-              </Button>
-            )}
-
-            {/* Email Button - Dynamic visibility */}
-            {visibleButtons.email && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleSendEmail}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[50px] flex-shrink-0"
-              >
-                <Mail className="w-4 h-4" />
-                <span className="text-[9px]">Email</span>
-              </Button>
-            )}
-
-
-
-            {/* WhatsApp Button - Dynamic visibility */}
-            {visibleButtons.whatsapp && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleWhatsApp}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[54px] flex-shrink-0"
-              >
-                <WhatsAppIcon className="w-4 h-4" />
-                <span className="text-[9px]">WhatsApp</span>
-              </Button>
-            )}
-
-            {/* Share Button - Dynamic visibility */}
-            {visibleButtons.compartir && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleShare}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[56px] flex-shrink-0"
-              >
-                <Share2 className="w-4 h-4" />
-                <span className="text-[9px]">Compartir</span>
-              </Button>
-            )}
-
-            {/* Download CV Button - Dynamic visibility */}
-            {visibleButtons.descargarCV && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleDownloadCV}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[60px] flex-shrink-0"
-              >
-                <Download className="w-4 h-4" />
-                <span className="text-[9px]">Descargar</span>
-              </Button>
-            )}
-
-            {/* Add Interview Button - Dynamic visibility */}
-            {visibleButtons.agregarEntrevista && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => toast.success('Abriendo formulario para agregar entrevista...')}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[60px] flex-shrink-0"
-              >
-                <Video className="w-4 h-4" />
-                <span className="text-[9px]">Entrevista</span>
-              </Button>
-            )}
-
-            {/* More Actions Dropdown - RESTAURADO */}
-            <div
-              ref={dropdownRef}
-              className="relative"
-            >
+            {/* More Actions Dropdown */}
+            <div ref={dropdownRef} className="relative">
               <Button
                 ref={buttonRef}
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="h-auto flex-col gap-0.5 px-2 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 min-w-[45px] flex-shrink-0"
+                className="h-auto flex-col gap-0.5 px-1 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 w-[80px] flex-shrink-0"
               >
                 <MoreHorizontal className="w-4 h-4" />
-                <span className="text-[9px]">Más</span>
+                <span className="text-[9px] text-center">Más</span>
               </Button>
+
               {isDropdownOpen && (
-                <div
-                  className="absolute right-0 bottom-full mb-2 bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-64 max-h-[70vh] overflow-y-auto z-50"
-                >
-                  {/* Mostrar acciones ocultas de la barra principal */}
-                  {!visibleButtons.verCV && (
-                    <div
-                      className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer rounded-t-lg transition-colors"
-                      onClick={() => {
-                        handleDownloadCV();
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      <Eye className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span>Ver CV</span>
-                    </div>
-                  )}
+                <div className="absolute right-0 bottom-full mb-2 bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-64 max-h-[70vh] overflow-y-auto z-50">
+                  {extraActions.map((action) => {
+                    if (action.isSpecial) return null;
 
-                  {!visibleButtons.llamar && (
-                    <div
-                      className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                      onClick={() => {
-                        handleCall();
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      <Phone className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span>Llamar</span>
-                    </div>
-                  )}
-
-                  {!visibleButtons.email && (
-                    <div
-                      className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                      onClick={() => {
-                        handleSendEmail();
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      <Mail className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span>Email</span>
-                    </div>
-                  )}
-
-
-
-                  {/* Separador si hay botones ocultos */}
-                  {(!visibleButtons.verCV || !visibleButtons.llamar || !visibleButtons.email) && (
-                    <div className="h-px bg-gray-700 my-1" />
-                  )}
-
-                  {/* 1. Descargar CV */}
-                  <div
-                    className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                    onClick={() => {
-                      handleDownloadCV();
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <Download className="w-4 h-4 mr-3 flex-shrink-0" />
-                    <span>Descargar CV</span>
-                  </div>
-
-                  {/* 2. Agregar entrevista */}
-                  <div
-                    className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                    onClick={() => {
-                      toast.success('Abriendo formulario para agregar entrevista...');
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <Video className="w-4 h-4 mr-3 flex-shrink-0" />
-                    <span>Agregar entrevista</span>
-                  </div>
-
-                  {/* 3. Mover a etapa - CON PORTAL PARA SUBMENU LATERAL */}
-                  <div>
-                    <div
-                      className="flex items-center justify-between px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                      onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
-                      onMouseEnter={() => setIsSubmenuOpen(true)}
-                      ref={submenuTriggerRef}
-                    >
-                      <div className="flex items-center">
-                        <Layers className="w-4 h-4 mr-3 flex-shrink-0" />
-                        <span>Mover a etapa</span>
-                      </div>
-                      <ChevronRight className="w-4 h-4 flex-shrink-0" />
-                    </div>
-                    
-                    {/* Submenu usando Portal para renderizar fuera del dropdown */}
-                    {isSubmenuOpen && typeof document !== 'undefined' && createPortal(
-                      <div 
-                        className="fixed bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-72 max-h-[70vh] overflow-y-auto z-[100] py-2"
-                        style={{ 
-                          top: `${submenuPosition.top}px`,
-                          left: `${submenuPosition.left}px`
+                    return (
+                      <div
+                        key={action.key}
+                        className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
+                        onClick={() => {
+                          if (action.onClick) action.onClick();
+                          setIsDropdownOpen(false);
                         }}
-                        onMouseLeave={() => setIsSubmenuOpen(false)}
-                        onMouseEnter={() => setIsSubmenuOpen(true)}
                       >
-                        <div className="text-xs text-gray-500 px-3 py-1.5 mb-1">Seleccionar etapa:</div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Screening con Talent Acquisition');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Screening con Talent Acquisition</span>
-                        </div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Evaluación CV');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Evaluación CV</span>
-                        </div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Serena AI');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Serena AI</span>
-                        </div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Psicométrico');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Psicométrico</span>
-                        </div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Entrevista - Caso product sense');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Entrevista - Caso product sense</span>
-                        </div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Entrevista Hiring Manager');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Entrevista Hiring Manager</span>
-                        </div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Antecedentes Judiciales');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Antecedentes Judiciales</span>
-                        </div>
-                        
-                        <div
-                          className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md"
-                          onClick={() => {
-                            toast.success('✓ Movido a: Seleccionado');
-                            setIsDropdownOpen(false);
-                            setIsSubmenuOpen(false);
-                          }}
-                        >
-                          <span>Seleccionado</span>
-                        </div>
-                      </div>,
-                      document.body
-                    )}
-                  </div>
+                        <action.icon className="w-4 h-4 mr-3 flex-shrink-0" />
+                        <span>{action.label}</span>
+                      </div>
+                    );
+                  })}
 
-                  {/* 4. Omitir Etapa */}
-                  <div
-                    className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                    onClick={() => {
-                      toast.success('Omitiendo etapa actual...');
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <SkipForward className="w-4 h-4 mr-3 flex-shrink-0" />
-                    <span>Omitir Etapa</span>
-                  </div>
-
-                  {/* 5. Solicitar verificación de antecedentes judiciales */}
-                  <div
-                    className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                    onClick={() => {
-                      toast.success('Solicitando verificación de antecedentes...');
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <Shield className="w-4 h-4 mr-3 flex-shrink-0" />
-                    <span>Solicitar verificación de antecedentes judiciales</span>
-                  </div>
-
-                  {/* 6. Copiar Application ID */}
-                  <div
-                    className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                    onClick={() => {
-                      handleCopyApplicationId();
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <FileText className="w-4 h-4 mr-3 flex-shrink-0" />
-                    <span>Copiar Application ID</span>
-                  </div>
-
-                  {/* 7. Copiar Candidate ID */}
-                  <div
-                    className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                    onClick={() => {
-                      handleCopyCandidateId();
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <FileText className="w-4 h-4 mr-3 flex-shrink-0" />
-                    <span>Copiar Candidate ID</span>
-                  </div>
-
-                  {/* 8. Imprimir perfil */}
-                  <div
-                    className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                    onClick={() => {
-                      handlePrint();
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <Printer className="w-4 h-4 mr-3 flex-shrink-0" />
-                    <span>Imprimir perfil</span>
-                  </div>
-
-                  {/* 9. Agregar documento */}
-                  {onAddDocument && (
-                    <div
-                      className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                      onClick={() => {
-                        onAddDocument();
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      <Download className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span>Agregar documento</span>
-                    </div>
+                  {/* Renderizado especial para 'Mover a etapa' si está en el menú Más */}
+                  {mode === 'vacancy' && extraActions.some(a => a.key === 'move_sep') && (
+                    <>
+                      <div className="h-px bg-gray-700 my-1" />
+                      <div
+                        className="flex items-center justify-between px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
+                        onClick={(e) => handleSubmenuToggle(e, false)}
+                      >
+                        <div className="flex items-center">
+                          <Layers className="w-4 h-4 mr-3 flex-shrink-0" />
+                          <span>Mover a etapa</span>
+                        </div>
+                        <ChevronRight className="w-4 h-4 flex-shrink-0" />
+                      </div>
+                    </>
                   )}
-
-                  {/* 10. Editar perfil */}
-                  {onEditProfile && (
-                    <div
-                      className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer rounded-b-lg transition-colors"
-                      onClick={() => {
-                        onEditProfile();
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      <Edit className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span>Editar perfil</span>
-                    </div>
-                  )}
+                  
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Portal para el submenú de etapas (Renderizado fuera para evitar recortes) */}
+      {isSubmenuOpen && createPortal(
+        <div 
+          className="fixed bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-72 max-h-[70vh] overflow-y-auto z-[100] py-2 animate-in fade-in zoom-in-95 duration-200"
+          style={{ 
+            top: `${submenuPosition.top}px`, 
+            left: `${submenuPosition.left}px` 
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between px-3 py-1.5 mb-1 border-b border-gray-800">
+            <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">Mover a etapa</div>
+            <button onClick={() => setIsSubmenuOpen(false)} className="text-gray-500 hover:text-white">
+              <RotateCcw className="w-3 h-3" />
+            </button>
+          </div>
+          {['Screening con Talent', 'Evaluación CV', 'Serena AI', 'Psicométrico', 'Caso Product Sense', 'Entrevista Hiring', 'Antecedentes', 'Seleccionado'].map((stage) => (
+            <div
+              key={stage}
+              className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md mb-0.5"
+              onClick={() => {
+                toast.success(`✓ Candidato movido a: ${stage}`);
+                setIsDropdownOpen(false);
+                setIsSubmenuOpen(false);
+              }}
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2.5" />
+              <span>{stage}</span>
+            </div>
+          ))}
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
