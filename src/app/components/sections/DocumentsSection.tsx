@@ -16,9 +16,10 @@ interface DocumentsSectionProps {
   documents?: Document[];
   onUploadTrigger?: () => void;
   triggerUpload?: boolean;
+  isValentina?: boolean;
 }
 
-export function DocumentsSection({ documents: initialDocuments = [], onUploadTrigger, triggerUpload }: DocumentsSectionProps) {
+export function DocumentsSection({ documents: initialDocuments = [], onUploadTrigger, triggerUpload, isValentina }: DocumentsSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [documents, setDocuments] = React.useState<Document[]>(initialDocuments);
@@ -29,6 +30,10 @@ export function DocumentsSection({ documents: initialDocuments = [], onUploadTri
   }, [initialDocuments]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isValentina) {
+      toast.error('Estamos presentando inconvenientes técnicos y no podemos procesar el archivo en este momento. Inténtalo más tarde.');
+      return;
+    }
     const files = event.target.files;
     if (files && files.length > 0) {
       const file = files[0];
@@ -54,16 +59,28 @@ export function DocumentsSection({ documents: initialDocuments = [], onUploadTri
   };
 
   const handleDownload = (doc: Document) => {
+    if (isValentina) {
+      toast.error('Por el momento no podemos descargar el archivo, inténtalo más tarde.');
+      return;
+    }
     toast.success(`Descargando ${doc.name}...`);
     console.log('Download document:', doc.id);
   };
 
   const handleView = (doc: Document) => {
+    if (isValentina) {
+      toast.error('Estamos presentando inconvenientes para visualizar el documento. Por favor, inténtalo más tarde.');
+      return;
+    }
     toast.success(`Abriendo ${doc.name}...`);
     console.log('View document:', doc.id);
   };
 
   const handleDelete = (doc: Document) => {
+    if (isValentina) {
+      toast.error('No se ha podido procesar la eliminación del documento. Inténtalo de nuevo más tarde.');
+      return;
+    }
     setDocuments(documents.filter(d => d.id !== doc.id));
     toast.success(`Documento "${doc.name}" eliminado`);
   };

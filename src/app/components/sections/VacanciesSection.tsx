@@ -14,6 +14,7 @@ interface VacanciesSectionProps {
   openCommentPanel: any;
   highlightedStageId: any;
   onVacancySelect?: (isSelected: boolean) => void;
+  isValentina?: boolean;
 }
 
 export function VacanciesSection({ 
@@ -25,7 +26,8 @@ export function VacanciesSection({
   deleteComment,
   openCommentPanel, 
   highlightedStageId,
-  onVacancySelect
+  onVacancySelect,
+  isValentina
 }: VacanciesSectionProps) {
   const [selectedVacancyId, setSelectedVacancyId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -117,6 +119,7 @@ export function VacanciesSection({
                 highlightedStageId={highlightedStageId} 
                 activeApplication={applications.find(app => app.id === selectedVacancyId)} 
                 candidate={candidate} 
+                isValentina={isValentina}
               />
             )}
           </div>

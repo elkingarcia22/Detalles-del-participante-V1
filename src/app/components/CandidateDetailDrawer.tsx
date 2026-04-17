@@ -141,6 +141,12 @@ export function CandidateDetailDrawer({
       { key: 'city', label: 'Ciudad' },
       { key: 'country', label: 'País' }
     ];
+    
+    // Simulación de error para Valentina Herrera Castro
+    if (mockCandidate.name === 'Valentina Herrera Castro') {
+      toast.error('Lo sentimos, no hemos podido guardar los cambios en el perfil. Por favor, inténtalo de nuevo en unos minutos.');
+      return;
+    }
 
     const errors: string[] = [];
     mandatoryFields.forEach(field => {
@@ -250,6 +256,7 @@ export function CandidateDetailDrawer({
   };
 
   const [isInsideVacancy, setIsInsideVacancy] = useState(false);
+  const isValentina = mockCandidate?.name === 'Valentina Herrera Castro';
 
   const renderSection = () => {
     const candidate = mockCandidate;
@@ -262,6 +269,7 @@ export function CandidateDetailDrawer({
             isEditMode={isEditMode} 
             onDataChange={(newData: any) => setEditedCandidateData(newData)}
             validationErrors={validationErrors}
+            isValentina={isValentina}
           />
         );
       case 'application':
@@ -335,6 +343,7 @@ export function CandidateDetailDrawer({
         onNext={handleNext}
         onSerenaClick={() => setIsSerenaPanelOpen(true)}
         isDisabled={isSectionEditing}
+        isValentina={isValentina}
       />
 
       {/* Main Container */}
@@ -350,6 +359,7 @@ export function CandidateDetailDrawer({
             activeApplicationId={activeApplicationId}
             onApplicationChange={setActiveApplicationId}
             isDisabled={isSectionEditing}
+            isValentina={isValentina}
           />
 
           {/* Center Column - Content Area */}
@@ -369,6 +379,7 @@ export function CandidateDetailDrawer({
                     onSave={handleSaveChanges}
                     onCancel={handleCancelEdit}
                     hideButtons={isSectionEditing}
+                    isValentina={isValentina}
                   />
                 ) : (
                   <FloatingActionBar
@@ -381,6 +392,7 @@ export function CandidateDetailDrawer({
                     candidatePhone={mockCandidate.phone}
                     onAddDocument={handleAddDocument}
                     onEditProfile={handleEditProfile}
+                    isValentina={isValentina}
                   />
                 )}
               </div>

@@ -49,7 +49,7 @@ interface StageAccordionProps {
   blockerReason?: string;
 }
 
-function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onToggle, children, comments, addComment, editComment, deleteComment, openCommentPanel, status = 'completed', blockerReason }: StageAccordionProps) {
+function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onToggle, children, comments, addComment, editComment, deleteComment, openCommentPanel, status = 'completed', blockerReason, isValentina }: StageAccordionProps & { isValentina?: boolean }) {
   const [commentText, setCommentText] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [showCommentInput, setShowCommentInput] = useState(false);
@@ -111,6 +111,10 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
   const config = statusConfig[status];
 
   const handleAddComment = () => {
+    if (isValentina) {
+      toast.error('Por el momento no podemos registrar tu comentario o mensaje. Por favor, intenta más tarde.');
+      return;
+    }
     if (commentText.trim()) {
       addComment(commentText, id, title, isPrivate);
       setCommentText('');
@@ -276,6 +280,10 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
                               size="sm"
                               disabled={!editingText.trim()}
                               onClick={() => {
+                                if (isValentina) {
+                                  toast.error('Estamos presentando inconvenientes para actualizar la información. Inténtalo más tarde.');
+                                  return;
+                                }
                                 if (editComment && editingText.trim()) {
                                   editComment(comment.id, editingText);
                                   setEditingCommentId(null);
@@ -319,6 +327,10 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
                                   onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
+                                    if (isValentina) {
+                                      toast.error('No se ha podido procesar la eliminación del comentario. Inténtalo de nuevo más tarde.');
+                                      return;
+                                    }
                                     if (deleteComment) deleteComment(comment.id);
                                     setDeletingCommentId(null);
                                   }}
@@ -392,9 +404,10 @@ interface StagesSectionProps {
   highlightedStageId?: string | null;
   activeApplication?: any;
   candidate?: any;
+  isValentina?: boolean;
 }
 
-export function StagesSection({ comments, addComment, editComment, deleteComment, openCommentPanel, highlightedStageId, activeApplication, candidate }: StagesSectionProps) {
+export function StagesSection({ comments, addComment, editComment, deleteComment, openCommentPanel, highlightedStageId, activeApplication, candidate, isValentina }: StagesSectionProps) {
   const [openStages, setOpenStages] = useState<Set<string>>(new Set(['screening-talent']));
   const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -748,6 +761,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['screening-talent']}
           blockerReason={activeApplication?.blocker?.stageId === 'screening-talent' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <div className="bg-white border border-gray-200 rounded-lg p-5">
             <p className="text-sm text-gray-600">
@@ -773,6 +787,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['evaluacion-cv']}
           blockerReason={activeApplication?.blocker?.stageId === 'evaluacion-cv' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <div className="bg-white border border-gray-200 rounded-lg p-6 space-y-5">
             {/* Header */}
@@ -853,6 +868,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['evaluacion-serena']}
           blockerReason={activeApplication?.blocker?.stageId === 'evaluacion-serena' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <SerenaAIInterviewSection 
             interviewData={activeApplication?.serenaInterview} 
@@ -877,6 +893,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['evaluacion-psicometrica']}
           blockerReason={activeApplication?.blocker?.stageId === 'evaluacion-psicometrica' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <div className="bg-white border border-gray-200 rounded-lg p-5">
             <p className="text-sm text-gray-600">
@@ -902,6 +919,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['entrevista-tecnica']}
           blockerReason={activeApplication?.blocker?.stageId === 'entrevista-tecnica' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <InterviewsSection />
         </StageAccordion>
@@ -923,6 +941,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['entrevista-pm']}
           blockerReason={activeApplication?.blocker?.stageId === 'entrevista-pm' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <div className="bg-white border border-gray-200 rounded-lg p-5">
             <p className="text-sm text-gray-600">
@@ -948,6 +967,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['entrevista-hiring']}
           blockerReason={activeApplication?.blocker?.stageId === 'entrevista-hiring' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <div className="bg-white border border-gray-200 rounded-lg p-5">
             <p className="text-sm text-gray-600">
@@ -973,6 +993,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['antecedentes']}
           blockerReason={activeApplication?.blocker?.stageId === 'antecedentes' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <MeetingsSection />
         </StageAccordion>
@@ -994,6 +1015,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
           openCommentPanel={openCommentPanel}
           status={stageStatuses['seleccionado']}
           blockerReason={activeApplication?.blocker?.stageId === 'seleccionado' ? activeApplication.blocker.reason : undefined}
+          isValentina={isValentina}
         >
           <div className="bg-white border border-gray-200 rounded-lg p-5">
             <p className="text-sm text-teal-700 font-medium">

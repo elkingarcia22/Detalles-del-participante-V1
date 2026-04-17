@@ -17,6 +17,7 @@ interface CandidateSidebarProps {
   applications?: any[];
   activeApplicationId?: string | null;
   onApplicationChange?: (appId: string) => void;
+  isDisabled?: boolean;
 }
 
 const generalSections: SidebarItem[] = [
@@ -33,7 +34,8 @@ export function CandidateSidebar({
   isEditMode,
   applications,
   activeApplicationId,
-  onApplicationChange
+  onApplicationChange,
+  isDisabled = false
 }: CandidateSidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -58,12 +60,14 @@ export function CandidateSidebar({
       <button
         key={item.id}
         onClick={() => onSectionChange(item.id)}
+        disabled={isDisabled}
         className={cn(
-          'w-full flex items-center gap-3 py-2 text-sm font-medium rounded-lg transition-colors',
+          'w-full flex items-center gap-3 py-2 text-sm font-medium rounded-lg transition-all',
           isCollapsed ? 'px-2 justify-center' : 'px-3',
           isActive
             ? 'bg-blue-50 text-blue-700'
-            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+            : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
+          isDisabled && (isActive ? 'opacity-80' : 'opacity-40 cursor-not-allowed')
         )}
       >
         <Icon className={cn('w-5 h-5 flex-shrink-0', isActive ? 'text-blue-600' : 'text-gray-400')} />
@@ -101,7 +105,11 @@ export function CandidateSidebar({
       {/* Toggle Button */}
       <button
         onClick={toggleCollapse}
-        className="absolute -right-3 top-6 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm hover:bg-gray-50 transition-colors"
+        disabled={isDisabled}
+        className={cn(
+          "absolute -right-3 top-6 z-10 w-6 h-6 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm transition-all",
+          isDisabled ? "opacity-0 pointer-events-none" : "hover:bg-gray-50"
+        )}
         title={isCollapsed ? 'Expandir menú' : 'Contraer menú'}
       >
         {isCollapsed ? (

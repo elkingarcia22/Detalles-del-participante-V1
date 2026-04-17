@@ -23,6 +23,7 @@ interface CandidateHeaderProps {
   onNext: () => void;
   onSerenaClick?: () => void;
   isDisabled?: boolean;
+  isValentina?: boolean;
 }
 
 export function CandidateHeader({
@@ -33,13 +34,18 @@ export function CandidateHeader({
   onPrevious,
   onNext,
   onSerenaClick,
-  isDisabled = false
+  isDisabled = false,
+  isValentina = false
 }: CandidateHeaderProps) {
   const hasPrevious = currentIndex > 1;
   const hasNext = currentIndex < totalCandidates;
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const copyToClipboard = async (text: string, field: string) => {
+    if (isValentina) {
+      toast.error('Estamos presentando inconvenientes para acceder a la información detallada en este momento. Inténtalo más tarde.');
+      return;
+    }
     try {
       // Try modern clipboard API first
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -237,7 +243,13 @@ export function CandidateHeader({
             {/* Serena IA Header Button */}
             <Tooltip content="Análisis Serena IA">
               <button 
-                onClick={onSerenaClick}
+                onClick={() => {
+                  if (isValentina) {
+                    toast.error('No podemos generar el análisis de Serena IA por el momento. Estamos trabajando para restablecer el servicio.');
+                    return;
+                  }
+                  onSerenaClick?.();
+                }}
                 className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-fuchsia-600 rounded-full transition-all group shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:scale-105 active:scale-95"
               >
                 <Sparkles className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />

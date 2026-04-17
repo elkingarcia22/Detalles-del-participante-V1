@@ -50,6 +50,7 @@ interface FloatingActionBarProps {
   candidatePhone?: string;
   onAddDocument?: () => void;
   onEditProfile?: () => void;
+  isValentina?: boolean;
 }
 
 export function FloatingActionBar({
@@ -62,6 +63,7 @@ export function FloatingActionBar({
   candidatePhone,
   onAddDocument,
   onEditProfile,
+  isValentina = false
 }: FloatingActionBarProps) {
   // Estado para dropdown personalizado
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -74,12 +76,42 @@ export function FloatingActionBar({
 
   // Definición de acciones base
   const vacancyActions = [
-    { key: 'reject', label: 'Descartar', icon: Ban, onClick: onReject, variant: 'reject' as const },
-    { key: 'next', label: 'Siguiente', icon: ArrowRight, onClick: onNextStage, variant: 'primary' as const },
-    { key: 'skip', label: 'Omitir etapa', icon: SkipForward, onClick: () => toast.success('Omitiendo etapa actual...') },
-    { key: 'move_sep', label: 'Mover a etapa', icon: Layers, isSpecial: true }, // Marcado para renderizado especial
-    { key: 'interview', label: 'Agregar entrevista', icon: Video, onClick: () => toast.success('Abriendo formulario para agregar entrevista...') },
-    { key: 'shield', label: 'Verificación Antecedentes', icon: Shield, onClick: () => toast.success('Solicitando verificación de antecedentes...') },
+    { key: 'reject', label: 'Descartar', icon: Ban, onClick: () => {
+        if (isValentina) {
+          toast.error('No ha sido posible actualizar el estado del proceso debido a un inconveniente en el sistema. Estamos trabajando para solucionarlo.');
+          return;
+        }
+        onReject();
+    }, variant: 'reject' as const },
+    { key: 'next', label: 'Siguiente', icon: ArrowRight, onClick: () => {
+        if (isValentina) {
+          toast.error('No ha sido posible actualizar el estado del proceso debido a un inconveniente en el sistema. Estamos trabajando para solucionarlo.');
+          return;
+        }
+        onNextStage();
+    }, variant: 'primary' as const },
+    { key: 'skip', label: 'Omitir etapa', icon: SkipForward, onClick: () => {
+        if (isValentina) {
+          toast.error('No ha sido posible actualizar el estado del proceso debido a un inconveniente en el sistema. Estamos trabajando para solucionarlo.');
+          return;
+        }
+        toast.success('Omitiendo etapa actual...');
+    }},
+    { key: 'move_sep', label: 'Mover a etapa', icon: Layers, isSpecial: true },
+    { key: 'interview', label: 'Agregar entrevista', icon: Video, onClick: () => {
+        if (isValentina) {
+          toast.error('Por el momento no podemos programar la entrevista. Inténtalo de nuevo más tarde.');
+          return;
+        }
+        toast.success('Abriendo formulario para agregar entrevista...');
+    }},
+    { key: 'shield', label: 'Verificación Antecedentes', icon: Shield, onClick: () => {
+        if (isValentina) {
+          toast.error('Estamos presentando inconvenientes para solicitar la verificación de antecedentes. Por favor, inténtalo más tarde.');
+          return;
+        }
+        toast.success('Solicitando verificación de antecedentes...');
+    }},
     { key: 'copyAppId', label: 'Copiar Application ID', icon: FileText, onClick: () => {
         const appId = 'APP-2024-001234';
         navigator.clipboard.writeText(appId).then(() => toast.success('Application ID copiado'));
@@ -87,13 +119,49 @@ export function FloatingActionBar({
   ];
 
   const generalActions = [
-    { key: 'viewCV', label: 'Ver CV', icon: Eye, onClick: () => toast.success('Abriendo visor de CV...') },
-    { key: 'call', label: 'Llamar', icon: Phone, onClick: () => candidatePhone ? window.location.href = `tel:${candidatePhone}` : toast.error('Teléfono no disponible') },
-    { key: 'email', label: 'Email', icon: Mail, onClick: onMessage },
+    { key: 'viewCV', label: 'Ver CV', icon: Eye, onClick: () => {
+        if (isValentina) {
+          toast.error('Estamos presentando inconvenientes para visualizar el documento. Por favor, inténtalo más tarde.');
+          return;
+        }
+        toast.success('Abriendo visor de CV...');
+    }},
+    { key: 'call', label: 'Llamar', icon: Phone, onClick: () => {
+        if (isValentina) {
+          toast.error('No es posible iniciar la llamada en este momento. Inténtalo de nuevo en unos minutos.');
+          return;
+        }
+        candidatePhone ? window.location.href = `tel:${candidatePhone}` : toast.error('Teléfono no disponible');
+    }},
+    { key: 'email', label: 'Email', icon: Mail, onClick: () => {
+        if (isValentina) {
+          toast.error('Por el momento no podemos abrir el cliente de correo. Inténtalo más tarde.');
+          return;
+        }
+        onMessage();
+    }},
     { key: 'editProfile', label: 'Editar perfil', icon: Edit, onClick: onEditProfile },
-    { key: 'addDoc', label: 'Agregar documento', icon: FileText, onClick: onAddDocument },
-    { key: 'downloadCV', label: 'Descargar CV', icon: Download, onClick: () => toast.success('Descargando CV...') },
-    { key: 'print', label: 'Imprimir perfil', icon: Printer, onClick: () => window.print() },
+    { key: 'addDoc', label: 'Agregar documento', icon: FileText, onClick: () => {
+        if (isValentina) {
+          toast.error('No se ha podido habilitar el cargue de documentos para este perfil. Inténtalo más tarde.');
+          return;
+        }
+        if (onAddDocument) onAddDocument();
+    }},
+    { key: 'downloadCV', label: 'Descargar CV', icon: Download, onClick: () => {
+        if (isValentina) {
+          toast.error('Por el momento no podemos descargar el archivo, inténtalo más tarde.');
+          return;
+        }
+        toast.success('Descargando CV...');
+    }},
+    { key: 'print', label: 'Imprimir perfil', icon: Printer, onClick: () => {
+        if (isValentina) {
+          toast.error('No ha sido posible generar la versión de impresión del perfil. Por favor, inténtalo más tarde.');
+          return;
+        }
+        window.print();
+    }},
   ];
 
   // Determinar qué se muestra en la barra (los primeros 4 items disponibles)
@@ -284,6 +352,12 @@ export function FloatingActionBar({
               key={stage}
               className="flex items-center px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-blue-600 cursor-pointer transition-colors mx-1 rounded-md mb-0.5"
               onClick={() => {
+                if (isValentina) {
+                  toast.error('Hubo un problema al procesar la acción de reclutamiento. Estamos trabajando para solucionarlo.');
+                  setIsDropdownOpen(false);
+                  setIsSubmenuOpen(false);
+                  return;
+                }
                 toast.success(`✓ Candidato movido a: ${stage}`);
                 setIsDropdownOpen(false);
                 setIsSubmenuOpen(false);
