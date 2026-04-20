@@ -855,7 +855,7 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
       <div ref={(el) => (stageRefs.current['evaluacion-serena'] = el)}>
         <StageAccordion
           id="evaluacion-serena"
-          title="Evaluación Serena IA"
+          title="Entrevista Serena IA"
           category="Filtro Inicial"
           icon={Bot}
           number={3}

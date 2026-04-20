@@ -165,6 +165,45 @@ export const candidatesData: CandidateData[] = [
           technicalScore: 94,
           productManagerScore: 90,
           hiringManagerScore: 93
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola María, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -180,6 +219,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 88,
           technicalScore: 78
         },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola María, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
         rejectionReason: 'Falta de experiencia específica en el sector fintech'
       },
       {
@@ -194,6 +272,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 96,
           technicalScore: 98
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola María, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -580,6 +697,45 @@ export const candidatesData: CandidateData[] = [
           productManagerScore: 65,
           hiringManagerScore: 71
         },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Andrés, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
         rejectionReason: 'Inconsistencias encontradas en verificación de referencias laborales.'
       },
       {
@@ -594,6 +750,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 85,
           technicalScore: 88
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Andrés, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -607,6 +802,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'medium',
         scores: {
           cvScore: 70
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Andrés, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -622,6 +856,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 74,
           technicalScore: 70
         },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Andrés, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
         rejectionReason: 'Falta de experiencia en diseño de producto complejo.'
       },
       {
@@ -635,6 +908,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'medium',
         scores: {
           cvScore: 78
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Andrés, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -799,6 +1111,45 @@ export const candidatesData: CandidateData[] = [
           technicalScore: 90,
           productManagerScore: 88,
           hiringManagerScore: 86
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Carolina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -813,6 +1164,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 94,
           technicalScore: 95
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Carolina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -826,6 +1216,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'medium',
         scores: {
           cvScore: 75
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Carolina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'Perfil más orientado a diseño visual que a investigación pura.'
       },
@@ -841,6 +1270,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 86,
           technicalScore: 82
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Carolina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'El candidato decidió retirar su postulación.'
       }
@@ -1031,6 +1499,45 @@ export const candidatesData: CandidateData[] = [
           serenaScore: 86,
           technicalScore: 89,
           productManagerScore: 87
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Carlos, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -1045,6 +1552,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 94,
           technicalScore: 95
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Carlos, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -1058,6 +1604,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'medium',
         scores: {
           cvScore: 75
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Carlos, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'El perfil no se ajusta completamente al enfoque estratégico requerido.'
       }
@@ -1181,6 +1766,45 @@ export const candidatesData: CandidateData[] = [
           technicalScore: 80,
           productManagerScore: 65
         },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Sebastián, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
         rejectionReason: 'En entrevista con PM mostró poca profundidad en procesos de research y toma de decisiones basadas en datos.'
       },
       {
@@ -1195,6 +1819,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 85,
           technicalScore: 88
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Sebastián, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -1208,6 +1871,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'medium',
         scores: {
           cvScore: 85
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Sebastián, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -1328,6 +2030,45 @@ export const candidatesData: CandidateData[] = [
           psychometricScore: 82,
           serenaScore: 84,
           technicalScore: 86
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Camila Andrea, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -1342,6 +2083,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 90,
           technicalScore: 85
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Camila Andrea, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -1355,6 +2135,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'medium',
         scores: {
           cvScore: 72
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Camila Andrea, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'La candidata buscaba un rol más enfocado en diseño visual.'
       }
@@ -1557,6 +2376,45 @@ export const candidatesData: CandidateData[] = [
           serenaScore: 58,
           technicalScore: 52
         },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Natalia, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
         rejectionReason: 'Test psicométrico reveló bajo score en pensamiento analítico y resolución de problemas complejos.'
       },
       {
@@ -1570,6 +2428,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'low',
         scores: {
           cvScore: 60
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Natalia, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'Falta experiencia en roles de producto digital.'
       }
@@ -1666,6 +2563,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 86,
           psychometricScore: 83,
           serenaScore: 85
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Diego Alejandro, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -1680,6 +2616,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 90,
           technicalScore: 85
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Diego Alejandro, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -1795,6 +2770,45 @@ export const candidatesData: CandidateData[] = [
           psychometricScore: 52,
           serenaScore: 45
         },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Camila, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
         rejectionReason: 'Perfil muy junior. Aún está estudiando y no tiene experiencia profesional relevante en producto digital.'
       }
     ],
@@ -1889,6 +2903,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 38,
           psychometricScore: 42,
           serenaScore: 35
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Felipe, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'Perfil enfocado en desarrollo web básico. No tiene experiencia en diseño de producto ni metodologías UX. Expectativa salarial fuera de rango.'
       }
@@ -1985,6 +3038,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 82,
           psychometricScore: 80,
           serenaScore: 81
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Patricia Daniela, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -1999,6 +3091,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 85,
           technicalScore: 82
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Patricia Daniela, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -2115,6 +3246,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 83,
           psychometricScore: 79,
           serenaScore: 80
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Juliana, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       },
       {
@@ -2130,6 +3300,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 82,
           technicalScore: 79,
           productManagerScore: 70
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Juliana, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'Perfil demasiado enfocado en investigación cualitativa en lugar de visual UI.'
       }
@@ -2350,6 +3559,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 79,
           psychometricScore: 76
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Daniela, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -2460,6 +3708,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 85,
           psychometricScore: 82
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Andrés Felipe, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -2571,6 +3858,45 @@ export const candidatesData: CandidateData[] = [
           cvScore: 42,
           psychometricScore: 38
         },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Roberto, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
         rejectionReason: 'Experiencia en publicidad tradicional. No tiene experiencia en diseño digital ni producto. Perfil no alineado con la posición.'
       }
     ],
@@ -2658,6 +3984,45 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 50,
           psychometricScore: 44
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Mariana, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         rejectionReason: 'Perfil enfocado en diseño gráfico tradicional. No cuenta con experiencia en producto digital ni conocimientos de UX.'
       }
@@ -2753,6 +4118,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'medium',
         scores: {
           cvScore: 78
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Mateo, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         },
         blocker: {
           stageId: 'evaluacion-cv',
@@ -2895,6 +4299,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'high',
         scores: {
           cvScore: 78
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Isabella, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],
@@ -3004,6 +4447,45 @@ export const candidatesData: CandidateData[] = [
         confidence: 'high',
         scores: {
           cvScore: 80
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Santiago, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstico al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
         }
       }
     ],

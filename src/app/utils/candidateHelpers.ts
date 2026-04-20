@@ -8,7 +8,7 @@ import { Comment } from '../types/comments';
 export const STAGE_MAPPINGS = {
   'screening-talent': { order: 0, label: 'Screening con Talent Acquisition', shortLabel: 'Screening' },
   'evaluacion-cv': { order: 1, label: 'Evaluación de CV', shortLabel: 'CV' },
-  'evaluacion-serena': { order: 2, label: 'Evaluación Serena IA', shortLabel: 'Serena IA' },
+  'evaluacion-serena': { order: 2, label: 'Entrevista Serena IA', shortLabel: 'Entrevista IA' },
   'evaluacion-psicometrica': { order: 3, label: 'Evaluación Psicométrica', shortLabel: 'Psico' },
   'entrevista-tecnica': { order: 4, label: 'Entrevista Técnica', shortLabel: 'Ent. 1' },
   'entrevista-pm': { order: 5, label: 'Entrevista con PM', shortLabel: 'Ent. 2' },
