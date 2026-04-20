@@ -4,6 +4,7 @@ import { cn } from './ui/utils';
 import { Button } from './ui/button';
 import { Avatar } from './ui/avatar';
 import { Tooltip } from './ui/tooltip';
+import { toast } from 'sonner';
 
 interface CandidateHeaderProps {
   candidate: {

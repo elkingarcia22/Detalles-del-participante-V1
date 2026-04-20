@@ -2,6 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { GraduationCap, Calendar, Award, BookOpen, Plus, Trash2, Edit2, X, Check, AlertCircle } from 'lucide-react';
 import { cn } from '../ui/utils';
 import { toast } from 'sonner';
+import { DatePicker } from '../ui/date-picker';
+import { YearPicker } from '../ui/year-picker';
+import { format, isValid } from 'date-fns';
+import { parseFlexibleDate } from '../../utils/dateUtils';
 
 interface Education {
   id: string;
@@ -300,16 +304,27 @@ export function EducationSection({
                   <div>
                     <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Año Inicio <span className="text-red-500">*</span></label>
                     <div className="relative">
-                      <input type="number" placeholder="YYYY" value={editEducationForm.startDate} onChange={e => setEditEducationForm({...editEducationForm, startDate: e.target.value})} className={cn("w-full px-3 py-2 text-sm border rounded-lg focus:ring-2", isEduError('startDate') ? "border-red-500 bg-red-50" : "border-slate-200 focus:ring-blue-500")} />
-                      {isEduError('startDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2.5" />}
+                      <YearPicker
+                        value={editEducationForm.startDate}
+                        onChange={val => setEditEducationForm({...editEducationForm, startDate: val})}
+                        error={isEduError('startDate')}
+                        className="w-full"
+                      />
+                      {isEduError('startDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5 z-10" />}
                     </div>
                   </div>
                   <div className="space-y-3">
                     <div>
                       <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Año Finalización <span className="text-red-500">*</span></label>
                       <div className="relative">
-                        <input type="number" placeholder="YYYY" value={editEducationForm.endDate || ''} onChange={e => setEditEducationForm({...editEducationForm, endDate: e.target.value})} className={cn("w-full px-3 py-2 text-sm border rounded-lg focus:ring-2", isEduError('endDate') ? "border-red-500 bg-red-50" : "border-slate-200 focus:ring-blue-500")} />
-                        {isEduError('endDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-2 top-2.5" />}
+                        <YearPicker
+                          value={editEducationForm.endDate || ''}
+                          onChange={val => setEditEducationForm({...editEducationForm, endDate: val})}
+                          error={isEduError('endDate')}
+                          disabled={editEducationForm.current}
+                          className="w-full"
+                        />
+                        {isEduError('endDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5 z-10" />}
                       </div>
                     </div>
                     <label className="flex items-center gap-2 cursor-pointer p-1.5 rounded-md hover:bg-slate-50 transition-colors w-max">
@@ -436,16 +451,37 @@ export function EducationSection({
                   <div>
                     <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Obtención <span className="text-red-500">*</span></label>
                     <div className="relative">
-                      <input type="date" value={editCertForm.date} onChange={e => setEditCertForm({...editCertForm, date: e.target.value})} className={cn("w-full px-3 py-2 text-sm border rounded-lg focus:ring-2", isCertError('date') ? "border-red-500 bg-red-50" : "border-slate-200 focus:ring-blue-500")} />
-                      {isCertError('date') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5" />}
+                      <DatePicker
+                        date={parseFlexibleDate(editCertForm.date)}
+                        onChange={(date) => {
+                          if (date && isValid(date)) {
+                            setEditCertForm({...editCertForm, date: format(date, 'yyyy-MM-dd')});
+                          }
+                        }}
+                        error={isCertError('date')}
+                        className="w-full"
+                      />
+                      {isCertError('date') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5 z-10" />}
                     </div>
                   </div>
                   <div className="space-y-3">
                     <div>
                       <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Finalización <span className="text-red-500">*</span></label>
                       <div className="relative">
-                        <input type="date" value={editCertForm.endDate || ''} onChange={e => setEditCertForm({...editCertForm, endDate: e.target.value})} className={cn("w-full px-3 py-2 text-sm border rounded-lg focus:ring-2", isCertError('endDate') ? "border-red-500 bg-red-50" : "border-slate-200 focus:ring-blue-500")} />
-                        {isCertError('endDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5" />}
+                        <DatePicker
+                          date={parseFlexibleDate(editCertForm.endDate)}
+                          onChange={(date) => {
+                            if (date && isValid(date)) {
+                              setEditCertForm({...editCertForm, endDate: format(date, 'yyyy-MM-dd')});
+                            } else {
+                              setEditCertForm({...editCertForm, endDate: null});
+                            }
+                          }}
+                          disabled={editCertForm.current}
+                          error={isCertError('endDate')}
+                          className="w-full"
+                        />
+                        {isCertError('endDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5 z-10" />}
                       </div>
                     </div>
                     <label className="flex items-center gap-2 cursor-pointer p-1.5 rounded-md hover:bg-slate-50 transition-colors w-max">

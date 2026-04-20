@@ -22,6 +22,11 @@ export interface Application {
     stageId: string;
     reason: string;
     priority: 'high' | 'medium';
+    action?: {
+      type: 'whatsapp' | 'email' | 'document';
+      label: string;
+      message?: string;
+    };
   };
   serenaInterview?: {
     transcript: Array<{
@@ -39,6 +44,16 @@ export interface Application {
       strengths: string[];
       improvements: string[];
     };
+  };
+  cvEvaluation?: {
+    summary: string;
+    score: number;
+    criteria: Array<{ label: string, score: number, status: "pass" | "fail" | "warning" }>;
+  };
+  backgroundCheck?: {
+    status: 'clean' | 'issues' | 'pending';
+    completedDate: string;
+    details: Array<{ category: string; result: string; status: 'pass' | 'fail' | 'warning' }>;
   };
 }
 
@@ -151,6 +166,16 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-001-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas de diseño complejos y su profundo conocimiento en accesibilidad (WCAG). Su trayectoria en empresas de producto como Stripe y Rappi garantiza una curva de aprendizaje mínima.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ]
+        },
         jobTitle: 'Product Designer Senior',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'seleccionado',
@@ -204,6 +229,16 @@ export const candidatesData: CandidateData[] = [
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
             ]
           }
+        },
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          details: [
+            { category: 'Identidad', result: 'Verificada sin inconsistencias', status: 'pass' },
+            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
+            { category: 'Historial Crediticio', result: 'Comportamiento financiero estable', status: 'pass' },
+            { category: 'Referencias Laborales', result: 'Confirmadas y altamente positivas', status: 'pass' }
+          ]
         }
       },
       {
@@ -431,6 +466,16 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-002-1',
+        cvEvaluation: {
+          summary: 'Candidata con fuerte enfoque en diseño de interacción y metodologías ágiles. Su experiencia en Accenture Interactive demuestra capacidad para manejar proyectos de gran escala. Requiere validación de sus certificaciones internacionales pendientes.',
+          score: 84,
+          criteria: [
+            { label: 'Años de Experiencia', score: 80, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 85, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 70, status: 'warning' },
+            { label: 'Estabilidad Laboral', score: 90, status: 'pass' }
+          ]
+        },
         jobTitle: 'Product Designer Senior',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'antecedentes',
@@ -449,12 +494,17 @@ export const candidatesData: CandidateData[] = [
         blocker: {
           stageId: 'antecedentes',
           reason: 'Documentación incompleta: Falta certificado de la última empresa internacional.',
-          priority: 'high'
+          priority: 'high',
+          action: {
+            type: 'whatsapp',
+            label: 'Pedir certificado por WhatsApp',
+            message: 'Hola Valentina, espero que estés bien. Te escribo de Serena IA para solicitarte el certificado laboral de tu última experiencia internacional (Accenture) que nos hace falta para completar tu verificación de antecedentes. ¡Muchas gracias!'
+          }
         },
         serenaInterview: {
           transcript: [
             { role: 'serena', text: 'Hola Valentina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en Accenture Interactive. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
-            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnóstica al framework.', timestamp: '10:02' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnostica al framework.', timestamp: '10:02' },
             { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
             { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
             { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
@@ -489,6 +539,16 @@ export const candidatesData: CandidateData[] = [
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
             ]
           }
+        },
+        backgroundCheck: {
+          status: 'pending',
+          completedDate: '2026-04-10',
+          details: [
+            { category: 'Identidad', result: 'Verificada correctamente', status: 'pass' },
+            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
+            { category: 'Historial Crediticio', result: 'En proceso de verificación', status: 'warning' },
+            { category: 'Referencias Laborales', result: 'Pendiente confirmar certificado de Accenture International', status: 'warning' }
+          ]
         }
       },
       {
@@ -736,7 +796,17 @@ export const candidatesData: CandidateData[] = [
             ]
           }
         },
-        rejectionReason: 'Inconsistencias encontradas en verificación de referencias laborales.'
+        rejectionReason: 'Inconsistencias encontradas en verificación de referencias laborales.',
+        backgroundCheck: {
+          status: 'issues',
+          completedDate: '2026-04-12',
+          details: [
+            { category: 'Identidad', result: 'Verificada correctamente', status: 'pass' },
+            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
+            { category: 'Referencias Laborales', result: 'Discrepancia detectada en fechas con TechSolutions SAS (8 meses de diferencia)', status: 'fail' },
+            { category: 'Veracidad de CV', result: 'Inconsistencias encontradas en historial laboral', status: 'fail' }
+          ]
+        }
       },
       {
         id: 'app-003-2',
@@ -4161,7 +4231,12 @@ export const candidatesData: CandidateData[] = [
         blocker: {
           stageId: 'evaluacion-cv',
           reason: 'Sin respuesta a solicitud de documentos adicionales',
-          priority: 'high'
+          priority: 'high',
+          action: {
+            type: 'whatsapp',
+            label: 'Reiterar solicitud por WhatsApp',
+            message: 'Hola Mateo, te escribimos para recordarte el envío de los documentos adicionales solicitados para avanzar en tu proceso de selección. Quedamos atentos.'
+          }
         }
       }
     ],

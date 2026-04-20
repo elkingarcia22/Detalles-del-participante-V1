@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bot, Download, FileText, CheckCircle2, TrendingUp, MessageSquare, Quote, Star, ArrowRight } from 'lucide-react';
+import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { cn } from '../ui/utils';
@@ -23,9 +24,10 @@ interface SerenaAIInterviewSectionProps {
     };
   };
   score?: number;
+  isValentina?: boolean;
 }
 
-export function SerenaAIInterviewSection({ interviewData, score = 88 }: SerenaAIInterviewSectionProps) {
+export function SerenaAIInterviewSection({ interviewData, score = 88, isValentina }: SerenaAIInterviewSectionProps) {
   // If no data is passed, we show a placeholder or the default view (for demo purposes we use the passed data)
   if (!interviewData) {
     return (
@@ -39,8 +41,11 @@ export function SerenaAIInterviewSection({ interviewData, score = 88 }: SerenaAI
   const { transcript, questionScores, overallFeedback } = interviewData;
 
   const handleDownloadFeedback = () => {
-    // Simulated download
-    alert('Descargando reporte de feedback de Serena IA...');
+    if (isValentina) {
+      toast.error('No se pudo generar el reporte de feedback consolidado. Inténtalo de nuevo más tarde.');
+      return;
+    }
+    toast.success('Descargando reporte de feedback de Serena IA...');
   };
 
   return (
@@ -149,7 +154,18 @@ export function SerenaAIInterviewSection({ interviewData, score = 88 }: SerenaAI
             ))}
           </div>
           <div className="bg-white border-t border-slate-200 p-4 text-center">
-            <Button variant="ghost" size="sm" className="text-blue-600 text-xs font-bold hover:bg-blue-50 gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-blue-600 text-xs font-bold hover:bg-blue-50 gap-2"
+              onClick={() => {
+                if (isValentina) {
+                  toast.error('La transcripción completa no está disponible para su descarga en este momento.');
+                  return;
+                }
+                toast.success('Abriendo transcripción completa en PDF...');
+              }}
+            >
               <FileText className="w-4 h-4" />
               Ver transcripción completa (PDF)
             </Button>

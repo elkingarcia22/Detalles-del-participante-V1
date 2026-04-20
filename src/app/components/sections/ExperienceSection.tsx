@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Briefcase, MapPin, Calendar, Plus, Trash2, Edit2, X, Check, AlertCircle } from 'lucide-react';
 import { cn } from '../ui/utils';
 import { toast } from 'sonner';
+import { DatePicker } from '../ui/date-picker';
+import { format, isValid } from 'date-fns';
+import { parseFlexibleDate } from '../../utils/dateUtils';
 
 interface Experience {
   id?: string;
@@ -352,16 +355,17 @@ export function ExperienceSection({ experiences = mockExperiences, isEditMode = 
                       Fecha de inicio <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <input
-                        type="date"
-                        value={editForm.startDate}
-                        onChange={(e) => updateEditForm('startDate', e.target.value)}
-                        className={cn(
-                          "w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-all",
-                          isFieldError('startDate') ? "border-red-500 bg-red-50 focus:ring-red-200" : "border-gray-300 focus:ring-blue-500"
-                        )}
+                      <DatePicker
+                        date={parseFlexibleDate(editForm.startDate)}
+                        onChange={(date) => {
+                          if (date && isValid(date)) {
+                            updateEditForm('startDate', format(date, 'yyyy-MM-dd'));
+                          }
+                        }}
+                        error={isFieldError('startDate')}
+                        className="w-full"
                       />
-                      {isFieldError('startDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5" />}
+                      {isFieldError('startDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5 z-10" />}
                     </div>
                   </div>
                   <div className="space-y-3">
@@ -370,17 +374,20 @@ export function ExperienceSection({ experiences = mockExperiences, isEditMode = 
                         Fecha de fin {!editForm.current && <span className="text-red-500">*</span>}
                       </label>
                       <div className="relative">
-                        <input
-                          type="date"
-                          value={editForm.endDate || ''}
-                          onChange={(e) => updateEditForm('endDate', e.target.value || null)}
+                        <DatePicker
+                          date={parseFlexibleDate(editForm.endDate)}
+                          onChange={(date) => {
+                            if (date && isValid(date)) {
+                              updateEditForm('endDate', format(date, 'yyyy-MM-dd'));
+                            } else {
+                              updateEditForm('endDate', null);
+                            }
+                          }}
                           disabled={editForm.current}
-                          className={cn(
-                            "w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed",
-                            !editForm.current && isFieldError('endDate') ? "border-red-500 bg-red-50 focus:ring-red-200" : "border-gray-300 focus:ring-blue-500"
-                          )}
+                          error={!editForm.current && isFieldError('endDate')}
+                          className="w-full"
                         />
-                        {!editForm.current && isFieldError('endDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5" />}
+                        {!editForm.current && isFieldError('endDate') && <AlertCircle className="w-4 h-4 text-red-500 absolute right-8 top-2.5 z-10" />}
                       </div>
                     </div>
 

@@ -17,6 +17,9 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
+      captionLayout="dropdown-buttons"
+      fromYear={1900}
+      toYear={new Date().getFullYear() + 20}
       classNames={{
         months: "flex flex-col sm:flex-row gap-2",
         month: "flex flex-col gap-4",

@@ -142,10 +142,6 @@ export function FloatingActionBar({
     }},
     { key: 'editProfile', label: 'Editar perfil', icon: Edit, onClick: onEditProfile },
     { key: 'addDoc', label: 'Agregar documento', icon: FileText, onClick: () => {
-        if (isValentina) {
-          toast.error('No se ha podido habilitar el cargue de documentos para este perfil. Inténtalo más tarde.');
-          return;
-        }
         if (onAddDocument) onAddDocument();
     }},
     { key: 'downloadCV', label: 'Descargar CV', icon: Download, onClick: () => {

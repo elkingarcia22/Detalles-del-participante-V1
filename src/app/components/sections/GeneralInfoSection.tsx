@@ -16,6 +16,9 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { cn } from '../ui/utils';
+import { DatePicker } from '../ui/date-picker';
+import { format, isValid } from 'date-fns';
+import { parseFlexibleDate } from '../../utils/dateUtils';
 
 interface GeneralInfoSectionProps {
   candidate?: any; // CandidateData from candidatesData
@@ -389,12 +392,14 @@ export function GeneralInfoSection({
             <div className="flex-1 min-w-0">
               <Label>Fecha de nacimiento</Label>
               {isEditMode ? (
-                <input
-                  type="text"
-                  value={localEditedData.birthDate}
-                  onChange={(e) => handleInputChange('birthDate', e.target.value)}
-                  placeholder="DD/MM/AAAA"
-                  className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                <DatePicker
+                  date={parseFlexibleDate(localEditedData.birthDate)}
+                  onChange={(date) => {
+                    if (date && isValid(date)) {
+                      handleInputChange('birthDate', format(date, 'dd/MM/yyyy'));
+                    }
+                  }}
+                  className="w-full"
                 />
               ) : (
                 <p className="text-sm text-gray-900">{localEditedData.birthDate}</p>

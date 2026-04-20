@@ -286,14 +286,15 @@ export function CandidateDetailDrawer({
             openCommentPanel={openCommentPanel}
             highlightedStageId={highlightedStageId}
             onVacancySelect={setIsInsideVacancy}
+            isValentina={isValentina}
           />
         );
       case 'experience':
-        return <ExperienceSection experiences={candidate.experience} isEditMode={isEditMode} onEditingChange={setIsSectionEditing} />;
+        return <ExperienceSection experiences={candidate.experience} isEditMode={isEditMode} onEditingChange={setIsSectionEditing} isValentina={isValentina} />;
       case 'education':
-        return <EducationSection education={candidate.education} isEditMode={isEditMode} onEditingChange={setIsSectionEditing} />;
+        return <EducationSection education={candidate.education} isEditMode={isEditMode} onEditingChange={setIsSectionEditing} isValentina={isValentina} />;
       case 'documents':
-        return <DocumentsSection triggerUpload={triggerDocumentUpload} documents={(candidate as any).documents} />;
+        return <DocumentsSection triggerUpload={triggerDocumentUpload} documents={(candidate as any).documents} isValentina={isValentina} />;
       default:
         return (
           <GeneralInfoSection 
