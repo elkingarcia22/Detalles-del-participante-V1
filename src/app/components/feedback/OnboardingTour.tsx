@@ -8,49 +8,35 @@ interface TourStep {
   title: string;
   content: string;
   icon: React.ReactNode;
-  position: 'top' | 'bottom' | 'left' | 'right' | 'center';
+  position: 'top' | 'bottom' | 'left' | 'right' | 'center' | 'bottom-left';
 }
 
 const TOUR_STEPS: TourStep[] = [
   {
     target: 'center',
-    title: '¡Impulsa tu Reclutamiento!',
-    content: 'Bienvenido a la nueva experiencia V1. Te guiaremos a través de las mejoras clave para que aproveches al máximo la plataforma.',
+    title: 'Bienvenido al Detalle del Candidato',
+    content: 'Vamos a guiarte por esta nueva experiencia. A lo largo del recorrido, podrás usar el botón de feedback para dejarnos comentarios sobre elementos a cambiar, añadir u optimizar.',
     icon: <Sparkles size={24} />,
     position: 'center'
   },
   {
-    target: '[data-tour="candidate-card"]',
-    title: 'Explora Candidatos',
-    content: 'Selecciona un candidato de la lista para ver su perfil detallado. Hemos estandarizado toda la información técnica para tu comodidad.',
+    target: '[data-tour="candidate-card-andres"]',
+    title: 'Selecciona al Candidato',
+    content: 'Haz clic en la tarjeta de Andrés Parra Gómez para abrir el detalle completo.',
     icon: <MousePointer2 size={24} />,
     position: 'right'
   },
   {
-    target: '[data-tour="candidate-header"]',
-    title: 'Perfil Profesional',
-    content: 'Aquí tienes un resumen ejecutivo del candidato: datos de contacto, ubicación y tags clave siempre a la mano.',
-    icon: <div className="text-xl">👤</div>,
-    position: 'bottom'
-  },
-  {
-    target: '[data-tour="stages-tracker"]',
-    title: 'Control del Proceso',
-    content: 'Visualiza en qué punto se encuentra el candidato de forma rápida y visual con nuestro nuevo tracker de etapas.',
-    icon: <div className="text-xl">📈</div>,
-    position: 'bottom'
-  },
-  {
-    target: '[data-tour="stages-list"]',
-    title: 'Evidencia Técnica',
-    content: 'Accede a los resultados de pruebas, análisis de IA y antecedentes en un formato claro y estandarizado.',
-    icon: <div className="text-xl">📑</div>,
-    position: 'top'
+    target: '#candidate-detail-drawer',
+    title: 'Navega y Explora',
+    content: 'En este panel principal puedes revisar el currículum, evaluaciones y notas de IA. Navega por todas las secciones para explorar las funcionalidades.',
+    icon: <div className="text-xl">🧭</div>,
+    position: 'bottom-left'
   },
   {
     target: '[data-tour="feedback-button"]',
-    title: 'Queremos escucharte',
-    content: 'Tu feedback es el motor de esta evolución. Usa este botón en cualquier momento para enviarnos tus impresiones.',
+    title: '¡Queremos tu Feedback!',
+    content: 'Tu feedback es invaluable. Sugiere elementos que faltan, datos que cambiarías o nuevas funcionalidades. ¡Haz clic aquí para compartir tus ideas!',
     icon: <div className="text-xl">💬</div>,
     position: 'left'
   }
@@ -78,43 +64,61 @@ const OnboardingTour: React.FC = () => {
 
   const updateSpotlight = () => {
     const step = TOUR_STEPS[currentStep];
+    console.log('[OnboardingTour] currentStep:', currentStep, 'target:', step.target);
+
     if (step.target === 'center') {
+      console.log('[OnboardingTour] Target is center. Hiding spotlight.');
       setSpotlightStyles({ display: 'none' });
       setTooltipStyles({
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -60%)',
+        marginLeft: '-190px',
+        marginTop: '-150px',
         position: 'fixed'
       });
       return;
     }
 
-    const element = document.querySelector(step.target);
+    let element = document.querySelector(step.target);
+    console.log('[OnboardingTour] Initial querySelector result:', !!element);
+    
+    // Robust fallback just in case the data-tour attribute is missing
+    if (!element && step.target === '[data-tour="candidate-card-andres"]') {
+      console.log('[OnboardingTour] Using fallback search for Andrés Parra Gómez');
+      const allCards = document.querySelectorAll('.bg-white.rounded-lg.border.p-4');
+      for (const card of Array.from(allCards)) {
+        if (card.textContent?.includes('Andrés Parra Gómez')) {
+          element = card;
+          console.log('[OnboardingTour] Fallback found element');
+          break;
+        }
+      }
+    }
+
     if (!element) {
-      // If element not found (e.g. drawer not open yet for drawer steps), show a generic floating tooltip or wait
+      console.warn('[OnboardingTour] ELEMENT NOT FOUND FOR STEP', currentStep);
       setSpotlightStyles({ display: 'none' });
       return;
     }
 
     const rect = element.getBoundingClientRect();
     const padding = 12;
+    console.log('[OnboardingTour] Element rect:', rect.top, rect.left, rect.width, rect.height);
     
     setSpotlightStyles({
-      top: rect.top - padding,
-      left: rect.left - padding,
-      width: rect.width + padding * 2,
-      height: rect.height + padding * 2,
+      top: `${rect.top - padding}px`,
+      left: `${rect.left - padding}px`,
+      width: `${rect.width + padding * 2}px`,
+      height: `${rect.height + padding * 2}px`,
       display: 'block',
       borderRadius: '16px'
     });
 
-    // Smart tooltip positioning
     const tooltipWidth = 380;
-    const tooltipHeight = 220;
+    const tooltipHeight = 320; // Increased to ensure long text doesn't cut off
     const margin = 24;
     let top = 0;
     let left = 0;
-    let transform = '';
 
     switch (step.position) {
       case 'bottom':
@@ -126,27 +130,29 @@ const OnboardingTour: React.FC = () => {
         left = Math.max(margin, Math.min(rect.left + rect.width / 2 - tooltipWidth / 2, window.innerWidth - tooltipWidth - margin));
         break;
       case 'left':
-        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        top = rect.top + rect.height / 2 - tooltipHeight / 2 - 160;
         left = rect.left - margin - tooltipWidth;
         break;
       case 'right':
         top = rect.top + rect.height / 2 - tooltipHeight / 2;
         left = rect.right + margin;
         break;
+      case 'bottom-left':
+        top = rect.bottom - tooltipHeight - margin;
+        left = rect.left + margin;
+        break;
     }
 
-    // Secondary adjustments to prevent horizontal overflow
     if (left + tooltipWidth > window.innerWidth - margin) left = window.innerWidth - tooltipWidth - margin;
     if (left < margin) left = margin;
-    
-    // Vertical overflow check
     if (top + tooltipHeight > window.innerHeight - margin) top = window.innerHeight - tooltipHeight - margin;
     if (top < margin) top = margin;
 
     setTooltipStyles({
       top: `${top}px`,
       left: `${left}px`,
-      transform,
+      marginLeft: '0px',
+      marginTop: '0px',
       position: 'fixed'
     });
   };
@@ -154,58 +160,42 @@ const OnboardingTour: React.FC = () => {
   if (!isTourActive) return null;
 
   const step = TOUR_STEPS[currentStep];
+  const isCenter = step.target === 'center';
 
   return (
     <div className="fixed inset-0 z-[10001] pointer-events-none">
-      <AnimatePresence>
-        {/* 4-Panel Mask to allow clicking the hole */}
-        <div className={`absolute inset-0 z-[10002] pointer-events-none transition-opacity duration-300 ${spotlightStyles.display === 'none' ? 'opacity-0' : 'opacity-100'}`}>
-          {/* Top Mask */}
-          <div 
-            className="absolute top-0 left-0 right-0 bg-slate-900/60 backdrop-blur-[2px] pointer-events-auto transition-all duration-500" 
-            style={{ height: Math.max(0, (spotlightStyles.top as number) || 0) }}
-          />
-          {/* Bottom Mask */}
-          <div 
-            className="absolute left-0 right-0 bottom-0 bg-slate-900/60 backdrop-blur-[2px] pointer-events-auto transition-all duration-500" 
-            style={{ top: Math.min(windowSize.height, ((spotlightStyles.top as number) || 0) + ((spotlightStyles.height as number) || 0)) }}
-          />
-          {/* Left Mask */}
-          <div 
-            className="absolute left-0 bg-slate-900/60 backdrop-blur-[2px] pointer-events-auto transition-all duration-500" 
-            style={{ 
-              top: Math.max(0, (spotlightStyles.top as number) || 0), 
-              height: (spotlightStyles.height as number) || 0,
-              width: Math.max(0, (spotlightStyles.left as number) || 0)
-            }}
-          />
-          {/* Right Mask */}
-          <div 
-            className="absolute right-0 bg-slate-900/60 backdrop-blur-[2px] pointer-events-auto transition-all duration-500" 
-            style={{ 
-              top: Math.max(0, (spotlightStyles.top as number) || 0), 
-              height: (spotlightStyles.height as number) || 0,
-              left: Math.min(windowSize.width, ((spotlightStyles.left as number) || 0) + ((spotlightStyles.width as number) || 0))
-            }}
-          />
+      {/* Full Backdrop for Center Step */}
+      <div 
+        className={`absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] transition-opacity duration-300 ${isCenter ? 'opacity-100 z-[10002] pointer-events-auto' : 'opacity-0 -z-10 pointer-events-none'}`}
+      />
 
-          {/* Animated Border Frame (Non-blocking) */}
-          <motion.div
-            layout
-            style={spotlightStyles}
-            className="absolute border-[3px] border-blue-400/50 rounded-[16px] pointer-events-none"
-            animate={{
-              borderColor: ['rgba(96,165,250,0.4)', 'rgba(96,165,250,0.8)', 'rgba(96,165,250,0.4)'],
-              boxShadow: [
-                '0 0 0 0px rgba(96,165,250,0)',
-                '0 0 0 20px rgba(96,165,250,0.15)',
-                '0 0 0 0px rgba(96,165,250,0)'
-              ]
-            }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
+      {/* Spotlight Mask using box-shadow similar to NOM 035 */}
+      <div className={`absolute inset-0 z-[10002] pointer-events-none transition-opacity duration-300 ${!isCenter && spotlightStyles.display !== 'none' ? 'opacity-100' : 'opacity-0'}`}>
+        <motion.div
+          layout
+          style={{
+            ...spotlightStyles,
+            position: 'absolute',
+            boxShadow: '0 0 0 9999px rgba(15, 23, 42, 0.7)'
+          }}
+          className="border-[3px] border-blue-500 rounded-[12px] pointer-events-none"
+          animate={{
+            borderColor: ['#3b82f6', '#60a5fa', '#3b82f6'],
+            boxShadow: [
+              '0 0 0 9999px rgba(15, 23, 42, 0.7), 0 0 0 0px rgba(59, 130, 246, 0)',
+              '0 0 0 9999px rgba(15, 23, 42, 0.7), 0 0 0 15px rgba(59, 130, 246, 0.2)',
+              '0 0 0 9999px rgba(15, 23, 42, 0.7), 0 0 0 0px rgba(59, 130, 246, 0)'
+            ]
+          }}
+          transition={{
+            layout: { type: "spring", stiffness: 300, damping: 30 },
+            borderColor: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+            boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
+      </div>
 
+      <AnimatePresence mode="wait">
         {/* Tooltip Content */}
         <motion.div
           key={currentStep}
@@ -258,13 +248,15 @@ const OnboardingTour: React.FC = () => {
                 <span>Atrás</span>
               </button>
 
-              <button
-                onClick={currentStep === TOUR_STEPS.length - 1 ? finishTour : nextStep}
-                className="flex items-center gap-3 bg-slate-900 group text-white pl-6 pr-4 py-3 rounded-2xl font-black shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95"
-              >
-                <span>{currentStep === TOUR_STEPS.length - 1 ? 'Finalizar' : 'Continuar'}</span>
-                <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </button>
+              {currentStep !== 1 && (
+                <button
+                  onClick={currentStep === TOUR_STEPS.length - 1 ? finishTour : nextStep}
+                  className="flex items-center gap-3 bg-slate-900 group text-white pl-6 pr-4 py-3 rounded-2xl font-black shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95"
+                >
+                  <span>{currentStep === TOUR_STEPS.length - 1 ? 'Finalizar' : 'Continuar'}</span>
+                  <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              )}
             </div>
           </div>
         </motion.div>

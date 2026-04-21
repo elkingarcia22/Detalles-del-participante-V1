@@ -1,14 +1,18 @@
 import React from 'react';
 import { MessageSquareText, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useOnboarding } from '../../context/OnboardingContext';
 
 interface FeedbackFABProps {
   onClick: () => void;
 }
 
 const FeedbackFAB: React.FC<FeedbackFABProps> = ({ onClick }) => {
+  const { isSerenaActive } = useOnboarding();
+  const positionClasses = isSerenaActive ? 'right-[450px]' : 'right-8';
+
   return (
-    <div className="fixed bottom-8 right-8 z-[9999] flex flex-col items-end gap-3 group">
+    <div className={`fixed bottom-8 ${positionClasses} z-[9999] flex flex-col items-end gap-3 group transition-all duration-300`}>
       {/* Premium Label Tooltip */}
       <motion.div 
         initial={{ opacity: 0, x: 20, scale: 0.8 }}

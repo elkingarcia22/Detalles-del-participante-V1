@@ -7,13 +7,12 @@ import FeedbackFAB from './components/feedback/FeedbackFAB';
 import FeedbackModal from './components/feedback/FeedbackModal';
 
 function OnboardingManager() {
-  const { openFeedback, isFeedbackModalOpen, closeFeedback } = useOnboarding();
+  const { isFeedbackModalOpen, closeFeedback } = useOnboarding();
   
   return (
     <>
       <WelcomeOverlay />
       <OnboardingTour />
-      <FeedbackFAB onClick={openFeedback} />
       <FeedbackModal isOpen={isFeedbackModalOpen} onClose={closeFeedback} />
     </>
   );

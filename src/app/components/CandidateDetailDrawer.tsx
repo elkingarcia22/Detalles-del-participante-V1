@@ -14,6 +14,8 @@ import { Toaster, toast } from 'sonner';
 import { Comment } from '../types/comments';
 import { candidatesData } from '../data/candidatesData';
 import { notesToComments, generateTasks } from '../utils/candidateHelpers';
+import FeedbackFAB from './feedback/FeedbackFAB';
+import { useOnboarding } from '../context/OnboardingContext';
 
 // Definir tipo de tarea
 export interface Task {
@@ -50,13 +52,22 @@ export function CandidateDetailDrawer({
   totalCandidates = 74,
   currentIndex = 1
 }: CandidateDetailDrawerProps) {
-  const [activeSection, setActiveSection] = useState('generalInfo');
+  const { 
+    openFeedback, 
+    activeSection, 
+    setActiveSection, 
+    isSerenaActive, 
+    setSerenaActive, 
+    isEditMode, 
+    setEditMode, 
+    isInsideVacancy, 
+    setInsideVacancy 
+  } = useOnboarding();
   const [triggerDocumentUpload, setTriggerDocumentUpload] = useState(false);
-  const [isEditMode, setIsEditMode] = useState(false);
   const [isSectionEditing, setIsSectionEditing] = useState(false);
   const [activeApplicationId, setActiveApplicationId] = useState<string | null>(null);
   const [highlightedStageId, setHighlightedStageId] = useState<string | null>(null);
-  const [isSerenaPanelOpen, setIsSerenaPanelOpen] = useState(false);
+  
   
   // Estado para comentarios compartido entre StagesSection y ActivityHubPanel
   const [comments, setComments] = useState<Comment[]>([]);
@@ -67,7 +78,7 @@ export function CandidateDetailDrawer({
   // Estado para edición sincronizada
   const [editedCandidateData, setEditedCandidateData] = useState<any>(null);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
-
+  
 
   // Función para agregar un nuevo comentario
   const addComment = (
@@ -120,7 +131,7 @@ export function CandidateDetailDrawer({
   const handleEditProfile = () => {
     setEditedCandidateData({ ...mockCandidate });
     setValidationErrors([]);
-    setIsEditMode(true);
+    setEditMode(true);
     
     // Solo navegar a información general si no estamos en una sección ya editable
     if (!['experience', 'education'].includes(activeSection)) {
@@ -162,7 +173,7 @@ export function CandidateDetailDrawer({
     }
 
     // Si pasa la validación
-    setIsEditMode(false);
+    setEditMode(false);
     setValidationErrors([]);
     // Aquí se guardarían los cambios realmente (en una DB u estado global persistente)
     toast.success('Cambios guardados exitosamente');
@@ -170,7 +181,7 @@ export function CandidateDetailDrawer({
   };
 
   const handleCancelEdit = () => {
-    setIsEditMode(false);
+    setEditMode(false);
     setValidationErrors([]);
     setEditedCandidateData(null);
     toast.info('Edición cancelada');
@@ -255,7 +266,7 @@ export function CandidateDetailDrawer({
     }
   };
 
-  const [isInsideVacancy, setIsInsideVacancy] = useState(false);
+
   const isValentina = mockCandidate?.name === 'Valentina Herrera Castro';
 
   const renderSection = () => {
@@ -285,7 +296,7 @@ export function CandidateDetailDrawer({
             deleteComment={deleteComment}
             openCommentPanel={openCommentPanel}
             highlightedStageId={highlightedStageId}
-            onVacancySelect={setIsInsideVacancy}
+            onVacancySelect={setInsideVacancy}
             isValentina={isValentina}
           />
         );
@@ -309,7 +320,7 @@ export function CandidateDetailDrawer({
 
   // Resetear estados al cambiar de sección
   useEffect(() => {
-    setIsInsideVacancy(false);
+    setInsideVacancy(false);
     setIsSectionEditing(false);
   }, [activeSection]);
 
@@ -331,8 +342,9 @@ export function CandidateDetailDrawer({
   }, [activeSection, triggerDocumentUpload]);
 
   return (
-    <div className="h-full bg-gray-50 flex flex-col relative">
+    <div id="candidate-detail-drawer" className="h-full bg-gray-50 flex flex-col relative">
       <Toaster position="top-center" />
+      <FeedbackFAB onClick={openFeedback} />
       
       {/* Candidate Header */}
       <div data-tour="candidate-header">
@@ -343,7 +355,7 @@ export function CandidateDetailDrawer({
           onBack={onClose || (() => {})}
           onPrevious={handlePrevious}
           onNext={handleNext}
-          onSerenaClick={() => setIsSerenaPanelOpen(true)}
+          onSerenaClick={() => setSerenaActive(true)}
           isDisabled={isSectionEditing}
           isValentina={isValentina}
         />
@@ -405,8 +417,8 @@ export function CandidateDetailDrawer({
 
         {/* Serena IA Side Panel - Now anchored to the main container below header */}
         <SerenaIAPanel 
-          isOpen={isSerenaPanelOpen} 
-          onClose={() => setIsSerenaPanelOpen(false)} 
+          isOpen={isSerenaActive} 
+          onClose={() => setSerenaActive(false)} 
           candidate={mockCandidate} 
         />
       </div>

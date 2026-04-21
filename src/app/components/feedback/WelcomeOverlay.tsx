@@ -2,9 +2,17 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Rocket, Heart, Briefcase, ChartBar, Download, MessageCircle, Sparkles } from 'lucide-react';
 import { useOnboarding } from '../../context/OnboardingContext';
+import { router } from '../../routes';
 
 const WelcomeOverlay: React.FC = () => {
   const { isWelcomeOpen, startTour } = useOnboarding();
+
+  const handleStartTour = () => {
+    router.navigate('/candidatos');
+    setTimeout(() => {
+      startTour();
+    }, 100);
+  };
 
   if (!isWelcomeOpen) return null;
 
@@ -39,12 +47,11 @@ const WelcomeOverlay: React.FC = () => {
           </motion.div>
 
           <h1 className="text-4xl md:text-5xl font-[900] text-slate-900 mb-6 tracking-tight leading-none">
-            Transformando la <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Selección de Talento</span>
+            Prototipo de Validación <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Detalle del Candidato V1</span>
           </h1>
 
           <p className="text-xl text-slate-600 mb-10 leading-relaxed font-medium">
-            Bienvenido al nuevo estándar para la gestión de candidatos. 
-            Validamos eficiencia, claridad y profundidad técnica en cada paso.
+            Esto no es la plataforma real de UBITS. Es un prototipo interactivo para validar el diseño del detalle del candidato previo a su desarrollo, y así asegurarnos de que sea completamente funcional para nuestros clientes.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
@@ -78,7 +85,7 @@ const WelcomeOverlay: React.FC = () => {
           </div>
 
           <button
-            onClick={startTour}
+            onClick={handleStartTour}
             className="w-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold py-5 rounded-[20px] transition-all duration-300 transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-4 text-xl shadow-2xl shadow-slate-300 group overflow-hidden relative"
           >
             {/* Animated background flash */}
@@ -89,7 +96,7 @@ const WelcomeOverlay: React.FC = () => {
           </button>
           
           <p className="mt-6 text-slate-400 text-sm font-medium tracking-wide flex items-center justify-center gap-2">
-            PROTOTIPO DE VALIDACIÓN <span className="w-1 h-1 bg-slate-300 rounded-full" /> UBITS 2024
+            PROTOTIPO DE VALIDACIÓN <span className="w-1 h-1 bg-slate-300 rounded-full" /> UBITS 2026
           </p>
         </motion.div>
       </motion.div>

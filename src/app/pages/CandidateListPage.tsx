@@ -9,10 +9,12 @@ import { Badge } from '../components/ui/badge';
 import { Tooltip } from '../components/ui/tooltip';
 import { candidatesData } from '../data/candidatesData';
 import { cn } from '../components/ui/utils';
+import { useOnboarding } from '../context/OnboardingContext';
 
 export function CandidateListPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isTourActive, currentStep, nextStep } = useOnboarding();
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
   const [isSerenaOpen, setIsSerenaOpen] = useState(false);
 
@@ -25,7 +27,7 @@ export function CandidateListPage() {
   }, [id]);
 
   const candidates = [
-    { id: 1, name: 'Jhoana Mercedes Martín...', cvScore: 85, experience: '5 años', appliedTime: 'Aplicó hace 5 meses', status: 'En progreso' },
+    { id: 1, name: 'Andrés Parra Gómez', cvScore: 85, experience: '5 años', appliedTime: 'Aplicó hace 5 meses', status: 'En progreso' },
     { id: 2, name: 'Carlos Alberto González ...', cvScore: 78, experience: '3 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
     { id: 3, name: 'Diana Paola Rodríguez Suárez', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
     { id: 'cand-002', name: 'Valentina Herrera Castro', cvScore: 94, experience: '8 años', appliedTime: 'Aplicó hace 3 meses', status: 'En progreso', hasBlocker: true, blockerReason: 'Documentación incompleta: Referencias laborales pendientes de validación.' },
@@ -35,6 +37,9 @@ export function CandidateListPage() {
   ];
 
   const handleCandidateClick = (candidateId: string | number) => {
+    if (isTourActive && currentStep === 1 && candidateId === 1) {
+      nextStep();
+    }
     navigate(`/candidatos/candidato/${candidateId}`);
   };
 
@@ -59,6 +64,7 @@ export function CandidateListPage() {
   const CandidateCard = ({ candidate }: { candidate: any }) => (
     <div
       onClick={() => handleCandidateClick(candidate.id)}
+      data-tour={candidate.id === 1 ? 'candidate-card-andres' : undefined}
       className={cn(
         "bg-white rounded-lg border p-4 hover:shadow-md cursor-pointer transition-shadow",
         candidate.hasBlocker ? "border-amber-200 bg-amber-50/40" : "border-gray-200"
