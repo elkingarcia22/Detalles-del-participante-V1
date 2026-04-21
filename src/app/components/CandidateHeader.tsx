@@ -242,7 +242,7 @@ export function CandidateHeader({
           {/* Right Section: Navigation */}
           <div className="flex-shrink-0 pt-1 flex items-center gap-4">
             {/* Serena IA Header Button */}
-            <Tooltip content="Análisis Serena IA">
+            <Tooltip content="Análisis Serena IA" side="bottom">
               <button 
                 onClick={() => {
                   if (isValentina) {
@@ -259,7 +259,7 @@ export function CandidateHeader({
             </Tooltip>
 
             <div className="flex items-center gap-1 px-2 py-1 bg-white rounded-lg border border-gray-200">
-              <Tooltip content="Anterior">
+              <Tooltip content="Anterior" side="bottom">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -279,7 +279,7 @@ export function CandidateHeader({
                 </div>
               </div>
 
-              <Tooltip content="Siguiente">
+              <Tooltip content="Siguiente" side="bottom">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -293,7 +293,7 @@ export function CandidateHeader({
             </div>
             
             {/* Close Button */}
-            <Tooltip content={isDisabled ? "Guarda los cambios primero" : "Cerrar"}>
+            <Tooltip content={isDisabled ? "Guarda los cambios primero" : "Cerrar"} side="bottom">
               <Button
                 variant="ghost"
                 size="sm"

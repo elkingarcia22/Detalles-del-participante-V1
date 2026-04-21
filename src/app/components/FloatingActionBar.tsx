@@ -126,12 +126,12 @@ export function FloatingActionBar({
         }
         toast.success('Abriendo visor de CV...');
     }},
-    { key: 'call', label: 'Llamar', icon: Phone, onClick: () => {
+    { key: 'whatsapp', label: 'WhatsApp', icon: WhatsAppIcon, onClick: () => {
         if (isValentina) {
-          toast.error('No es posible iniciar la llamada en este momento. Inténtalo de nuevo en unos minutos.');
+          toast.error('No es posible abrir WhatsApp en este momento. Inténtalo de nuevo en unos minutos.');
           return;
         }
-        candidatePhone ? window.location.href = `tel:${candidatePhone}` : toast.error('Teléfono no disponible');
+        candidatePhone ? window.open(`https://wa.me/${candidatePhone.replace(/\D/g, '')}`, '_blank') : toast.error('Teléfono no disponible');
     }},
     { key: 'email', label: 'Email', icon: Mail, onClick: () => {
         if (isValentina) {
@@ -141,6 +141,13 @@ export function FloatingActionBar({
         onMessage();
     }},
     { key: 'editProfile', label: 'Editar perfil', icon: Edit, onClick: onEditProfile },
+    { key: 'call', label: 'Llamar', icon: Phone, onClick: () => {
+        if (isValentina) {
+          toast.error('No es posible iniciar la llamada en este momento. Inténtalo de nuevo en unos minutos.');
+          return;
+        }
+        candidatePhone ? window.location.href = `tel:${candidatePhone}` : toast.error('Teléfono no disponible');
+    }},
     { key: 'addDoc', label: 'Agregar documento', icon: FileText, onClick: () => {
         if (onAddDocument) onAddDocument();
     }},
