@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Send, Smile, Frown, Meh, Sparkles, Heart, ChevronDown } from 'lucide-react';
+import { X, Send, Sparkles, Heart, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 import { useOnboarding } from '../../context/OnboardingContext';
 
@@ -24,7 +24,6 @@ const SECTIONS = [
 
 const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
   const { activeSection, isFeedbackAutoOpened, isSerenaActive, isEditMode, isInsideVacancy } = useOnboarding();
-  const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedSection, setSelectedSection] = useState('generalInfo');
@@ -77,18 +76,12 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    if (rating === null) {
-      toast.error('Por favor selecciona una calificación');
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       const response = await fetch('https://egarcia.app.n8n.cloud/webhook/a519263a-021f-4faf-a621-1ab6ce1bed11', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          rating,
           comment,
           section: selectedSection,
           source: 'Candidate V1 Dashboard',
@@ -101,7 +94,6 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
           description: 'Tus comentarios nos ayudan a evolucionar la plataforma.',
           icon: <Heart className="w-4 h-4 text-pink-500" />
         });
-        setRating(null);
         setComment('');
         onClose();
       } else {
@@ -114,11 +106,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const ratings = [
-    { value: 1, icon: <Frown className="w-8 h-8" />, label: 'Mejorable', color: 'hover:text-red-500' },
-    { value: 2, icon: <Meh className="w-8 h-8" />, label: 'Neutral', color: 'hover:text-amber-500' },
-    { value: 3, icon: <Smile className="w-8 h-8" />, label: '¡Genial!', color: 'hover:text-emerald-500' },
-  ];
+
 
   if (!isOpen) return null;
 
@@ -173,26 +161,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
 
-            <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">¿Qué te parece?</label>
-            
-            <div className="flex justify-between gap-2 mb-6">
-              {ratings.map((r) => (
-                <button
-                  key={r.value}
-                  onClick={() => setRating(r.value)}
-                  className={`flex-1 flex flex-col items-center gap-1 p-3 rounded-2xl border-2 transition-all duration-300 group ${
-                    rating === r.value 
-                      ? 'bg-blue-50 border-blue-500 text-blue-600 scale-105 shadow-lg shadow-blue-100' 
-                      : 'bg-white border-slate-100 text-slate-400 hover:border-blue-200 ' + r.color
-                  }`}
-                >
-                  <div className={`transition-transform duration-300 group-hover:scale-110 ${rating === r.value ? 'scale-110' : ''}`}>
-                    {React.cloneElement(r.icon, { size: 24 })}
-                  </div>
-                  <span className="text-[9px] font-black uppercase tracking-tight">{r.label}</span>
-                </button>
-              ))}
-            </div>
+
 
             <div className="space-y-2">
               <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Compártenos tus comentarios</label>
@@ -213,7 +182,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting || rating === null}
+                disabled={isSubmitting || !comment.trim()}
                 className="flex-[2] bg-slate-900 hover:bg-slate-800 disabled:opacity-50 disabled:hover:bg-slate-900 text-white font-black py-3 rounded-xl transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-2 uppercase tracking-widest text-[10px]"
               >
                 {isSubmitting ? (

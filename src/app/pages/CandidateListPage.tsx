@@ -27,36 +27,41 @@ export function CandidateListPage() {
   }, [id]);
 
   const candidates = [
-    { id: 1, name: 'Andrés Parra Gómez', cvScore: 85, experience: '5 años', appliedTime: 'Aplicó hace 5 meses', status: 'En progreso' },
-    { id: 2, name: 'Carlos Alberto González ...', cvScore: 78, experience: '3 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
-    { id: 3, name: 'Diana Paola Rodríguez Suárez', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
+    { id: 'cand-001', name: 'Andrés Parra Gómez', cvScore: 85, experience: '5 años', appliedTime: 'Aplicó hace 5 meses', status: 'En progreso' },
+    { id: 'cand-003', name: 'Carlos Alberto González ...', cvScore: 78, experience: '3 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
+    { id: 'cand-004', name: 'Diana Paola Rodríguez Suárez', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
     { id: 'cand-002', name: 'Valentina Herrera Castro', cvScore: 94, experience: '8 años', appliedTime: 'Aplicó hace 3 meses', status: 'En progreso', hasBlocker: true, blockerReason: 'Documentación incompleta: Referencias laborales pendientes de validación.' },
-    { id: 4, name: 'María Fernanda López To...', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
-    { id: 5, name: 'José Antonio Ramírez Sá...', cvScore: 76, experience: '6 años', appliedTime: 'Aplicó hace 2 meses', status: 'En progreso' },
-    { id: 6, name: 'Ana Gabriela Morales Cruz', cvScore: 88, experience: '5 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
+    { id: 'cand-005', name: 'María Fernanda López To...', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
+    { id: 'cand-006', name: 'José Antonio Ramírez Sá...', cvScore: 76, experience: '6 años', appliedTime: 'Aplicó hace 2 meses', status: 'En progreso' },
+    { id: 'cand-007', name: 'Ana Gabriela Morales Cruz', cvScore: 88, experience: '5 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
   ];
 
   const handleCandidateClick = (candidateId: string | number) => {
-    if (isTourActive && currentStep === 1 && candidateId === 1) {
+    if (isTourActive && currentStep === 1 && candidateId === 'cand-001') {
       nextStep();
     }
     navigate(`/candidatos/candidato/${candidateId}`);
   };
 
+  const totalCandidates = 74;
+  const currentIndex = selectedCandidateId 
+    ? Math.max(1, candidatesData.findIndex(c => c.id.toString() === selectedCandidateId.toString()) + 1)
+    : 1;
+
   const handlePrevious = () => {
     if (selectedCandidateId) {
-      const idx = candidates.findIndex(c => c.id.toString() === selectedCandidateId.toString());
+      const idx = candidatesData.findIndex(c => c.id.toString() === selectedCandidateId.toString());
       if (idx > 0) {
-        navigate(`/candidatos/candidato/${candidates[idx - 1].id}`);
+        navigate(`/candidatos/candidato/${candidatesData[idx - 1].id}`);
       }
     }
   };
 
   const handleNext = () => {
     if (selectedCandidateId) {
-      const idx = candidates.findIndex(c => c.id.toString() === selectedCandidateId.toString());
-      if (idx < candidates.length - 1) {
-        navigate(`/candidatos/candidato/${candidates[idx + 1].id}`);
+      const idx = candidatesData.findIndex(c => c.id.toString() === selectedCandidateId.toString());
+      if (idx < candidatesData.length - 1) {
+        navigate(`/candidatos/candidato/${candidatesData[idx + 1].id}`);
       }
     }
   };
@@ -131,7 +136,7 @@ export function CandidateListPage() {
                     <MapPin className="w-2.5 h-2.5" /> Bogotá
                   </Badge>
                   <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 text-[9px] px-1.5 py-0">+ 4 años exp.</Badge>
-                  <span className="text-[10px] text-slate-400 font-bold ml-1 uppercase tracking-wider">74 APLICACIONES</span>
+                  <span className="text-[10px] text-slate-400 font-bold ml-1 uppercase tracking-wider">{totalCandidates} APLICACIONES</span>
                </div>
             </div>
           </div>
@@ -311,6 +316,8 @@ export function CandidateListPage() {
           onPrevious={handlePrevious}
           onNext={handleNext}
           onClose={() => navigate('/candidatos')}
+          currentIndex={currentIndex}
+          totalCandidates={totalCandidates}
         />
       </Drawer>
     </div>
