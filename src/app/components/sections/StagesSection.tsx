@@ -591,9 +591,9 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
       </div>
 
       {/* Progress Tracker */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6 mb-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm" data-tour="stages-tracker">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-gray-900">Progreso del candidato</h3>
+          <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider">Progreso del Reclutamiento</h3>
           <span className="text-xs text-gray-500">{progress}</span>
         </div>
         

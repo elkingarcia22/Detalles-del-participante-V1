@@ -335,17 +335,19 @@ export function CandidateDetailDrawer({
       <Toaster position="top-center" />
       
       {/* Candidate Header */}
-      <CandidateHeader 
-        candidate={mockCandidate} 
-        currentIndex={currentIndex}
-        totalCandidates={totalCandidates}
-        onBack={onClose || (() => {})}
-        onPrevious={handlePrevious}
-        onNext={handleNext}
-        onSerenaClick={() => setIsSerenaPanelOpen(true)}
-        isDisabled={isSectionEditing}
-        isValentina={isValentina}
-      />
+      <div data-tour="candidate-header">
+        <CandidateHeader 
+          candidate={mockCandidate} 
+          currentIndex={currentIndex}
+          totalCandidates={totalCandidates}
+          onBack={onClose || (() => {})}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          onSerenaClick={() => setIsSerenaPanelOpen(true)}
+          isDisabled={isSectionEditing}
+          isValentina={isValentina}
+        />
+      </div>
 
       {/* Main Container */}
       <div className="flex flex-1 overflow-hidden relative">

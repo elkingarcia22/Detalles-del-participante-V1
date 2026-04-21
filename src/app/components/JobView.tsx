@@ -52,8 +52,8 @@ export function JobView({ onCandidateClick }: { onCandidateClick: (id: string) =
     
     return { ...stage, active, discarded, total: stageCandidates.length };
   });
-
-  const renderCandidateCard = (candidate: any) => {
+    
+  const renderCandidateCard = (candidate: any, isTourTarget?: boolean) => {
     const app = candidate._activeApp || candidate.applications?.[0] || {} as any;
     const daysSinceApplied = app.appliedDate 
       ? Math.floor((new Date().getTime() - new Date(app.appliedDate).getTime()) / (1000 * 60 * 60 * 24))
@@ -62,7 +62,8 @@ export function JobView({ onCandidateClick }: { onCandidateClick: (id: string) =
     return (
       <div 
         key={candidate.id}
-        className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow cursor-pointer mb-2"
+        data-tour={isTourTarget ? "candidate-card" : undefined}
+        className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow cursor-pointer mb-2 relative"
         onClick={() => onCandidateClick(candidate.id)}
       >
         <div className="flex items-start gap-2 mb-2">
@@ -214,7 +215,7 @@ export function JobView({ onCandidateClick }: { onCandidateClick: (id: string) =
                         </div>
                       </div>
                       <div className="flex-1 bg-slate-100/20 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
-                        {stage.active.map(c => renderCandidateCard(c))}
+                        {stage.active.map((c, idx) => renderCandidateCard(c, stage.order === 1 && idx === 0))}
                       </div>
                     </div>
                   ))}
