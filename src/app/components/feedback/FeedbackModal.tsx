@@ -19,7 +19,8 @@ const SECTIONS = [
   { id: 'vacancies', label: 'Vacantes' },
   { id: 'vacanciesDetail', label: 'Vacantes (Detalle)' },
   { id: 'documents', label: 'Documentos' },
-  { id: 'serenaIA', label: 'Serena IA' }
+  { id: 'serenaIA', label: 'Serena IA' },
+  { id: 'application', label: 'Estado de Aplicación' }
 ];
 
 const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
@@ -37,19 +38,26 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
         setSelectedSection('serenaIA');
       } else if (activeSection) {
         let mappedSection = activeSection;
+        
+        // Detección automática de modos de edición y detalle de vacantes
         if (isEditMode) {
           if (activeSection === 'generalInfo') mappedSection = 'generalInfoEdit';
-          if (activeSection === 'experience') mappedSection = 'experienceEdit';
-          if (activeSection === 'education') mappedSection = 'educationEdit';
+          else if (activeSection === 'experience') mappedSection = 'experienceEdit';
+          else if (activeSection === 'education') mappedSection = 'educationEdit';
         } else if (activeSection === 'vacancies' && isInsideVacancy) {
           mappedSection = 'vacanciesDetail';
         }
         
-        // Evitar que setee secciones que no existen (ej. 'application' si no está en la lista de SECTIONS)
+        // Verificar si la sección existe en nuestra lista
         if (SECTIONS.some(s => s.id === mappedSection)) {
           setSelectedSection(mappedSection);
         } else {
-          setSelectedSection('generalInfo');
+          // Fallback a la sección activa base o generalInfo
+          if (SECTIONS.some(s => s.id === activeSection)) {
+            setSelectedSection(activeSection);
+          } else {
+            setSelectedSection('generalInfo');
+          }
         }
       }
     }

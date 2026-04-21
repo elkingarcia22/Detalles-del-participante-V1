@@ -14,9 +14,8 @@ import { useOnboarding } from '../context/OnboardingContext';
 export function CandidateListPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isTourActive, currentStep, nextStep } = useOnboarding();
+  const { isTourActive, currentStep, nextStep, isSerenaActive, setSerenaActive } = useOnboarding();
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
-  const [isSerenaOpen, setIsSerenaOpen] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -43,7 +42,7 @@ export function CandidateListPage() {
     navigate(`/candidatos/candidato/${candidateId}`);
   };
 
-  const totalCandidates = 74;
+  const totalCandidatesCount = 74; // Static as per prototype requirements
   const currentIndex = selectedCandidateId 
     ? Math.max(1, candidatesData.findIndex(c => c.id.toString() === selectedCandidateId.toString()) + 1)
     : 1;
@@ -136,7 +135,7 @@ export function CandidateListPage() {
                     <MapPin className="w-2.5 h-2.5" /> Bogotá
                   </Badge>
                   <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 text-[9px] px-1.5 py-0">+ 4 años exp.</Badge>
-                  <span className="text-[10px] text-slate-400 font-bold ml-1 uppercase tracking-wider">{totalCandidates} APLICACIONES</span>
+                  <span className="text-[10px] text-slate-400 font-bold ml-1 uppercase tracking-wider">{totalCandidatesCount} APLICACIONES</span>
                </div>
             </div>
           </div>
@@ -145,17 +144,17 @@ export function CandidateListPage() {
             {/* Serena IA Button */}
             <Tooltip content="Asistente Serena IA">
               <button 
-                onClick={() => setIsSerenaOpen(!isSerenaOpen)}
+                onClick={() => setSerenaActive(!isSerenaActive)}
                 className={cn(
                   "flex items-center gap-2 px-4 py-1.5 rounded-full transition-all group",
-                  isSerenaOpen 
+                  isSerenaActive 
                     ? "bg-slate-800 text-white shadow-lg" 
                     : "bg-gradient-to-r from-blue-600 via-indigo-600 to-fuchsia-600 text-white shadow-md hover:scale-105"
                 )}
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span className="text-[11px] font-bold uppercase tracking-wider">
-                  {isSerenaOpen ? 'Cerrar' : 'Serena IA'}
+                  {isSerenaActive ? 'Cerrar' : 'Serena IA'}
                 </span>
               </button>
             </Tooltip>
@@ -298,8 +297,8 @@ export function CandidateListPage() {
 
         {/* Global Serena Panel */}
         <SerenaIAPanel 
-          isOpen={isSerenaOpen} 
-          onClose={() => setIsSerenaOpen(false)}
+          isOpen={isSerenaActive} 
+          onClose={() => setSerenaActive(false)}
           mode="global"
           allCandidates={candidatesData}
         />
@@ -307,17 +306,17 @@ export function CandidateListPage() {
 
       {/* Candidate Detail Drawer */}
       <Drawer
-        open={selectedCandidateId !== null}
-        onClose={() => navigate('/candidatos')}
-        width="90%"
+        open={!!selectedCandidateId}
+        onOpenChange={(open) => !open && navigate('/candidatos')}
       >
-        <CandidateDetailDrawer
-          candidateId={selectedCandidateId!}
+        <CandidateDetailDrawer 
+          candidateId={selectedCandidateId} 
+          onClose={() => navigate('/candidatos')}
+          onSerenaClick={() => setSerenaActive(true)}
           onPrevious={handlePrevious}
           onNext={handleNext}
-          onClose={() => navigate('/candidatos')}
           currentIndex={currentIndex}
-          totalCandidates={totalCandidates}
+          totalCandidates={totalCandidatesCount}
         />
       </Drawer>
     </div>
