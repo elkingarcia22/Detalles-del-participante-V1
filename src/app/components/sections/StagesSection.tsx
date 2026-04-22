@@ -149,12 +149,11 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
     <div className={cn("rounded-xl border overflow-hidden", config.bgColor, config.borderColor)}>
       {/* Accordion Header */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-2 p-4 sm:p-5">
-        <button
+        <div
           onClick={canExpand ? onToggle : undefined}
-          style={{ cursor: canExpand ? 'pointer' : 'default' }}
           className={cn(
             "flex-1 flex items-center gap-3 sm:gap-4 transition-opacity min-w-0",
-            canExpand ? "hover:opacity-70" : "cursor-default"
+            canExpand ? "hover:opacity-70 cursor-pointer" : "cursor-default"
           )}
         >
           <div className={cn("w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 flex items-center justify-center rounded-full border-2 text-sm font-bold", config.numberBg, config.numberBorder, config.numberText)}>
@@ -165,24 +164,29 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
               {title}
             </h3>
             {status === 'blocked' && blockerReason ? (
-              <div className="mt-1 flex flex-col gap-2">
+              <div className="mt-1">
                 <p className="text-xs text-amber-600 font-bold flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  {blockerReason}
+                  <AlertCircle className="w-3 h-3 flex-shrink-0" />
+                  <span className="truncate">{blockerReason}</span>
                 </p>
+                {/* Blocker action button — moved here for better responsive layout */}
                 {blockerAction && (
                   <Button
                     size="sm"
                     variant="secondary"
                     onClick={(e) => {
                       e.stopPropagation();
+                      if (isValentina) {
+                        toast.error('No es posible abrir WhatsApp en este momento. Inténtalo de nuevo en unos minutos.');
+                        return;
+                      }
                       if (blockerAction.type === 'whatsapp' && candidate?.phone) {
                         const phone = candidate.phone.replace(/[^0-9]/g, '');
                         const text = encodeURIComponent(blockerAction.message || '');
                         window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
                       }
                     }}
-                    className="w-fit h-7 px-2.5 text-[10px] font-bold flex items-center gap-1.5 transition-all shadow-sm border border-gray-200"
+                    className="w-fit h-7 px-2.5 mt-2 text-[10px] font-bold flex items-center gap-1.5 transition-all shadow-sm border border-gray-200"
                   >
                     {blockerAction.type === 'whatsapp' && <WhatsAppIcon className="w-3 h-3" />}
                     {blockerAction.label}
@@ -195,9 +199,10 @@ function StageAccordion({ id, title, category, icon: Icon, number, isOpen, onTog
               </p>
             )}
           </div>
-        </button>
+        </div>
         
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
+          {/* Blocker action button — moved to title area */}
           {config.badge}
           {stageComments.length > 0 && (
             <Badge variant="secondary" className="text-xs whitespace-nowrap">

@@ -448,284 +448,7 @@ export const candidatesData: CandidateData[] = [
       'Demuestra liderazgo nato y capacidad de mentoría'
     ]
   },
-
-  // ====== ETAPA 8: VERIFICACIÓN ANTECEDENTES (1 ACTIVO, 1 RECHAZADO) ======
-  {
-    id: 'cand-002',
-    name: 'Valentina Herrera Castro',
-    email: 'valentina.herrera@email.com',
-    phone: '+57 318 789 0123',
-    age: 31,
-    location: 'Bogotá, Colombia',
-    avatar: 'VH',
-    yearsExperience: 8,
-    expectedSalary: '$9.500.000 - $11.500.000 COP',
-    availability: '1 mes',
-    
-    // Lista de aplicaciones (vacantes)
-    applications: [
-      {
-        id: 'app-002-1',
-        cvEvaluation: {
-          summary: 'Candidata con fuerte enfoque en diseño de interacción y metodologías ágiles. Su experiencia en Accenture Interactive demuestra capacidad para manejar proyectos de gran escala. Requiere validación de sus certificaciones internacionales pendientes.',
-          score: 84,
-          criteria: [
-            { label: 'Años de Experiencia', score: 80, status: 'pass' },
-            { label: 'Stack Tecnológico', score: 85, status: 'pass' },
-            { label: 'Educación y Certificaciones', score: 70, status: 'warning' },
-            { label: 'Estabilidad Laboral', score: 90, status: 'pass' }
-          ]
-        },
-        jobTitle: 'Product Designer Senior',
-        jobLocation: 'Bogotá, Colombia',
-        currentStage: 'antecedentes',
-        status: 'active',
-        appliedDate: '2026-02-12',
-        matchScore: 94,
-        confidence: 'high',
-        scores: {
-          cvScore: 94,
-          psychometricScore: 90,
-          serenaScore: 92,
-          technicalScore: 95,
-          productManagerScore: 91,
-          hiringManagerScore: 94
-        },
-        blocker: {
-          stageId: 'antecedentes',
-          reason: 'Documentación incompleta: Falta certificado de la última empresa internacional.',
-          priority: 'high',
-          action: {
-            type: 'whatsapp',
-            label: 'Pedir certificado por WhatsApp',
-            message: 'Hola Valentina, espero que estés bien. Te escribo de Serena IA para solicitarte el certificado laboral de tu última experiencia internacional (Accenture) que nos hace falta para completar tu verificación de antecedentes. ¡Muchas gracias!'
-          }
-        },
-        serenaInterview: {
-          transcript: [
-            { role: 'serena', text: 'Hola Valentina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en Accenture Interactive. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
-            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnostica al framework.', timestamp: '10:02' },
-            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
-            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
-            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
-            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
-          ],
-          questionScores: [
-            { 
-              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
-              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño de Accenture?', 
-              score: 92
-            },
-            { 
-              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
-              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
-            },
-            { 
-              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
-              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
-            }
-          ],
-          overallFeedback: {
-            summary: 'Valentina demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
-            strengths: [
-              'Expertise profundo en sistemas de diseño escalables.',
-              'Compromiso genuino y metodológico con la accesibilidad digital.',
-              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
-            ],
-            improvements: [
-              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
-              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
-          }
-        },
-        backgroundCheck: {
-          status: 'pending',
-          completedDate: '2026-04-10',
-          details: [
-            { category: 'Identidad', result: 'Verificada correctamente', status: 'pass' },
-            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
-            { category: 'Historial Crediticio', result: 'En proceso de verificación', status: 'warning' },
-            { category: 'Referencias Laborales', result: 'Pendiente confirmar certificado de Accenture International', status: 'warning' }
-          ]
-        }
-      },
-      {
-        id: 'app-002-2',
-        jobTitle: 'UX Senior Strategist',
-        jobLocation: 'Remote (USA)',
-        currentStage: 'entrevista-pm',
-        status: 'active',
-        appliedDate: '2026-01-05',
-        matchScore: 88,
-        confidence: 'high',
-        scores: {
-          cvScore: 96,
-          technicalScore: 92
-        }
-      },
-      {
-        id: 'app-002-3',
-        jobTitle: 'Design Lead',
-        jobLocation: 'Medellín, Colombia',
-        currentStage: 'seleccionado',
-        status: 'rejected',
-        appliedDate: '2025-09-20',
-        matchScore: 91,
-        confidence: 'high',
-        scores: {
-          cvScore: 92,
-          technicalScore: 94
-        },
-        rejectionReason: 'El candidato aceptó otra oferta'
-      }
-    ],
-    
-    // Información personal adicional
-    firstName: 'Valentina',
-    lastName: 'Herrera Castro',
-    identificationNumber: '1023456789',
-    identificationType: 'Cédula de Ciudadanía',
-    nationality: 'Colombiana',
-    linkedin: 'https://www.linkedin.com/in/valentinaherrera',
-    birthDate: '22/08/1995',
-    
-    // Ubicación detallada
-    city: 'Bogotá',
-    country: 'Colombia',
-    willingToRelocate: true,
-    interestedLocations: ['Remote (Global)', 'USA', 'Europa'],
-    
-    // Información laboral adicional
-    noticePeriod: '1',
-    noticePeriodUnit: 'Mes',
-    currency: 'Peso colombiano (COP)',
-    
-    // Perfil profesional
-    description: 'Product Designer Senior con 8 años de experiencia trabajando con equipos globales en Google y Accenture Interactive. Especializada en diseño de sistemas escalables, investigación de usuarios internacional y colaboración cross-cultural. He liderado proyectos de transformación digital para corporaciones Fortune 500 y startups tecnológicas, siempre enfocándome en crear experiencias intuitivas y accesibles. Mi experiencia en consultoría me ha dado una visión estratégica única para resolver problemas complejos de negocio a través del diseño. Apasionada por la accesibilidad digital, las metodologías ágiles y el liderazgo de equipos distribuidos. Certificada en Design Operations y con experiencia trabajando en ambientes altamente colaborativos y de ritmo acelerado.',
-    
-    experience: [
-      {
-        company: 'Google (Contractor)',
-        position: 'UX Designer',
-        duration: 'Ene 2023 - Presente',
-        description: 'Diseño de features para productos Google Workspace. Colaboración con equipos internacionales en Mountain View, Londres y Bangalore. Research y testing con usuarios globales de diferentes culturas y contextos.',
-        location: 'Remote (USA)',
-        startDate: 'Enero 2023',
-        endDate: null,
-        current: true,
-        achievements: [
-          'Diseñé 3 features clave para Google Workspace adoptadas por +50M usuarios',
-          'Lideré iniciativas de accesibilidad logrando WCAG 2.1 AAA compliance',
-          'Colaboré con equipos en 5 países diferentes, optimizando procesos de trabajo remoto',
-          'Implementé sistema de componentes reutilizables que redujo tiempo de diseño en 35%',
-          'Mentoría a 2 diseñadores contratistas en mejores prácticas de Google'
-        ]
-      },
-      {
-        company: 'Accenture Interactive',
-        position: 'Senior UX Designer',
-        duration: 'Jun 2019 - Dic 2022',
-        description: 'Consultoría de diseño estratégico para clientes Fortune 500 en banca, retail y telecomunicaciones. Liderazgo de proyectos end-to-end de transformación digital. Mentoría de diseñadores junior y coordinación con stakeholders C-level.',
-        location: 'Bogotá, Colombia',
-        startDate: 'Junio 2019',
-        endDate: 'Diciembre 2022',
-        current: false,
-        achievements: [
-          'Lideré transformación digital de banco regional con 80% de incremento en usuarios digitales',
-          'Diseñé sistema de diseño adoptado por 20+ equipos de producto del cliente',
-          'Facilitación de +50 workshops de Design Thinking con stakeholders ejecutivos',
-          'Mentoría de equipo de 5 diseñadores junior en metodologías ágiles',
-          'Implementé procesos de user research que redujeron tiempo de validación en 40%'
-        ]
-      },
-      {
-        company: 'Globant',
-        position: 'UX Designer',
-        duration: 'Ago 2017 - May 2019',
-        description: 'Diseño de productos digitales para clientes de USA y Latam en retail, fintech y media. Trabajo en equipos ágiles internacionales. Especialización en mobile-first y responsive design.',
-        location: 'Bogotá, Colombia',
-        startDate: 'Agosto 2017',
-        endDate: 'Mayo 2019',
-        current: false,
-        achievements: [
-          'Diseñé app fintech que alcanzó 100K descargas en primeros 3 meses',
-          'Creé sistema de design tokens adoptado por 3 proyectos del estudio',
-          'Colaboré con equipos en Argentina, México y USA en proyectos simultáneos',
-          'Lideré iniciativa de UI/UX best practices para todo el equipo de diseño'
-        ]
-      }
-    ],
-    education: [
-      {
-        institution: 'MIT Professional Education',
-        degree: 'Digital Transformation: Strategist in AI & Cloud',
-        year: '2026',
-        current: true,
-        description: 'Programa ejecutivo sobre tecnologías emergentes y su impacto estratégico en el diseño de productos.'
-      },
-      {
-        institution: 'Universidad de los Andes',
-        degree: 'Diseño',
-        year: '2017',
-        description: 'Título con distinción en Diseño con énfasis en diseño de interacción y medios digitales. Proyecto de grado sobre accesibilidad en interfaces móviles.'
-      },
-      {
-        institution: 'General Assembly',
-        degree: 'UX Design Immersive',
-        year: '2018',
-        description: 'Bootcamp intensivo de 12 semanas en diseño UX/UI con enfoque en metodologías ágiles, design thinking y prototipado rápido.'
-      },
-      {
-        institution: 'Nielsen Norman Group',
-        degree: 'UX Certification',
-        year: '2021',
-        description: 'Certificación profesional en User Experience del Nielsen Norman Group.'
-      }
-    ],
-    skills: {
-      technical: ['Figma', 'Sketch', 'Design Systems', 'Advanced Prototyping', 'User Research', 'Design Ops', 'Accessibility (WCAG)', 'Analytics', 'A/B Testing', 'Maze', 'UserTesting', 'Miro', 'FigJam', 'Design Tokens', 'Component Libraries'],
-      soft: ['Liderazgo', 'Comunicación intercultural', 'Pensamiento estratégico', 'Mentoría', 'Adaptabilidad', 'Stakeholder Management', 'Presentaciones ejecutivas', 'Facilitación de workshops', 'Trabajo remoto', 'Inglés fluido (C1)']
-    },
-    portfolio: {
-      url: 'https://valentinaherrera.design',
-      projects: [
-        {
-          name: 'Google Workspace Feature (NDA)',
-          description: 'Feature de productividad y colaboración para Google Workspace con enfoque en accesibilidad global',
-          impact: 'Adoptado por +50M usuarios en 6 meses. Incremento del 22% en engagement'
-        },
-        {
-          name: 'Banking Digital Transformation - Accenture',
-          description: 'Transformación digital completa de banco regional latinoamericano con 5M+ clientes',
-          impact: 'Incremento del 80% en usuarios digitales, NPS de 78, reducción del 60% en llamadas a call center'
-        },
-        {
-          name: 'Accenture Design System',
-          description: 'Sistema de diseño escalable para cliente enterprise con +20 productos digitales',
-          impact: 'Adoptado por 20+ equipos, reducción del 50% en tiempo de diseño a producción'
-        },
-        {
-          name: 'Fintech Mobile App - Globant',
-          description: 'App móvil de pagos y transferencias para mercado latinoamericano',
-          impact: '100K descargas en 3 meses, rating de 4.7/5 en stores'
-        }
-      ]
-    },
-    documents: [
-      { id: 'doc-002-1', name: 'Valentina_Herrera_CV.pdf', type: 'PDF', size: '1.5 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' },
-      { id: 'doc-002-2', name: 'Google_UX_Certification.pdf', type: 'PDF', size: '2.1 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' },
-      { id: 'doc-002-3', name: 'Portfolio_Global_2024.pdf', type: 'PDF', size: '32.0 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' }
-    ],
-    notes: [
-      'Experiencia internacional excepcional - trabajó en Google',
-      'Portfolio de alto nivel con proyectos de gran impacto medible',
-      'Excelente fit cultural: colaborativa, estratégica y orientada a resultados',
-      'Certificaciones de Nielsen Norman Group y General Assembly',
-      'Expectativa salarial en el límite superior pero completamente justificada'
-    ]
-  },
+  // ====== ETAPA 8: VERIFICACIÓN ANTECEDENTES (0 ACTIVOS, 1 RECHAZADO) ======
   {
     id: 'cand-003',
     name: 'Andrés Parra Gómez',
@@ -4163,7 +3886,7 @@ export const candidatesData: CandidateData[] = [
     ]
   },
 
-  // ====== ETAPA 1: EVALUACIÓN CV (3 ACTIVOS) ======
+  // ====== ETAPA 1: EVALUACIÓN CV (4 ACTIVOS) ======
   {
     id: 'cand-019',
     name: 'Mateo Sánchez Rojas',
@@ -4645,5 +4368,256 @@ export const candidatesData: CandidateData[] = [
       'Buen balance entre diseño visual y arquitectura de información clínica',
       'Residente en Medellín, abierto a remoto o Bogotá'
     ]
+  },
+
+
+  // ====== ETAPA 8: VERIFICACIÓN ANTECEDENTES (1 ACTIVO CON BLOCKER, 1 RECHAZADO) ======
+  {
+    id: 'cand-002',
+    name: 'Valentina Herrera Castro',
+    email: 'valentina.herrera@email.com',
+    phone: '+57 318 789 0123',
+    age: 31,
+    location: 'Bogotá, Colombia',
+    avatar: 'VH',
+    yearsExperience: 8,
+    expectedSalary: '$9.500.000 - $11.500.000 COP',
+    availability: '1 mes',
+    
+    // Lista de aplicaciones (vacantes)
+    applications: [
+      {
+        id: 'app-002-1',
+        cvEvaluation: {
+          summary: 'Candidata con fuerte enfoque en diseño de interacción y metodologías ágiles. Su experiencia en Accenture Interactive demuestra capacidad para manejar proyectos de gran escala. Requiere validación de sus certificaciones internacionales pendientes.',
+          score: 84,
+          criteria: [
+            { label: 'Años de Experiencia', score: 80, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 85, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 70, status: 'warning' },
+            { label: 'Estabilidad Laboral', score: 90, status: 'pass' }
+          ]
+        },
+        jobTitle: 'Product Designer Senior',
+        jobLocation: 'Bogotá, Colombia',
+        currentStage: 'antecedentes',
+        status: 'active',
+        appliedDate: '2026-02-12',
+        matchScore: 94,
+        confidence: 'high',
+        scores: {
+          cvScore: 94,
+          psychometricScore: 90,
+          serenaScore: 92,
+          technicalScore: 95,
+          productManagerScore: 91,
+          hiringManagerScore: 94
+        },
+        blocker: {
+          stageId: 'antecedentes',
+          reason: 'Documentación incompleta: Falta certificado de la última empresa internacional.',
+          priority: 'high',
+          action: {
+            type: 'whatsapp',
+            label: 'Pedir certificado por WhatsApp',
+            message: 'Hola Valentina, espero que estés bien. Te escribo de Serena IA para solicitarte el certificado laboral de tu última experiencia internacional (Accenture) que nos hace falta para completar tu verificación de antecedentes. ¡Muchas gracias!'
+          }
+        },
+        serenaInterview: {
+          transcript: [
+            { role: 'serena', text: 'Hola Valentina, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en Accenture Interactive. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
+            { role: 'candidate', text: 'El mayor desafío fue unificar los componentes de 20 equipos de producto diferentes que trabajaban con tecnologías distintas. Tuvimos que crear una base sólida de Design Tokens que fuera agnostica al framework.', timestamp: '10:02' },
+            { role: 'serena', text: 'Entiendo. ¿Y cómo manejaste la resistencia al cambio de los desarrolladores que ya tenían sus propios flujos?', timestamp: '10:05' },
+            { role: 'candidate', text: 'Implementamos un sistema de gobernanza donde cada equipo podía proponer mejoras. Hicimos sesiones de pair programming y creamos una documentación extremadamente detallada en Storybook.', timestamp: '10:07' },
+            { role: 'serena', text: 'Excelente enfoque. Pasando a accesibilidad, he visto que es una de tus pasiones. ¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', timestamp: '10:10' },
+            { role: 'candidate', text: 'Integramos linters de accesibilidad directamente en Figma y realizamos auditorías automáticas en el CI/CD. Pero lo más importante fueron los tests de usabilidad con personas con discapacidad real.', timestamp: '10:12' }
+          ],
+          questionScores: [
+            { 
+              objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
+              question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño de Accenture?', 
+              score: 92
+            },
+            { 
+              objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
+              question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
+              score: 85
+            },
+            { 
+              objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
+              question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
+              score: 95
+            }
+          ],
+          overallFeedback: {
+            summary: 'Valentina demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            strengths: [
+              'Expertise profundo en sistemas de diseño escalables.',
+              'Compromiso genuino y metodológico con la accesibilidad digital.',
+              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+            ],
+            improvements: [
+              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
+              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
+            ]
+          }
+        },
+        backgroundCheck: {
+          status: 'pending',
+          completedDate: '2026-04-10',
+          details: [
+            { category: 'Identidad', result: 'Verificada correctamente', status: 'pass' },
+            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
+            { category: 'Historial Crediticio', result: 'En proceso de verificación', status: 'warning' },
+            { category: 'Referencias Laborales', result: 'Pendiente confirmar certificado de Accenture International', status: 'warning' }
+          ]
+        }
+      }
+    ],
+    
+    // Información personal adicional
+    firstName: 'Valentina',
+    lastName: 'Herrera Castro',
+    identificationNumber: '1023456789',
+    identificationType: 'Cédula de Ciudadanía',
+    nationality: 'Colombiana',
+    linkedin: 'https://www.linkedin.com/in/valentinaherrera',
+    birthDate: '22/08/1995',
+    
+    // Ubicación detallada
+    city: 'Bogotá',
+    country: 'Colombia',
+    willingToRelocate: true,
+    interestedLocations: ['Remote (Global)', 'USA', 'Europa'],
+    
+    // Información laboral adicional
+    noticePeriod: '1',
+    noticePeriodUnit: 'Mes',
+    currency: 'Peso colombiano (COP)',
+    
+    // Perfil profesional
+    description: 'Product Designer Senior con 8 años de experiencia trabajando con equipos globales en Google y Accenture Interactive. Especializada en diseño de sistemas escalables, investigación de usuarios internacional y colaboración cross-cultural. He liderado proyectos de transformación digital para corporaciones Fortune 500 y startups tecnológicas, siempre enfocándome en crear experiencias intuitivas y accesibles. Mi experiencia en consultoría me ha dado una visión estratégica única para resolver problemas complejos de negocio a través del diseño. Apasionada por la accesibilidad digital, las metodologías ágiles y el liderazgo de equipos distribuidos. Certificada en Design Operations y con experiencia trabajando en ambientes altamente colaborativos y de ritmo acelerado.',
+    
+    experience: [
+      {
+        company: 'Google (Contractor)',
+        position: 'UX Designer',
+        duration: 'Ene 2023 - Presente',
+        description: 'Diseño de features para productos Google Workspace. Colaboración con equipos internacionales en Mountain View, Londres y Bangalore. Research y testing con usuarios globales de diferentes culturas y contextos.',
+        location: 'Remote (USA)',
+        startDate: 'Enero 2023',
+        endDate: null,
+        current: true,
+        achievements: [
+          'Diseñé 3 features clave para Google Workspace adoptadas por +50M usuarios',
+          'Lideré iniciativas de accesibilidad logrando WCAG 2.1 AAA compliance',
+          'Colaboré con equipos en 5 países diferentes, optimizando procesos de trabajo remoto',
+          'Implementé sistema de componentes reutilizables que redujo tiempo de diseño en 35%',
+          'Mentoría a 2 diseñadores contratistas en mejores prácticas de Google'
+        ]
+      },
+      {
+        company: 'Accenture Interactive',
+        position: 'Senior UX Designer',
+        duration: 'Jun 2019 - Dic 2022',
+        description: 'Consultoría de diseño estratégico para clientes Fortune 500 en banca, retail y telecomunicaciones. Liderazgo de proyectos end-to-end de transformación digital. Mentoría de diseñadores junior y coordinación con stakeholders C-level.',
+        location: 'Bogotá, Colombia',
+        startDate: 'Junio 2019',
+        endDate: 'Diciembre 2022',
+        current: false,
+        achievements: [
+          'Lideré transformación digital de banco regional con 80% de incremento en usuarios digitales',
+          'Diseñé sistema de diseño adoptado por 20+ equipos de producto del cliente',
+          'Facilitación de +50 workshops de Design Thinking con stakeholders ejecutivos',
+          'Mentoría de equipo de 5 diseñadores junior en metodologías ágiles',
+          'Implementé procesos de user research que redujeron tiempo de validación en 40%'
+        ]
+      },
+      {
+        company: 'Globant',
+        position: 'UX Designer',
+        duration: 'Ago 2017 - May 2019',
+        description: 'Diseño de productos digitales para clientes de USA y Latam en retail, fintech y media. Trabajo en equipos ágiles internacionales. Especialización en mobile-first y responsive design.',
+        location: 'Bogotá, Colombia',
+        startDate: 'Agosto 2017',
+        endDate: 'Mayo 2019',
+        current: false,
+        achievements: [
+          'Diseñé app fintech que alcanzó 100K descargas en primeros 3 meses',
+          'Creé sistema de design tokens adoptado por 3 proyectos del estudio',
+          'Colaboré con equipos en Argentina, México y USA en proyectos simultáneos',
+          'Lideré iniciativa de UI/UX best practices para todo el equipo de diseño'
+        ]
+      }
+    ],
+    education: [
+      {
+        institution: 'MIT Professional Education',
+        degree: 'Digital Transformation: Strategist in AI & Cloud',
+        year: '2026',
+        current: true,
+        description: 'Programa ejecutivo sobre tecnologías emergentes y su impacto estratégico en el diseño de productos.'
+      },
+      {
+        institution: 'Universidad de los Andes',
+        degree: 'Diseño',
+        year: '2017',
+        description: 'Título con distinción en Diseño con énfasis en diseño de interacción y medios digitales. Proyecto de grado sobre accesibilidad en interfaces móviles.'
+      },
+      {
+        institution: 'General Assembly',
+        degree: 'UX Design Immersive',
+        year: '2018',
+        description: 'Bootcamp intensivo de 12 semanas en diseño UX/UI con enfoque en metodologías ágiles, design thinking y prototipado rápido.'
+      },
+      {
+        institution: 'Nielsen Norman Group',
+        degree: 'UX Certification',
+        year: '2021',
+        description: 'Certificación profesional en User Experience del Nielsen Norman Group.'
+      }
+    ],
+    skills: {
+      technical: ['Figma', 'Sketch', 'Design Systems', 'Advanced Prototyping', 'User Research', 'Design Ops', 'Accessibility (WCAG)', 'Analytics', 'A/B Testing', 'Maze', 'UserTesting', 'Miro', 'FigJam', 'Design Tokens', 'Component Libraries'],
+      soft: ['Liderazgo', 'Comunicación intercultural', 'Pensamiento estratégico', 'Mentoría', 'Adaptabilidad', 'Stakeholder Management', 'Presentaciones ejecutivas', 'Facilitación de workshops', 'Trabajo remoto', 'Inglés fluido (C1)']
+    },
+    portfolio: {
+      url: 'https://valentinaherrera.design',
+      projects: [
+        {
+          name: 'Google Workspace Feature (NDA)',
+          description: 'Feature de productividad y colaboración para Google Workspace con enfoque en accesibilidad global',
+          impact: 'Adoptado por +50M usuarios en 6 meses. Incremento del 22% en engagement'
+        },
+        {
+          name: 'Banking Digital Transformation - Accenture',
+          description: 'Transformación digital completa de banco regional latinoamericano con 5M+ clientes',
+          impact: 'Incremento del 80% en usuarios digitales, NPS de 78, reducción del 60% en llamadas a call center'
+        },
+        {
+          name: 'Accenture Design System',
+          description: 'Sistema de diseño escalable para cliente enterprise con +20 productos digitales',
+          impact: 'Adoptado por 20+ equipos, reducción del 50% en tiempo de diseño a producción'
+        },
+        {
+          name: 'Fintech Mobile App - Globant',
+          description: 'App móvil de pagos y transferencias para mercado latinoamericano',
+          impact: '100K descargas en 3 meses, rating de 4.7/5 en stores'
+        }
+      ]
+    },
+    documents: [
+      { id: 'doc-002-1', name: 'Valentina_Herrera_CV.pdf', type: 'PDF', size: '1.5 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' },
+      { id: 'doc-002-2', name: 'Google_UX_Certification.pdf', type: 'PDF', size: '2.1 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' },
+      { id: 'doc-002-3', name: 'Portfolio_Global_2024.pdf', type: 'PDF', size: '32.0 MB', uploadedDate: '2026-02-12', uploadedBy: 'Valentina Herrera Castro' }
+    ],
+    notes: [
+      'Experiencia internacional excepcional - trabajó en Google',
+      'Portfolio de alto nivel con proyectos de gran impacto medible',
+      'Excelente fit cultural: colaborativa, estratégica y orientada a resultados',
+      'Certificaciones de Nielsen Norman Group y General Assembly',
+      'Expectativa salarial en el límite superior pero completamente justificada'
+    ]
   }
+
 ];

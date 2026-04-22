@@ -248,7 +248,8 @@ const OnboardingTour: React.FC = () => {
                 <span>Atrás</span>
               </button>
 
-              {currentStep !== 1 && (
+              {/* Botón de continuación - Siempre visible para evitar bloqueos */}
+              {true && (
                 <button
                   onClick={currentStep === TOUR_STEPS.length - 1 ? finishTour : nextStep}
                   className="flex items-center gap-3 bg-slate-900 group text-white pl-6 pr-4 py-3 rounded-2xl font-black shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95"

@@ -49,7 +49,7 @@ export function CandidateDetailDrawer({
   onPrevious, 
   onNext,
   onClose,
-  totalCandidates = 74,
+  totalCandidates = 0,
   currentIndex = 1
 }: CandidateDetailDrawerProps) {
   const { 
@@ -420,6 +420,7 @@ export function CandidateDetailDrawer({
           isOpen={isSerenaActive} 
           onClose={() => setSerenaActive(false)} 
           candidate={mockCandidate} 
+          isValentina={isValentina}
         />
       </div>
     </div>

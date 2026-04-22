@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { toast } from 'sonner';
 import { Sparkles, X, Send, ChevronDown, Plus, Copy, Edit2, MessageCircle, Mail, AlertCircle } from 'lucide-react';
 import { cn } from './ui/utils';
 import { Badge } from './ui/badge';
@@ -17,6 +18,7 @@ interface SerenaIAPanelProps {
   candidate?: any;
   mode?: 'candidate' | 'global';
   allCandidates?: any[];
+  isValentina?: boolean;
 }
 
 const getMockAIResponse = (question: string, candidateName: string) => {
@@ -33,7 +35,7 @@ const getMockAIResponse = (question: string, candidateName: string) => {
   return `He analizado ese punto en el perfil de ${candidateName}. Su experiencia sugiere que tiene las competencias necesarias, aunque valdría la pena profundizar en la entrevista técnica sobre sus metodologías específicas.`;
 };
 
-export function SerenaIAPanel({ isOpen, onClose, candidate, mode, allCandidates }: SerenaIAPanelProps) {
+export function SerenaIAPanel({ isOpen, onClose, candidate, mode, allCandidates, isValentina }: SerenaIAPanelProps) {
   const [chatInput, setChatInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -124,6 +126,12 @@ export function SerenaIAPanel({ isOpen, onClose, candidate, mode, allCandidates 
 
   const handleAction = (actionType: string, customName?: string) => {
     const targetName = customName || candidateName;
+
+    if (isValentina && actionType === 'whatsapp') {
+      toast.error('No es posible abrir WhatsApp en este momento. Inténtalo de nuevo en unos minutos.');
+      return;
+    }
+
     setIsTyping(true);
     setTimeout(() => {
       setMessages(prev => [...prev, {

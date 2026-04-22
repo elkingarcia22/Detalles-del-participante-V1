@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { toast } from 'sonner';
 import { StagesSection } from './StagesSection';
 import { ChevronRight, ChevronLeft, BriefcaseBusiness, AlertCircle } from 'lucide-react';
 import { cn } from '../ui/utils';
@@ -197,6 +198,10 @@ export function VacanciesSection({
                                 variant="secondary"
                                 onClick={(e) => {
                                   e.stopPropagation();
+                                  if (isValentina) {
+                                    toast.error('No es posible abrir WhatsApp en este momento. Inténtalo de nuevo en unos minutos.');
+                                    return;
+                                  }
                                   if (app.blocker.action.type === 'whatsapp' && candidate?.phone) {
                                     const phone = candidate.phone.replace(/[^0-9]/g, '');
                                     const text = encodeURIComponent(app.blocker.action.message || '');

@@ -25,24 +25,38 @@ export function CandidateListPage() {
     }
   }, [id]);
 
-  const candidates = [
-    { id: 'cand-001', name: 'Andrés Parra Gómez', cvScore: 85, experience: '5 años', appliedTime: 'Aplicó hace 5 meses', status: 'En progreso' },
-    { id: 'cand-003', name: 'Carlos Alberto González ...', cvScore: 78, experience: '3 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
-    { id: 'cand-004', name: 'Diana Paola Rodríguez Suárez', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
-    { id: 'cand-002', name: 'Valentina Herrera Castro', cvScore: 94, experience: '8 años', appliedTime: 'Aplicó hace 3 meses', status: 'En progreso', hasBlocker: true, blockerReason: 'Documentación incompleta: Referencias laborales pendientes de validación.' },
-    { id: 'cand-005', name: 'María Fernanda López To...', cvScore: 82, experience: '4 años', appliedTime: 'Aplicó hace 1 mes', status: 'En progreso' },
-    { id: 'cand-006', name: 'José Antonio Ramírez Sá...', cvScore: 76, experience: '6 años', appliedTime: 'Aplicó hace 2 meses', status: 'En progreso' },
-    { id: 'cand-007', name: 'Ana Gabriela Morales Cruz', cvScore: 88, experience: '5 años', appliedTime: 'Aplicó hace 3 semanas', status: 'En progreso' },
-  ];
+  // Group candidates dynamically from candidatesData
+  const getCandidatesForColumn = (columnType: 'evaluacion-cv' | 'evaluacion-serena' | 'evaluacion-psicometrica' | 'revision') => {
+    return candidatesData.filter(candidate => {
+      const activeApp = candidate.applications?.find(app => app.status === 'active');
+      if (!activeApp) return false;
+
+      if (columnType === 'revision') {
+        return !!activeApp.blocker;
+      }
+      return activeApp.currentStage === columnType;
+    }).map(candidate => {
+      const activeApp = candidate.applications?.find(app => app.status === 'active')!;
+      return {
+        ...candidate,
+        cvScore: activeApp.scores?.cvScore || 0,
+        experience: candidate.yearsExperience ? `${candidate.yearsExperience} años` : 'N/A',
+        appliedTime: activeApp.appliedDate ? `Aplicó el ${activeApp.appliedDate}` : 'N/A',
+        status: activeApp.status === 'active' ? 'En proceso' : activeApp.status,
+        hasBlocker: !!activeApp.blocker,
+        blockerReason: activeApp.blocker?.reason
+      };
+    });
+  };
 
   const handleCandidateClick = (candidateId: string | number) => {
-    if (isTourActive && currentStep === 1 && candidateId === 'cand-001') {
+    if (isTourActive && currentStep === 1 && candidateId === 'cand-003') {
       nextStep();
     }
     navigate(`/candidatos/candidato/${candidateId}`);
   };
 
-  const totalCandidatesCount = 74; // Static as per prototype requirements
+  const totalCandidatesCount = candidatesData.length;
   const currentIndex = selectedCandidateId 
     ? Math.max(1, candidatesData.findIndex(c => c.id.toString() === selectedCandidateId.toString()) + 1)
     : 1;
@@ -68,7 +82,7 @@ export function CandidateListPage() {
   const CandidateCard = ({ candidate }: { candidate: any }) => (
     <div
       onClick={() => handleCandidateClick(candidate.id)}
-      data-tour={candidate.id === 1 ? 'candidate-card-andres' : undefined}
+      data-tour={candidate.id === 'cand-001' ? 'candidate-card-andres' : undefined}
       className={cn(
         "bg-white rounded-lg border p-4 hover:shadow-md cursor-pointer transition-shadow",
         candidate.hasBlocker ? "border-amber-200 bg-amber-50/40" : "border-gray-200"
@@ -233,12 +247,12 @@ export function CandidateListPage() {
                 <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
                   <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Evaluación CV</h3>
                   <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
-                     <span className="text-green-600">8 ACTIVOS</span>
+                     <span className="text-green-600">{getCandidatesForColumn('evaluacion-cv').length} ACTIVOS</span>
                      <span className="text-slate-400">16 TOTAL</span>
                   </div>
                 </div>
                 <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
-                  {candidates.slice(0, 3).map((candidate) => (
+                  {getCandidatesForColumn('evaluacion-cv').map((candidate) => (
                     <CandidateCard key={candidate.id} candidate={candidate} />
                   ))}
                 </div>
@@ -249,12 +263,12 @@ export function CandidateListPage() {
                 <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
                   <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Serena AI</h3>
                   <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
-                     <span className="text-green-600">6 ACTIVOS</span>
+                     <span className="text-green-600">{getCandidatesForColumn('evaluacion-serena').length} ACTIVOS</span>
                      <span className="text-slate-400">8 TOTAL</span>
                   </div>
                 </div>
                 <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
-                  {candidates.slice(0, 2).map((candidate) => (
+                  {getCandidatesForColumn('evaluacion-serena').map((candidate) => (
                     <CandidateCard key={candidate.id} candidate={candidate} />
                   ))}
                 </div>
@@ -265,12 +279,12 @@ export function CandidateListPage() {
                 <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
                   <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Psicométrica</h3>
                   <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
-                     <span className="text-green-600">5 ACTIVOS</span>
+                     <span className="text-green-600">{getCandidatesForColumn('evaluacion-psicometrica').length} ACTIVOS</span>
                      <span className="text-slate-400">6 TOTAL</span>
                   </div>
                 </div>
                 <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
-                  {candidates.slice(1, 4).map((candidate) => (
+                  {getCandidatesForColumn('evaluacion-psicometrica').map((candidate) => (
                     <CandidateCard key={candidate.id} candidate={candidate} />
                   ))}
                 </div>
@@ -281,12 +295,12 @@ export function CandidateListPage() {
                 <div className="bg-white rounded-t-lg border border-slate-200 p-3 shadow-sm">
                   <h3 className="text-xs font-bold text-slate-800 uppercase tracking-tight">Para Revisión</h3>
                   <div className="flex items-center gap-2 mt-1 text-[9px] font-bold">
-                     <span className="text-green-600">5 ACTIVOS</span>
+                     <span className="text-green-600">{getCandidatesForColumn('revision').length} ACTIVOS</span>
                      <span className="text-slate-400">5 TOTAL</span>
                   </div>
                 </div>
                 <div className="flex-1 bg-slate-100/30 border-x border-b border-slate-200 rounded-b-lg p-2 overflow-y-auto space-y-2">
-                  {candidates.filter(c => c.hasBlocker || c.name.includes('María') || c.name.includes('José')).map((candidate) => (
+                  {getCandidatesForColumn('revision').map((candidate) => (
                     <CandidateCard key={candidate.id} candidate={candidate} />
                   ))}
                 </div>
