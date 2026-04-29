@@ -360,6 +360,7 @@ export function CandidateDetailDrawer({
           onSerenaClick={() => setSerenaActive(true)}
           isDisabled={isSectionEditing}
           isValentina={isValentina}
+          isAndres={isAndres}
         />
       </div>
 
@@ -389,31 +390,32 @@ export function CandidateDetailDrawer({
               </div>
             </div>
 
-            {/* Floating Action Bar - Fixed at bottom center */}
-            <div className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-6">
-              <div className="flex justify-center pointer-events-none">
-                {isEditMode ? (
+            {/* Floating Action Bar Container */}
+            <div className="absolute bottom-0 left-0 right-0 z-30 h-24 pointer-events-none">
+              {isEditMode ? (
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
                   <EditModeBar
                     onSave={handleSaveChanges}
                     onCancel={handleCancelEdit}
                     hideButtons={isSectionEditing}
                     isValentina={isValentina}
                   />
-                ) : (
-                  <FloatingActionBar
-                    mode={isInsideVacancy ? 'vacancy' : 'general'}
-                    onReject={() => console.log('Reject')}
-                    onNextStage={() => console.log('Next stage')}
-                    onComment={() => {}}
-                    onAddTodo={() => {}}
-                    onMessage={() => console.log('Message')}
-                    candidatePhone={mockCandidate.phone}
-                    onAddDocument={handleAddDocument}
-                    onEditProfile={handleEditProfile}
-                    isValentina={isValentina}
-                  />
-                )}
-              </div>
+                </div>
+              ) : (
+                <FloatingActionBar
+                  mode={isInsideVacancy ? 'vacancy' : 'general'}
+                  onReject={() => console.log('Reject')}
+                  onNextStage={() => console.log('Next stage')}
+                  onComment={() => {}}
+                  onAddTodo={() => {}}
+                  onMessage={() => console.log('Message')}
+                  candidatePhone={mockCandidate.phone}
+                  onAddDocument={handleAddDocument}
+                  onEditProfile={handleEditProfile}
+                  isValentina={isValentina}
+                  isAndres={isAndres}
+                />
+              )}
             </div>
           </div>
         </div>

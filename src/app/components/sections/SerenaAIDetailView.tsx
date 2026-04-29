@@ -17,7 +17,9 @@ import {
   Sparkles,
   Plus,
   Lock,
-  X
+  X,
+  Pencil,
+  Trash2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
@@ -60,6 +62,9 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
   const [newComment, setNewComment] = useState('');
   const [isAddingComment, setIsAddingComment] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [editingText, setEditingText] = useState('');
+  const [deletingCommentId, setDeletingCommentId] = useState<number | null>(null);
 
   const handleAddComment = () => {
     if (!newComment.trim()) return;
@@ -142,28 +147,28 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
         <TabsList className="bg-slate-200/50 p-1.5 rounded-2xl mb-8 w-full sm:w-auto flex justify-start h-auto border border-slate-200/30">
           <TabsTrigger 
             value="analysis" 
-            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 transition-all flex items-center gap-2"
+            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all flex items-center gap-2"
           >
             <BarChart3 className="w-4 h-4" />
             Análisis y Puntajes
           </TabsTrigger>
           <TabsTrigger 
             value="transcript" 
-            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 transition-all flex items-center gap-2"
+            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all flex items-center gap-2"
           >
             <MessageSquare className="w-4 h-4" />
             Transcripción
           </TabsTrigger>
           <TabsTrigger 
             value="feedback" 
-            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 transition-all flex items-center gap-2"
+            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all flex items-center gap-2"
           >
             <Star className="w-4 h-4" />
             Feedback Serena
           </TabsTrigger>
           <TabsTrigger 
             value="comments" 
-            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 transition-all flex items-center gap-2"
+            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all flex items-center gap-2"
           >
             <MessageSquare className="w-4 h-4" />
             Comentarios
@@ -229,28 +234,69 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
             
             <div className="grid gap-4">
               {questionScores.map((item, idx) => (
-                <Card key={idx} className="p-5 border-gray-100 bg-white shadow-sm">
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-                    <div className="flex-1 flex items-center gap-5">
-                      <span className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-xs font-black text-blue-600 border border-blue-100 shrink-0">
-                        {idx + 1}
-                      </span>
-                      <div className="space-y-1.5">
-                        <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest block leading-none">{item.objective}</span>
-                        <p className="text-sm font-bold text-gray-900 leading-tight">
-                          {item.question}
-                        </p>
+                <Card key={idx} className="p-0 border-gray-100 bg-white shadow-sm overflow-hidden group hover:border-blue-200 transition-all">
+                  <div className="flex flex-col">
+                    {/* Header Row */}
+                    <div className="p-5 flex flex-col sm:flex-row items-center justify-between gap-6">
+                      <div className="flex-1 flex items-center gap-5">
+                        <span className={cn(
+                          "w-10 h-10 rounded-xl flex items-center justify-center text-xs font-black border shrink-0 shadow-sm group-hover:scale-105 transition-transform",
+                          "bg-blue-50 text-blue-600 border-blue-100"
+                        )}>
+                          {idx + 1}
+                        </span>
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] block leading-none">
+                            {item.objective}
+                          </span>
+                          <p className="text-sm font-bold text-gray-900 leading-tight">
+                            {item.question}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 shrink-0">
+                        {item.feedback && (
+                          <div className="hidden lg:block px-4 py-2 bg-gray-50/80 rounded-xl italic text-[10px] text-slate-500 max-w-[250px] truncate border border-gray-100">
+                            "{item.feedback}"
+                          </div>
+                        )}
+                        <div className="flex items-center gap-2.5 px-3 py-1.5 bg-gray-50 rounded-xl border border-gray-100">
+                          <span className="text-lg font-black text-slate-800">{item.score}</span>
+                          <span className="text-[8px] font-bold text-gray-400 uppercase">Pts</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4 shrink-0">
-                      {item.feedback && (
-                        <div className="hidden lg:block px-4 py-2 bg-gray-50/80 rounded-xl italic text-[10px] text-slate-500 max-w-[300px] truncate border border-gray-100">
-                          "{item.feedback}"
+
+                    {/* Audio Player Section - Redesigned 'Escuchar respuesta' */}
+                    <div className="px-5 py-4 bg-slate-50/50 border-t border-gray-50 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <button 
+                          onClick={() => handlePlayAudio(item.question)}
+                          className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 text-[10px] font-black text-gray-700 hover:text-blue-700 transition-all shadow-sm group/audio active:scale-95"
+                        >
+                          <div className="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-white group-hover/audio:bg-blue-600 group-hover/audio:scale-110 transition-all shadow-sm shadow-slate-200">
+                            <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
+                          </div>
+                          ESCUCHAR RESPUESTA
+                        </button>
+                        
+                        <div className="hidden sm:flex items-center gap-[3px] h-6 px-3 bg-white/50 rounded-lg border border-gray-100">
+                          {[0.4, 0.7, 0.5, 0.8, 0.3, 0.6, 0.9, 0.4, 0.7, 0.5, 0.8, 0.3, 0.6, 0.9, 0.4].map((h, i) => (
+                            <div 
+                              key={i} 
+                              className="w-[2px] bg-gray-200 rounded-full group-hover:bg-blue-200 transition-colors" 
+                              style={{ height: `${h * 100}%` }}
+                            />
+                          ))}
                         </div>
-                      )}
-                      <div className="flex items-center gap-2.5 px-3 py-1.5 bg-gray-50 rounded-xl border border-gray-100">
-                        <span className="text-lg font-black text-slate-800">{item.score}</span>
-                        <span className="text-[8px] font-bold text-gray-400 uppercase">Pts</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 px-2 py-1 bg-white rounded-md border border-gray-100 shadow-sm">
+                          <Volume2 className="w-3 h-3 text-gray-400" />
+                          <span className="text-[10px] font-black text-gray-400 tabular-nums">0:45</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -445,8 +491,9 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                 <Badge variant="outline" className="text-[10px] border-slate-200 bg-white">{comments.length}</Badge>
               </div>
               <Button 
+                variant="secondary"
                 onClick={() => setIsAddingComment(!isAddingComment)}
-                className="rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2 flex items-center gap-2 shadow-sm transition-all"
+                className="rounded-xl font-bold text-xs px-4 py-2 flex items-center gap-2 shadow-sm transition-all"
               >
                 <Plus className="w-4 h-4" />
                 Añadir comentario
@@ -509,31 +556,124 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
             ) : (
               <div className="space-y-4">
                 {comments.map((comment) => (
-                  <Card key={comment.id} className="p-6 border-gray-100 shadow-sm bg-white hover:shadow-md transition-all group relative overflow-hidden">
-                    {comment.isPrivate && (
-                      <div className="absolute top-0 right-0 p-2">
-                        <Lock className="w-3 h-3 text-slate-300" />
-                      </div>
-                    )}
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 font-black text-xs shrink-0 border border-slate-200">
-                        {comment.avatar}
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <div className="flex items-center justify-between">
-                          <h5 className="text-sm font-bold text-gray-900 group-hover:text-slate-900 transition-colors">{comment.user}</h5>
-                          <span className="text-[10px] font-bold text-gray-400">{comment.date}</span>
+                  <div key={comment.id} className="group/c bg-white rounded-lg p-3 border border-gray-200 hover:border-gray-300 transition-colors">
+                    {editingCommentId === comment.id ? (
+                      // Edit mode
+                      <div className="space-y-2">
+                        <textarea
+                          value={editingText}
+                          onChange={e => setEditingText(e.target.value)}
+                          className="w-full resize-none text-sm bg-gray-50 p-2 rounded-md border border-slate-200"
+                          rows={3}
+                          autoFocus
+                        />
+                        <div className="flex gap-2 justify-end">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => { setEditingCommentId(null); setEditingText(''); }}
+                          >
+                            Cancelar
+                          </Button>
+                          <Button
+                            size="sm"
+                            disabled={!editingText.trim()}
+                            onClick={() => {
+                              if (isValentina) {
+                                toast.error('Estamos presentando inconvenientes para actualizar la información. Inténtalo más tarde.');
+                                return;
+                              }
+                              setComments(comments.map(c => c.id === comment.id ? { ...c, text: editingText } : c));
+                              setEditingCommentId(null);
+                              setEditingText('');
+                              toast.success('Comentario actualizado');
+                            }}
+                          >
+                            Guardar
+                          </Button>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{comment.role}</p>
-                          {comment.isPrivate && (
-                            <Badge className="bg-slate-100 text-slate-500 border-none text-[8px] font-black uppercase px-1.5 h-4">Privado</Badge>
+                      </div>
+                    ) : (
+                      // Read mode
+                      <div className="flex items-start gap-2">
+                        <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                          {comment.avatar}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-sm font-medium text-gray-900">{comment.user}</span>
+                            <span className="text-xs text-gray-500">
+                              {comment.date}
+                            </span>
+                            {comment.isPrivate && (
+                              <Badge variant="outline" className="text-xs">Privado</Badge>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-700 mt-1 break-words">{comment.text}</p>
+                        </div>
+                        {/* Edit / Delete actions */}
+                        <div className={cn("flex items-center gap-1 transition-opacity flex-shrink-0", deletingCommentId === comment.id ? "opacity-100" : "opacity-0 group-hover/c:opacity-100")}>
+                          {deletingCommentId === comment.id ? (
+                            <div className="flex items-center gap-2 px-2 py-1 bg-red-50 rounded-md border border-red-100">
+                              <span className="text-[10px] font-bold text-red-600 uppercase tracking-wider">¿Eliminar?</span>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  if (isValentina) {
+                                    toast.error('No se ha podido procesar la eliminación del comentario. Inténtalo de nuevo más tarde.');
+                                    return;
+                                  }
+                                  setComments(comments.filter(c => c.id !== comment.id));
+                                  setDeletingCommentId(null);
+                                  toast.success('Comentario eliminado');
+                                }}
+                                className="px-2 py-0.5 text-[10px] bg-red-600 text-white rounded font-medium hover:bg-red-700 transition-colors"
+                              >
+                                Sí
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setDeletingCommentId(null);
+                                }}
+                                className="px-2 py-0.5 text-[10px] bg-white text-gray-600 rounded border border-gray-200 font-medium hover:bg-gray-50 transition-colors"
+                              >
+                                No
+                              </button>
+                            </div>
+                          ) : (
+                            <>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setEditingCommentId(comment.id);
+                                  setEditingText(comment.text);
+                                }}
+                                className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                                title="Editar comentario"
+                              >
+                                <Pencil className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setDeletingCommentId(comment.id);
+                                }}
+                                className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                                title="Eliminar comentario"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </>
                           )}
                         </div>
-                        <p className="text-sm text-gray-600 leading-relaxed mt-3">{comment.text}</p>
                       </div>
-                    </div>
-                  </Card>
+                    )}
+                  </div>
                 ))}
               </div>
             )}

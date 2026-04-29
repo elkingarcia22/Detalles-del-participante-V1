@@ -65,14 +65,54 @@ export function FloatingActionBar({
   onEditProfile,
   isValentina = false
 }: FloatingActionBarProps) {
-  // Estado para dropdown personalizado
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = React.useState(false);
   const [submenuPosition, setSubmenuPosition] = React.useState({ top: 0, left: 0, fromBar: false });
+  const [isMinimized, setIsMinimized] = React.useState(false);
+
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const submenuTriggerRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const startMinimizeTimer = React.useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setIsMinimized(true);
+    }, 2500); // Wait 2.5 seconds before minimizing
+  }, []);
+
+  const clearMinimizeTimer = React.useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  }, []);
+
+  React.useEffect(() => {
+    setIsMinimized(false);
+    startMinimizeTimer();
+    return () => clearMinimizeTimer();
+  }, [mode, startMinimizeTimer, clearMinimizeTimer]);
+
+  React.useEffect(() => {
+    if (isDropdownOpen || isSubmenuOpen) {
+      clearMinimizeTimer();
+    } else {
+      if (!isMinimized) {
+        startMinimizeTimer();
+      }
+    }
+  }, [isDropdownOpen, isSubmenuOpen, startMinimizeTimer, clearMinimizeTimer, isMinimized]);
+
+  const handleMouseEnter = () => {
+    clearMinimizeTimer();
+    setIsMinimized(false);
+  };
+
+  const handleMouseLeave = () => {
+    if (!isDropdownOpen && !isSubmenuOpen) {
+      startMinimizeTimer();
+    }
+  };
 
   // Definición de acciones base
   const vacancyActions = [
@@ -233,10 +273,26 @@ export function FloatingActionBar({
   };
 
   return (
-    <div ref={containerRef} className="pointer-events-auto">
-      <div className="bg-gray-900 border border-gray-700 shadow-2xl rounded-2xl backdrop-blur-sm bg-opacity-95 inline-flex">
-        <div className="px-2 sm:px-3 py-2.5">
-          <div className="flex items-center gap-1.5 sm:gap-2">
+    <div 
+      ref={containerRef} 
+      className={cn(
+        "pointer-events-auto absolute transition-all duration-500 ease-in-out z-50 flex justify-center",
+        "left-1/2 bottom-6 -translate-x-1/2"
+      )}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className={cn(
+        "shadow-2xl backdrop-blur-sm bg-opacity-95 transition-all duration-500",
+        isMinimized 
+          ? "w-16 h-1.5 bg-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:scale-110" 
+          : "bg-gray-900 border border-gray-700 rounded-2xl inline-flex"
+      )}>
+        {isMinimized ? (
+          <div className="w-full h-full" />
+        ) : (
+          <div className="px-2 sm:px-3 py-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2">
             
             {visibleActions.map((action) => {
               if (action.isSpecial && action.key === 'move_sep') {
@@ -332,6 +388,7 @@ export function FloatingActionBar({
             </div>
           </div>
         </div>
+        )}
       </div>
 
       {/* Portal para el submenú de etapas (Renderizado fuera para evitar recortes) */}

@@ -57,11 +57,6 @@ export function CandidateSidebar({
   const renderItem = (item: SidebarItem) => {
     let label = item.label;
     let Icon = item.icon;
-    
-    if (isAndres && item.id === 'vacancies') {
-      label = 'Etapas';
-      Icon = Layers;
-    }
 
     const isActive = activeSection === item.id;
     
