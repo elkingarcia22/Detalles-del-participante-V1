@@ -29,6 +29,7 @@ interface VacanciesSectionProps {
   onVacancySelect?: (isSelected: boolean) => void;
   isValentina?: boolean;
   isAndres?: boolean;
+  onEditProfile?: () => void;
 }
 
 export function VacanciesSection({ 
@@ -42,7 +43,8 @@ export function VacanciesSection({
   highlightedStageId,
   onVacancySelect,
   isValentina,
-  isAndres
+  isAndres,
+  onEditProfile
 }: VacanciesSectionProps) {
   const [selectedVacancyId, setSelectedVacancyId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -148,6 +150,7 @@ export function VacanciesSection({
                 isValentina={isValentina}
                 selectedStageDetailId={selectedStageDetailId}
                 onDetailChange={setSelectedStageDetailId}
+                onEditProfile={onEditProfile}
               />
             )}
           </div>
@@ -213,6 +216,10 @@ export function VacanciesSection({
                                 variant="secondary"
                                 onClick={(e) => {
                                   e.stopPropagation();
+                                  if (isValentina && app.blocker?.action?.type === 'edit_profile') {
+                                    onEditProfile?.();
+                                    return;
+                                  }
                                   if (isValentina) {
                                     toast.error('No es posible abrir WhatsApp en este momento. Inténtalo de nuevo en unos minutos.');
                                     return;

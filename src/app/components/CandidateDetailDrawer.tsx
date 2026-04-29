@@ -214,6 +214,20 @@ export function CandidateDetailDrawer({
     confidence: 'low' as const,
   };
 
+  const handleEditIdentification = () => {
+    handleEditProfile();
+    setActiveSection('generalInfo');
+    // Forzamos el foco después de un breve delay para que el DOM se actualice
+    setTimeout(() => {
+      const input = document.getElementById('identification-number-input');
+      if (input) {
+        input.focus();
+        // Opcional: resaltar el campo
+        input.classList.add('ring-2', 'ring-blue-500', 'border-transparent');
+      }
+    }, 100);
+  };
+
   // Resetear sección y generar datos cuando el candidato cambia
   useEffect(() => {
     // Al cambiar de candidato, mantenemos la sección activa
@@ -300,6 +314,7 @@ export function CandidateDetailDrawer({
             onVacancySelect={setInsideVacancy}
             isValentina={isValentina}
             isAndres={isAndres}
+            onEditProfile={handleEditIdentification}
           />
         );
       case 'experience':

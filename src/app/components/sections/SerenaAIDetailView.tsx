@@ -21,7 +21,8 @@ import {
   Pencil,
   Trash2,
   Pause,
-  Brain
+  Brain,
+  Clock
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
@@ -79,6 +80,12 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
 
   const handleAddComment = () => {
     if (!newComment.trim()) return;
+
+    if (isValentina) {
+      toast.error('Estamos presentando inconvenientes para publicar tu comentario. Inténtalo más tarde.');
+      return;
+    }
+
     const comment = {
       id: Date.now(),
       user: 'Usuario Actual',
@@ -125,7 +132,17 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
   const recommendation = overallFeedback?.recommendation || "Luisa Abello es una candidata altamente calificada para el puesto de Head de Producto de IA. Se recomienda avanzar en el proceso de selección.";
   const cvScore = overallFeedback?.cvScore || 85;
 
-  const handlePlayAudio = (idx: number) => {
+  const handlePlayAudio = (idx: number, role: 'serena' | 'candidate') => {
+    if (isValentina && role === 'candidate') {
+      toast.error('Inténtalo más tarde');
+      return;
+    }
+
+    if (isValentina && role === 'serena') {
+      toast.error('¡Ups! No logramos reproducir el audio. Inténtalo más tarde.');
+      return;
+    }
+
     if (playingAudioIndex === idx) {
       setPlayingAudioIndex(null);
     } else {
@@ -135,7 +152,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
 
   const handleDownloadReport = () => {
     if (isValentina) {
-      toast.error('El reporte detallado no está disponible en este momento.');
+      toast.error('Error al descargar el PDF. Inténtalo más tarde.');
       return;
     }
     toast.success('Descargando reporte completo de Serena IA...');
@@ -195,7 +212,20 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
         {/* 1. Analysis Tab */}
         <TabsContent value="analysis" className="mt-0 animate-in fade-in duration-300 space-y-8">
           {/* 1. Resumen de Evaluación */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <Card className="p-5 border-gray-100 bg-white shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
+                  <Trophy className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Score</p>
+                  <p className="text-2xl font-black text-gray-900">{obtainedScore}</p>
+                </div>
+              </div>
+              <p className="text-[10px] text-gray-500 font-medium mt-2">Puntaje obtenido en entrevista</p>
+            </Card>
+
             <Card className="p-5 border-gray-100 bg-white shadow-sm">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
@@ -212,7 +242,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
             <Card className="p-5 border-gray-100 bg-white shadow-sm">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
-                  <Play className="w-5 h-5 fill-current" />
+                  <Clock className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Duración</p>
@@ -223,31 +253,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
             </Card>
           </div>
 
-          {/* 1.5 Factores Destacados */}
-          <div className="space-y-4">
-            <div className="flex flex-col gap-1 px-1">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-blue-500" />
-                <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Factores destacados</h4>
-              </div>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5 ml-6">Atributos clave detectados por la IA</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="p-4 bg-blue-50/50 border border-blue-100 rounded-2xl">
-                <p className="text-xs font-bold text-blue-700">Comunicación Clara</p>
-                <p className="text-[10px] text-blue-600/70 mt-1">Capacidad para articular ideas de forma estructurada.</p>
-              </div>
-              <div className="p-4 bg-indigo-50/50 border border-indigo-100 rounded-2xl">
-                <p className="text-xs font-bold text-indigo-700">Resolución de Problemas</p>
-                <p className="text-[10px] text-indigo-600/70 mt-1">Enfoque analítico ante desafíos técnicos.</p>
-              </div>
-              <div className="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl">
-                <p className="text-xs font-bold text-emerald-700">Adaptabilidad</p>
-                <p className="text-[10px] text-emerald-600/70 mt-1">Flexibilidad para ajustarse a nuevos requerimientos.</p>
-              </div>
-            </div>
-          </div>
+
 
           {/* 2. Desglose por Pregunta */}
           <div className="space-y-3">
@@ -363,7 +369,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                         {/* Audio Player */}
                         <div className="mt-6 pt-4 border-t border-slate-200/60 flex items-center gap-4">
                           <button 
-                            onClick={() => handlePlayAudio(idx)}
+                            onClick={() => handlePlayAudio(idx, msg.role)}
                             className={cn(
                               "w-10 h-10 rounded-full text-white flex items-center justify-center transition-all shadow-lg shadow-slate-200 shrink-0 group/play",
                               playingAudioIndex === idx ? "bg-blue-600 hover:bg-blue-700" : "bg-slate-900 hover:bg-slate-800"

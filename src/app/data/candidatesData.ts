@@ -4512,12 +4512,11 @@ export const candidatesData: CandidateData[] = [
         },
         blocker: {
           stageId: 'antecedentes',
-          reason: 'Documentación incompleta: Falta certificado de la última empresa internacional.',
+          reason: 'Información incompleta: No contamos con el número de identificación para realizar la verificación de antecedentes.',
           priority: 'high',
           action: {
-            type: 'whatsapp',
-            label: 'Pedir certificado por WhatsApp',
-            message: 'Hola Valentina, espero que estés bien. Te escribo de Serena IA para solicitarte el certificado laboral de tu última experiencia internacional (Accenture) que nos hace falta para completar tu verificación de antecedentes. ¡Muchas gracias!'
+            type: 'edit_profile',
+            label: 'Ingresar identificación'
           }
         },
         serenaInterview: {

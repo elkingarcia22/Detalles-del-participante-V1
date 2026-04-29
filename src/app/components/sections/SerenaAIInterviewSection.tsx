@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bot, Download, FileText, CheckCircle2, TrendingUp, MessageSquare, Quote, Star, ArrowRight } from 'lucide-react';
+import { Bot, Download, FileText, CheckCircle2, TrendingUp, MessageSquare, Quote, Star, ArrowRight, Play } from 'lucide-react';
 import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
@@ -46,6 +46,14 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
       return;
     }
     toast.success('Descargando reporte de feedback de Serena IA...');
+  };
+
+  const handlePlayAudio = (text: string) => {
+    if (isValentina) {
+      toast.error('Lo sentimos, no pudimos reproducir el audio. Por favor, inténtalo de nuevo más tarde.');
+      return;
+    }
+    toast.success('Reproduciendo audio de la transcripción...');
   };
 
   return (

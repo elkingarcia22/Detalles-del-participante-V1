@@ -58,20 +58,22 @@ interface StageAccordionProps {
   children?: React.ReactNode;
   comments: Comment[];
   addComment: (text: string, stageId: string, stageName: string, isPrivate: boolean) => void;
-  editComment?: (id: string, newText: string) => void;
-  deleteComment?: (id: string) => void;
-  openCommentPanel?: (stageId: string) => void;
+  editComment: (id: string, newText: string) => void;
+  deleteComment: (id: string) => void;
+  openCommentPanel: (stageId: string) => void;
   status?: StageStatus;
   blockerReason?: string;
   blockerAction?: {
-    type: 'whatsapp' | 'email' | 'document';
+    type: 'whatsapp' | 'email' | 'document' | 'edit_profile';
     label: string;
     message?: string;
   };
   candidate?: any;
+  isValentina?: boolean;
+  onEditProfile?: () => void;
 }
 
-function StageAccordion({ id, title, category, icon: Icon, iconColor = "text-blue-600", number, isOpen, onToggle, children, comments, addComment, editComment, deleteComment, openCommentPanel, status = 'completed', blockerReason, blockerAction, candidate, isValentina }: StageAccordionProps & { isValentina?: boolean, iconColor?: string }) {
+function StageAccordion({ id, title, category, icon: Icon, iconColor = "text-blue-600", number, isOpen, onToggle, children, comments, addComment, editComment, deleteComment, openCommentPanel, status = 'completed', blockerReason, blockerAction, candidate, isValentina, onEditProfile }: StageAccordionProps) {
   const [commentText, setCommentText] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [showCommentInput, setShowCommentInput] = useState(false);
@@ -178,6 +180,10 @@ function StageAccordion({ id, title, category, icon: Icon, iconColor = "text-blu
                       variant="secondary"
                       onClick={(e) => {
                         e.stopPropagation();
+                        if (isValentina && blockerAction?.type === 'edit_profile') {
+                          onEditProfile?.();
+                          return;
+                        }
                         if (isValentina) {
                           toast.error('No es posible abrir WhatsApp en este momento. Inténtalo de nuevo en unos minutos.');
                           return;
@@ -456,6 +462,7 @@ interface StagesSectionProps {
   isValentina?: boolean;
   selectedStageDetailId?: string | null;
   onDetailChange?: (id: string | null) => void;
+  onEditProfile?: () => void;
 }
 
 export function StagesSection({ 
@@ -469,7 +476,8 @@ export function StagesSection({
   candidate, 
   isValentina,
   selectedStageDetailId = null,
-  onDetailChange
+  onDetailChange,
+  onEditProfile
 }: StagesSectionProps) {
   const [openStages, setOpenStages] = useState<Set<string>>(new Set(['screening-talent']));
   const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -856,6 +864,7 @@ export function StagesSection({
             blockerAction={activeApplication?.blocker?.stageId === stage.id ? activeApplication.blocker.action : undefined}
             candidate={candidate}
             isValentina={isValentina}
+            onEditProfile={onEditProfile}
           >
             {stage.children}
           </StageAccordion>

@@ -72,6 +72,16 @@ export function SerenaIAPanel({ isOpen, onClose, candidate, mode, allCandidates,
               isActionable: true
             }
           ]);
+        } else if (isValentina) {
+          setMessages([
+            {
+              id: 'initial-error',
+              from: 'ai',
+              text: `Lo sentimos, no hemos podido cargar la información de Serena IA en este momento. Estamos trabajando para restablecer el servicio.`,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              isActionable: false
+            }
+          ]);
         } else {
           setMessages([
             {

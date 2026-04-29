@@ -321,7 +321,7 @@ export function CandidateListPage() {
       {/* Candidate Detail Drawer */}
       <Drawer
         open={!!selectedCandidateId}
-        onOpenChange={(open) => !open && navigate('/candidatos')}
+        onClose={() => navigate('/candidatos')}
       >
         <CandidateDetailDrawer 
           candidateId={selectedCandidateId} 

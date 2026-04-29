@@ -83,7 +83,8 @@ export function PsychometricSection({ evaluation, isValentina }: PsychometricSec
   const minThreshold = evaluation.minimumThreshold ?? 70;
   const decision = evaluation.decision ?? 'Candidato Apto';
 
-  retu    <div className="bg-white border border-gray-200/60 rounded-3xl p-10 space-y-8 text-left shadow-sm">
+  return (
+    <div className="bg-white border border-gray-200/60 rounded-3xl p-10 space-y-8 text-left shadow-sm">
       
       {/* Header — Patrón Serena IA */}
       <div className="flex items-center gap-4 pb-6 border-b border-gray-100/80">
@@ -191,8 +192,6 @@ export function PsychometricSection({ evaluation, isValentina }: PsychometricSec
         <span className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50/50 border border-emerald-100 rounded-full text-[11px] text-emerald-700 font-black uppercase tracking-widest shadow-sm">
           {decision}
         </span>
-      </div>
-    </div>>
       </div>
     </div>
   );

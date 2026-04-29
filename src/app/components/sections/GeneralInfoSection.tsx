@@ -270,6 +270,7 @@ export function GeneralInfoSection({
               {isEditMode ? (
                 <div className="relative">
                   <input
+                    id="identification-number-input"
                     type="text"
                     value={localEditedData.identificationNumber}
                     onChange={(e) => handleInputChange('identificationNumber', e.target.value)}
