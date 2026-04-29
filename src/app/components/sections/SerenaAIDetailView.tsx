@@ -51,6 +51,26 @@ interface SerenaAIDetailViewProps {
 
 export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValentina }: SerenaAIDetailViewProps) {
   const [activeTab, setActiveTab] = useState('analysis');
+  const [comments, setComments] = useState([
+    { id: 1, user: 'Ana Martínez', role: 'Senior Recruiter', date: '29 Abr, 2024', text: 'Excelente manejo de conceptos técnicos. Muy prometedor para el equipo de arquitectura.', avatar: 'AM' },
+    { id: 2, user: 'Carlos Ruiz', role: 'Tech Lead', date: '28 Abr, 2024', text: 'Me gustaría validar más su experiencia con Kubernetes en la siguiente fase.', avatar: 'CR' }
+  ]);
+  const [newComment, setNewComment] = useState('');
+
+  const handleAddComment = () => {
+    if (!newComment.trim()) return;
+    const comment = {
+      id: Date.now(),
+      user: 'Usuario Actual',
+      role: 'Reclutador',
+      date: 'Hoy',
+      text: newComment,
+      avatar: 'UA'
+    };
+    setComments([comment, ...comments]);
+    setNewComment('');
+    toast.success('Comentario añadido correctamente');
+  };
 
   if (!interviewData) {
     return (
@@ -133,6 +153,13 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
           >
             <Star className="w-4 h-4" />
             Feedback Serena
+          </TabsTrigger>
+          <TabsTrigger 
+            value="comments" 
+            className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all flex items-center gap-2"
+          >
+            <MessageSquare className="w-4 h-4" />
+            Comentarios
           </TabsTrigger>
         </TabsList>
 
@@ -328,9 +355,6 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
         <TabsContent value="feedback" className="mt-0 animate-in fade-in duration-300">
           <div className="space-y-6">
             <Card className="p-8 border-gray-100 shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-10 opacity-[0.03] pointer-events-none">
-                <Bot className="w-64 h-64 rotate-12" />
-              </div>
               <div className="relative">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600">
@@ -397,13 +421,71 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                     </div>
                     <span className="text-xs text-gray-500 font-medium">3 Reclutadores han visto este feedback</span>
                   </div>
-                  <Button variant="outline" className="rounded-xl border-gray-200 text-gray-600 font-bold text-xs gap-2">
-                    <MessageSquare className="w-4 h-4" />
-                    Añadir comentario interno
-                  </Button>
                 </div>
               </div>
             </Card>
+          </div>
+        </TabsContent>
+        
+        {/* 4. Comments Tab */}
+        <TabsContent value="comments" className="mt-0 animate-in fade-in duration-300">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-4">
+              <div className="flex items-center justify-between mb-2 px-1">
+                <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Historial de Comentarios</h4>
+                <Badge variant="outline" className="text-[10px] border-slate-200">{comments.length}</Badge>
+              </div>
+              
+              {comments.length === 0 ? (
+                <div className="p-12 text-center bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
+                  <MessageSquare className="w-10 h-10 text-gray-300 mx-auto mb-3" />
+                  <p className="text-sm text-gray-400 font-medium">No hay comentarios aún.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {comments.map((comment) => (
+                    <Card key={comment.id} className="p-5 border-gray-100 shadow-sm bg-white hover:shadow-md transition-all">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-black text-xs shrink-0 border border-blue-100">
+                          {comment.avatar}
+                        </div>
+                        <div className="flex-1 space-y-1">
+                          <div className="flex items-center justify-between">
+                            <h5 className="text-sm font-bold text-gray-900">{comment.user}</h5>
+                            <span className="text-[10px] font-bold text-gray-400">{comment.date}</span>
+                          </div>
+                          <p className="text-[10px] font-bold text-blue-600/70 uppercase tracking-widest">{comment.role}</p>
+                          <p className="text-sm text-gray-600 leading-relaxed mt-2">{comment.text}</p>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-2 px-1">
+                <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Nuevo Comentario</h4>
+              </div>
+              <Card className="p-5 border-gray-100 shadow-sm bg-white sticky top-6">
+                <textarea 
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Escribe un comentario sobre el desempeño del candidato..."
+                  className="w-full h-32 p-4 text-sm bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500/20 resize-none mb-4 placeholder:text-gray-400 font-medium"
+                />
+                <Button 
+                  onClick={handleAddComment}
+                  className="w-full rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-5 shadow-lg shadow-slate-200"
+                >
+                  Publicar Comentario
+                </Button>
+                <p className="text-[9px] text-center text-gray-400 font-medium mt-4 leading-relaxed">
+                  Este comentario será visible para todos los miembros del equipo asignados a esta vacante.
+                </p>
+              </Card>
+            </div>
           </div>
         </TabsContent>
       </Tabs>
