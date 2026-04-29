@@ -4,6 +4,7 @@ import { ChevronDown, UserCheck, FileText, Bot, Brain, Lightbulb, Users, Shield,
 import { cn } from '../ui/utils';
 import { ScreeningSection } from './ScreeningSection';
 import { SerenaAIInterviewSection } from './SerenaAIInterviewSection';
+import { SerenaAIDetailView } from './SerenaAIDetailView';
 import { CVAnalysisSection } from './CVAnalysisSection';
 import { PsychometricSection } from './PsychometricSection';
 import { BackgroundCheckSection } from './BackgroundCheckSection';
@@ -453,9 +454,23 @@ interface StagesSectionProps {
   activeApplication?: any;
   candidate?: any;
   isValentina?: boolean;
+  selectedStageDetailId?: string | null;
+  onDetailChange?: (id: string | null) => void;
 }
 
-export function StagesSection({ comments, addComment, editComment, deleteComment, openCommentPanel, highlightedStageId, activeApplication, candidate, isValentina }: StagesSectionProps) {
+export function StagesSection({ 
+  comments, 
+  addComment, 
+  editComment, 
+  deleteComment, 
+  openCommentPanel, 
+  highlightedStageId, 
+  activeApplication, 
+  candidate, 
+  isValentina,
+  selectedStageDetailId = null,
+  onDetailChange
+}: StagesSectionProps) {
   const [openStages, setOpenStages] = useState<Set<string>>(new Set(['screening-talent']));
   const stageRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -538,6 +553,17 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
     'antecedentes': getStageStatus('antecedentes', currentStage, candidateStatus, activeApplication),
     'seleccionado': getStageStatus('seleccionado', currentStage, candidateStatus, activeApplication),
   };
+
+  if (selectedStageDetailId === 'evaluacion-serena') {
+    return (
+      <SerenaAIDetailView 
+        interviewData={activeApplication?.serenaInterview} 
+        score={activeApplication?.scores?.serenaScore} 
+        onBack={() => onDetailChange?.(null)}
+        isValentina={isValentina}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -813,7 +839,13 @@ export function StagesSection({ comments, addComment, editComment, deleteComment
             iconColor={stage.iconColor}
             number={stage.number}
             isOpen={openStages.has(stage.id)}
-            onToggle={() => toggleStage(stage.id)}
+            onToggle={() => {
+              if (stage.id === 'evaluacion-serena') {
+                onDetailChange?.('evaluacion-serena');
+              } else {
+                toggleStage(stage.id);
+              }
+            }}
             comments={comments}
             addComment={addComment}
             editComment={editComment}

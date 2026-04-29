@@ -89,6 +89,7 @@ export function VacanciesSection({
 
   // Sub-componente: Vista de Historial / Resumen
   const renderSummaryView = () => {
+    const [selectedStageDetailId, setSelectedStageDetailId] = useState<string | null>(null);
     const activeCount = applications.filter(app => app.status === 'active').length;
     const totalCount = applications.length;
 
@@ -119,13 +120,19 @@ export function VacanciesSection({
           <div className="animate-in fade-in slide-in-from-left-4 duration-300">
             {!isAndres && (
               <button 
-                onClick={() => setSelectedVacancyId(null)}
+                onClick={() => {
+                  if (selectedStageDetailId) {
+                    setSelectedStageDetailId(null);
+                  } else {
+                    setSelectedVacancyId(null);
+                  }
+                }}
                 className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 mb-4 transition-colors group"
               >
                 <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
                   <ChevronLeft className="w-4 h-4" />
                 </div>
-                Volver al historial de vacantes
+                {selectedStageDetailId ? 'Volver a las etapas de la vacante' : 'Volver al historial de vacantes'}
               </button>
             )}
             
@@ -140,6 +147,8 @@ export function VacanciesSection({
                 activeApplication={applications.find(app => app.id === selectedVacancyId)} 
                 candidate={candidate} 
                 isValentina={isValentina}
+                selectedStageDetailId={selectedStageDetailId}
+                onDetailChange={setSelectedStageDetailId}
               />
             )}
           </div>

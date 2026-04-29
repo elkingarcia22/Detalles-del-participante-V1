@@ -143,12 +143,21 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
                   )}
                 </div>
                 <div className={cn(
-                  "max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-sm",
+                  "max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-sm relative group",
                     msg.role === 'candidate' 
-                    ? "bg-slate-700 text-white rounded-tr-none" 
-                    : "bg-white text-gray-700 border border-slate-200 rounded-tl-none"
+                    ? "bg-white text-gray-800 border border-slate-200 rounded-tr-none" 
+                    : "bg-slate-100 text-gray-700 border border-slate-200 rounded-tl-none"
                 )}>
                   {msg.text}
+                  {msg.role === 'candidate' && (
+                    <button 
+                      onClick={() => handlePlayAudio(msg.text)}
+                      className="absolute -left-10 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all opacity-0 group-hover:opacity-100"
+                      title="Reproducir audio"
+                    >
+                      <Play className="w-3.5 h-3.5 fill-current" />
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -193,32 +202,32 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Strengths */}
-          <div className="bg-emerald-50/50 border border-emerald-100 rounded-xl p-6">
-            <h5 className="text-xs font-black text-emerald-700 uppercase tracking-widest mb-4 flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-gray-400" />
+          <div className="bg-white border border-gray-200 rounded-xl p-6 group hover:border-emerald-200 transition-colors">
+            <h5 className="text-xs font-black text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-gray-400 group-hover:text-emerald-600 transition-colors" />
               Fortalezas detectadas
             </h5>
             <ul className="space-y-3">
               {overallFeedback.strengths.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
-                  <p className="text-sm text-emerald-900 leading-relaxed font-medium">{item}</p>
+                  <div className="w-1.5 h-1.5 rounded-full bg-gray-300 mt-2 flex-shrink-0 group-hover:bg-emerald-400 transition-colors" />
+                  <p className="text-sm text-gray-600 leading-relaxed font-medium group-hover:text-gray-900 transition-colors">{item}</p>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Development Areas */}
-          <div className="bg-amber-50/50 border border-amber-100 rounded-xl p-6">
-            <h5 className="text-xs font-black text-amber-700 uppercase tracking-widest mb-4 flex items-center gap-2">
-              <ArrowRight className="w-4 h-4 text-gray-400" />
+          <div className="bg-white border border-gray-200 rounded-xl p-6 group hover:border-amber-200 transition-colors">
+            <h5 className="text-xs font-black text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+              <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-amber-600 transition-colors" />
               Áreas de desarrollo
             </h5>
             <ul className="space-y-3">
               {overallFeedback.improvements.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 flex-shrink-0" />
-                  <p className="text-sm text-amber-900 leading-relaxed font-medium">{item}</p>
+                  <div className="w-1.5 h-1.5 rounded-full bg-gray-300 mt-2 flex-shrink-0 group-hover:bg-amber-400 transition-colors" />
+                  <p className="text-sm text-gray-600 leading-relaxed font-medium group-hover:text-gray-900 transition-colors">{item}</p>
                 </li>
               ))}
             </ul>
