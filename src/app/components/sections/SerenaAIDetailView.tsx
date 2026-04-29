@@ -248,7 +248,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
 
         {/* 2. Transcript Tab */}
         <TabsContent value="transcript" className="mt-0 animate-in fade-in duration-300">
-          <Card className="border-gray-100 shadow-sm overflow-hidden flex flex-col h-[700px]">
+          <Card className="border-gray-100 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-white">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
@@ -259,13 +259,13 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                   <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">{transcript.length} Mensajes</p>
                 </div>
               </div>
-              <Button variant="outline" size="sm" className="text-xs font-bold gap-2 border-gray-200">
-                <FileText className="w-4 h-4" />
-                Ver PDF
+              <Button variant="outline" size="sm" className="text-xs font-bold gap-2 border-gray-200" onClick={handleDownloadReport}>
+                <Download className="w-4 h-4" />
+                Descargar PDF
               </Button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-slate-50/50 custom-scrollbar">
+            <div className="p-6 space-y-8 bg-slate-50/50">
               {transcript.map((msg, idx) => (
                 <div key={idx} className={cn(
                   "flex gap-4 group animate-in fade-in slide-in-from-bottom-2 duration-300",
