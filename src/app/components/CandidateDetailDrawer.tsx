@@ -268,6 +268,7 @@ export function CandidateDetailDrawer({
 
 
   const isValentina = mockCandidate?.name === 'Valentina Herrera Castro';
+  const isAndres = mockCandidate?.name === 'Andrés Parra Gómez';
 
   const renderSection = () => {
     const candidate = mockCandidate;
@@ -298,6 +299,7 @@ export function CandidateDetailDrawer({
             highlightedStageId={highlightedStageId}
             onVacancySelect={setInsideVacancy}
             isValentina={isValentina}
+            isAndres={isAndres}
           />
         );
       case 'experience':
@@ -375,6 +377,7 @@ export function CandidateDetailDrawer({
             onApplicationChange={setActiveApplicationId}
             isDisabled={isSectionEditing}
             isValentina={isValentina}
+            isAndres={isAndres}
           />
 
           {/* Center Column - Content Area */}

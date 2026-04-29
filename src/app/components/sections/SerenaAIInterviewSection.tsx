@@ -54,8 +54,8 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
       <div className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
-              <Bot className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+              <Bot className="w-6 h-6 text-gray-500" />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -73,7 +73,7 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Score Total</p>
             <p className={cn(
               "text-4xl font-black",
-              score >= 80 ? "text-blue-600" : score >= 60 ? "text-amber-600" : "text-red-600"
+              score >= 80 ? "text-gray-900" : score >= 60 ? "text-amber-600" : "text-red-600"
             )}>{score}</p>
           </div>
         </div>
@@ -82,17 +82,17 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
       {/* 2. Questions & Scores List */}
       <div className="space-y-4">
         <div className="flex items-center gap-2 px-1">
-          <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+          <Star className="w-5 h-5 text-gray-400" />
           <h4 className="text-sm font-bold tracking-tight text-slate-700 uppercase">Análisis y Puntaje por Pregunta</h4>
         </div>
         
         <div className="grid gap-3">
           {questionScores.map((item, idx) => (
-            <div key={idx} className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:border-blue-200 transition-colors">
+            <div key={idx} className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:border-gray-200 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 space-y-3">
                   <div>
-                    <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest block mb-1">Objetivo</span>
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Objetivo</span>
                     <p className="text-sm text-gray-700 font-medium leading-relaxed">
                       {item.objective}
                     </p>
@@ -118,7 +118,7 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
       <div className="space-y-4">
         <div className="flex items-center justify-between px-1">
           <div className="flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-blue-500" />
+            <MessageSquare className="w-5 h-5 text-gray-400" />
             <h4 className="text-sm font-bold tracking-tight text-slate-700 uppercase">Transcripción de la Conversación</h4>
           </div>
           <Badge variant="secondary" className="text-[10px] font-medium text-gray-500">
@@ -134,7 +134,7 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
                 msg.role === 'candidate' ? "items-end" : "items-start"
               )}>
                 <div className="flex items-center gap-2 mb-1">
-                  {msg.role === 'serena' && <Bot className="w-4 h-4 text-blue-600" />}
+                  {msg.role === 'serena' && <Bot className="w-4 h-4 text-gray-400" />}
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                     {msg.role === 'serena' ? 'Serena IA' : 'Candidato'}
                   </span>
@@ -144,8 +144,8 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
                 </div>
                 <div className={cn(
                   "max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-sm",
-                  msg.role === 'candidate' 
-                    ? "bg-blue-600 text-white rounded-tr-none" 
+                    msg.role === 'candidate' 
+                    ? "bg-slate-700 text-white rounded-tr-none" 
                     : "bg-white text-gray-700 border border-slate-200 rounded-tl-none"
                 )}>
                   {msg.text}
@@ -157,7 +157,7 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
             <Button 
               variant="ghost" 
               size="sm" 
-              className="text-blue-600 text-xs font-bold hover:bg-blue-50 gap-2"
+              className="text-gray-600 text-xs font-bold hover:bg-gray-100 gap-2"
               onClick={() => {
                 if (isValentina) {
                   toast.error('La transcripción completa no está disponible para su descarga en este momento.');
@@ -177,7 +177,7 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
       <div className="space-y-4">
         <div className="flex items-center justify-between px-1">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+            <CheckCircle2 className="w-5 h-5 text-gray-400" />
             <h4 className="text-sm font-bold tracking-tight text-slate-700 uppercase">Feedback Consolidado</h4>
           </div>
           <Button 
@@ -195,7 +195,7 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
           {/* Strengths */}
           <div className="bg-emerald-50/50 border border-emerald-100 rounded-xl p-6">
             <h5 className="text-xs font-black text-emerald-700 uppercase tracking-widest mb-4 flex items-center gap-2">
-              <TrendingUp className="w-4 h-4" />
+              <TrendingUp className="w-4 h-4 text-gray-400" />
               Fortalezas detectadas
             </h5>
             <ul className="space-y-3">
@@ -211,7 +211,7 @@ export function SerenaAIInterviewSection({ interviewData, score = 88, isValentin
           {/* Development Areas */}
           <div className="bg-amber-50/50 border border-amber-100 rounded-xl p-6">
             <h5 className="text-xs font-black text-amber-700 uppercase tracking-widest mb-4 flex items-center gap-2">
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 text-gray-400" />
               Áreas de desarrollo
             </h5>
             <ul className="space-y-3">

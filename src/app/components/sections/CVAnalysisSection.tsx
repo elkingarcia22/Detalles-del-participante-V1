@@ -45,8 +45,8 @@ export function CVAnalysisSection({ data, candidateName }: CVAnalysisSectionProp
           <p className="text-sm text-gray-600 leading-relaxed">
             {summary}
           </p>
-          <div className="flex items-center gap-2 text-xs font-medium text-teal-700 bg-teal-50 px-3 py-2 rounded-lg">
-            <CheckCircle2 className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-xs font-medium text-gray-600 bg-gray-50 px-3 py-2 rounded-lg border border-gray-100">
+            <CheckCircle2 className="w-4 h-4 text-gray-400" />
             Perfil altamente recomendado para avanzar a entrevista técnica.
           </div>
         </div>

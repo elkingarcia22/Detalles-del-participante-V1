@@ -28,6 +28,7 @@ interface VacanciesSectionProps {
   highlightedStageId: any;
   onVacancySelect?: (isSelected: boolean) => void;
   isValentina?: boolean;
+  isAndres?: boolean;
 }
 
 export function VacanciesSection({ 
@@ -40,14 +41,18 @@ export function VacanciesSection({
   openCommentPanel, 
   highlightedStageId,
   onVacancySelect,
-  isValentina
+  isValentina,
+  isAndres
 }: VacanciesSectionProps) {
   const [selectedVacancyId, setSelectedVacancyId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    setSelectedVacancyId(null);
-    if (onVacancySelect) onVacancySelect(false);
+    if (candidate?.name === 'Andrés Parra Gómez') {
+      setSelectedVacancyId('app-003-2');
+    } else {
+      setSelectedVacancyId(null);
+    }
   }, [candidate?.id]);
 
   React.useEffect(() => {
@@ -112,15 +117,17 @@ export function VacanciesSection({
       <div className="space-y-4">
         {selectedVacancyId ? (
           <div className="animate-in fade-in slide-in-from-left-4 duration-300">
-            <button 
-              onClick={() => setSelectedVacancyId(null)}
-              className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 mb-4 transition-colors group"
-            >
-              <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-                <ChevronLeft className="w-4 h-4" />
-              </div>
-              Volver al historial de vacantes
-            </button>
+            {!isAndres && (
+              <button 
+                onClick={() => setSelectedVacancyId(null)}
+                className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 mb-4 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                  <ChevronLeft className="w-4 h-4" />
+                </div>
+                Volver al historial de vacantes
+              </button>
+            )}
             
             {applications.find(app => app.id === selectedVacancyId) && (
               <StagesSection 

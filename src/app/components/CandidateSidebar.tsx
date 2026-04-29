@@ -18,6 +18,7 @@ interface CandidateSidebarProps {
   activeApplicationId?: string | null;
   onApplicationChange?: (appId: string) => void;
   isDisabled?: boolean;
+  isAndres?: boolean;
 }
 
 const generalSections: SidebarItem[] = [
@@ -35,7 +36,8 @@ export function CandidateSidebar({
   applications,
   activeApplicationId,
   onApplicationChange,
-  isDisabled = false
+  isDisabled = false,
+  isAndres = false
 }: CandidateSidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -53,7 +55,14 @@ export function CandidateSidebar({
   };
 
   const renderItem = (item: SidebarItem) => {
-    const Icon = item.icon;
+    let label = item.label;
+    let Icon = item.icon;
+    
+    if (isAndres && item.id === 'vacancies') {
+      label = 'Etapas';
+      Icon = Layers;
+    }
+
     const isActive = activeSection === item.id;
     
     const button = (
@@ -73,7 +82,7 @@ export function CandidateSidebar({
         <Icon className={cn('w-5 h-5 flex-shrink-0', isActive ? 'text-blue-600' : 'text-gray-400')} />
         {!isCollapsed && (
           <>
-            <span className="flex-1 text-left">{item.label}</span>
+            <span className="flex-1 text-left">{label}</span>
             {item.badge && (
               <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
                 {item.badge}
@@ -86,7 +95,7 @@ export function CandidateSidebar({
 
     if (isCollapsed) {
       return (
-        <Tooltip key={item.id} content={item.label} side="right">
+        <Tooltip key={item.id} content={label} side="right">
           {button}
         </Tooltip>
       );

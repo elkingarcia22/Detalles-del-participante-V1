@@ -26,7 +26,7 @@ export function PsychometricSection({ score = 88, isValentina }: PsychometricSec
     <div className="bg-white border border-gray-200 rounded-lg p-6 space-y-6">
       <div className="flex items-center justify-between pb-4 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+          <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500">
             <Brain className="w-5 h-5" />
           </div>
           <div>
@@ -43,13 +43,13 @@ export function PsychometricSection({ score = 88, isValentina }: PsychometricSec
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
           <h5 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Interpretación de Resultados</h5>
-          <div className="space-y-4">
-            <p className="text-sm text-gray-600 leading-relaxed">
+          <div className="space-y-4 bg-teal-50 border border-teal-100 p-4 rounded-xl">
+            <p className="text-sm text-teal-900 leading-relaxed">
               El candidato muestra un fuerte componente de pensamiento lógico y resolución de problemas. En el test de personalidad, sobresale en <span className="font-semibold text-gray-900">Apertura a la experiencia</span> y <span className="font-semibold text-gray-900">Responsabilidad</span>, rasgos alineados con roles de diseño Senior.
             </p>
-            <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg border border-purple-100">
-              <CheckCircle2 className="w-5 h-5 text-purple-600 flex-shrink-0" />
-              <p className="text-xs font-medium text-purple-800">
+            <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-teal-100/50">
+              <CheckCircle2 className="w-5 h-5 text-teal-600 flex-shrink-0" />
+              <p className="text-xs font-medium text-teal-800">
                 Fit cultural y competencias cognitivas por encima del percentil 85 para este cargo.
               </p>
             </div>
@@ -66,7 +66,7 @@ export function PsychometricSection({ score = 88, isValentina }: PsychometricSec
                 className="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl transition-all group"
               >
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-gray-400 group-hover:text-blue-600 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-gray-400 group-hover:text-gray-900 transition-colors">
                     <FileText className="w-4 h-4" />
                   </div>
                   <div>
@@ -74,7 +74,7 @@ export function PsychometricSection({ score = 88, isValentina }: PsychometricSec
                     <p className="text-[10px] text-gray-500 uppercase">{report.date} • {report.type}</p>
                   </div>
                 </div>
-                <Download className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                <Download className="w-4 h-4 text-gray-400 group-hover:text-gray-900" />
               </button>
             ))}
           </div>

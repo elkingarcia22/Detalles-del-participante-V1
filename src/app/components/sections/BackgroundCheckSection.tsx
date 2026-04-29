@@ -23,7 +23,7 @@ export function BackgroundCheckSection({ data, isValentina }: BackgroundCheckSec
 
   const getStatusConfig = (status: string) => {
     switch (status) {
-      case 'pass': return { icon: CheckCircle2, color: 'text-teal-600', bg: 'bg-teal-50' };
+      case 'pass': return { icon: CheckCircle2, color: 'text-gray-400', bg: 'bg-gray-50' };
       case 'fail': return { icon: AlertCircle, color: 'text-rose-600', bg: 'bg-rose-50' };
       case 'warning': return { icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' };
       default: return { icon: Shield, color: 'text-gray-600', bg: 'bg-gray-50' };
@@ -42,7 +42,7 @@ export function BackgroundCheckSection({ data, isValentina }: BackgroundCheckSec
     <div className="bg-white border border-gray-200 rounded-lg p-6 space-y-6 text-left">
       <div className="flex items-center justify-between pb-4 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-xl ${currentStatus.color} flex items-center justify-center text-white shadow-sm`}>
+          <div className={`w-10 h-10 rounded-xl ${data.status === 'clean' ? 'bg-gray-100 text-gray-500' : `${currentStatus.color} text-white shadow-sm`} flex items-center justify-center`}>
             <Shield className="w-5 h-5" />
           </div>
           <div>
@@ -50,7 +50,7 @@ export function BackgroundCheckSection({ data, isValentina }: BackgroundCheckSec
             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest leading-none">Última actualización: {data.completedDate}</p>
           </div>
         </div>
-        <div className={`px-3 py-1 rounded-full ${currentStatus.color} text-white text-[10px] font-bold tracking-wider`}>
+        <div className={`px-3 py-1 rounded-full ${data.status === 'clean' ? 'bg-gray-100 text-gray-600 border border-gray-200' : `${currentStatus.color} text-white`} text-[10px] font-bold tracking-wider`}>
           {currentStatus.label}
         </div>
       </div>
@@ -97,7 +97,7 @@ export function BackgroundCheckSection({ data, isValentina }: BackgroundCheckSec
             }
             toast.success('Iniciando descarga del reporte completo...');
           }}
-          className="flex items-center gap-2 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
+          className="flex items-center gap-2 text-xs font-bold text-gray-600 hover:text-gray-900 transition-colors"
         >
           DESCARGAR REPORTE
           <Download className="w-4 h-4" />
