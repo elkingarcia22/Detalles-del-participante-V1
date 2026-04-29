@@ -300,6 +300,24 @@ export const candidatesData: CandidateData[] = [
       },
       {
         id: 'app-001-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UX Lead',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'entrevista-tecnica',
@@ -350,13 +368,33 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Falta de experiencia específica en el sector fintech'
       },
       {
         id: 'app-001-3',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UI Specialist',
         jobLocation: 'Remote',
         currentStage: 'hired',
@@ -367,6 +405,38 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 96,
           technicalScore: 98
+        },
+        
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
+          details: [
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
+          ]
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -407,7 +477,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -528,6 +600,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-003-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer Senior',
         jobLocation: 'Santa Marta, Colombia',
         currentStage: 'antecedentes',
@@ -542,6 +632,24 @@ export const candidatesData: CandidateData[] = [
           technicalScore: 68,
           productManagerScore: 65,
           hiringManagerScore: 71
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -582,7 +690,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Inconsistencias encontradas en verificación de referencias laborales.',
@@ -600,6 +710,24 @@ export const candidatesData: CandidateData[] = [
       },
       {
         id: 'app-003-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Web Designer Specialist',
         jobLocation: 'Barranquilla, Colombia',
         currentStage: 'hired',
@@ -610,6 +738,38 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 85,
           technicalScore: 88
+        },
+        
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
+          details: [
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
+          ]
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -624,17 +784,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -647,12 +810,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-003-3',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Frontend Engineer',
         jobLocation: 'Remote',
         currentStage: 'evaluacion-cv',
@@ -676,17 +859,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -699,12 +885,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-003-4',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UI Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'entrevista-tecnica',
@@ -729,17 +935,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -752,13 +961,33 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Falta de experiencia en diseño de producto complejo.'
       },
       {
         id: 'app-003-5',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Web Developer',
         jobLocation: 'Remote',
         currentStage: 'evaluacion-cv',
@@ -782,17 +1011,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -805,7 +1037,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -957,6 +1191,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-004-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer Senior',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'hiring-manager',
@@ -985,17 +1237,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1008,12 +1263,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-004-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Interaction Designer',
         jobLocation: 'Remote',
         currentStage: 'hired',
@@ -1024,6 +1299,38 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 94,
           technicalScore: 95
+        },
+        
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
+          details: [
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
+          ]
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -1038,17 +1345,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1061,12 +1371,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-004-3',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UX Researcher',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'evaluacion-cv',
@@ -1090,17 +1420,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1113,13 +1446,33 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Perfil más orientado a diseño visual que a investigación pura.'
       },
       {
         id: 'app-004-4',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer',
         jobLocation: 'Remote',
         currentStage: 'entrevista-tecnica',
@@ -1144,17 +1497,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1167,7 +1523,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'El candidato decidió retirar su postulación.'
@@ -1346,6 +1704,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-005-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer Senior',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'entrevista-pm',
@@ -1373,17 +1749,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1396,12 +1775,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-005-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UX Lead',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'hired',
@@ -1412,6 +1811,38 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 94,
           technicalScore: 95
+        },
+        
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
+          details: [
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
+          ]
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -1426,17 +1857,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1449,12 +1883,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-005-3',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Service Designer',
         jobLocation: 'Remote',
         currentStage: 'evaluacion-cv',
@@ -1478,17 +1932,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1501,7 +1958,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'El perfil no se ajusta completamente al enfoque estratégico requerido.'
@@ -1612,6 +2071,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-006-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer Junior',
         jobLocation: 'Barranquilla, Colombia',
         currentStage: 'entrevista-pm',
@@ -1639,17 +2116,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1662,13 +2142,33 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'En entrevista con PM mostró poca profundidad en procesos de research y toma de decisiones basadas en datos.'
       },
       {
         id: 'app-006-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UI Designer',
         jobLocation: 'Remote',
         currentStage: 'hired',
@@ -1679,6 +2179,38 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 85,
           technicalScore: 88
+        },
+        
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
+          details: [
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
+          ]
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -1693,17 +2225,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1716,12 +2251,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-006-3',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Motion Designer',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'evaluacion-cv',
@@ -1745,17 +2300,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1768,7 +2326,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -1878,6 +2438,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-007-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'evaluacion-psicometrica',
@@ -1904,17 +2482,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1927,12 +2508,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-007-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UX Researcher',
         jobLocation: 'Remote',
         currentStage: 'hired',
@@ -1943,6 +2544,38 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 90,
           technicalScore: 85
+        },
+        
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
+          details: [
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
+          ]
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -1957,17 +2590,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -1980,12 +2616,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-007-3',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Service Designer',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'evaluacion-cv',
@@ -2009,17 +2665,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2032,7 +2691,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'La candidata buscaba un rol más enfocado en diseño visual.'
@@ -2223,6 +2884,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-008-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Content Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'test-psicometrico',
@@ -2249,17 +2928,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2272,13 +2954,33 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Test psicométrico reveló bajo score en pensamiento analítico y resolución de problemas complejos.'
       },
       {
         id: 'app-008-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Visual Designer',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'evaluacion-cv',
@@ -2302,17 +3004,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2325,7 +3030,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Falta experiencia en roles de producto digital.'
@@ -2412,6 +3119,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-009-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer',
         jobLocation: 'Cali, Colombia',
         currentStage: 'para-revision',
@@ -2437,17 +3162,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2460,12 +3188,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-009-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'UX Designer',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'hired',
@@ -2476,6 +3224,38 @@ export const candidatesData: CandidateData[] = [
         scores: {
           cvScore: 90,
           technicalScore: 85
+        },
+        
+        backgroundCheck: {
+          status: 'clean',
+          completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
+          details: [
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
+          ]
+        },
+        
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Demuestra una estructura cognitiva sólida, ideal para roles donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidato altamente recomendado. Sus habilidades cognitivas superan el percentil 90.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ]
         },
         serenaInterview: {
           transcript: [
@@ -2490,17 +3270,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2513,7 +3296,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -2618,6 +3403,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-010-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Junior UX/UI',
         jobLocation: 'Manizales, Colombia',
         currentStage: 'para-revision',
@@ -2643,17 +3446,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2666,7 +3472,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Perfil muy junior. Aún está estudiando y no tiene experiencia profesional relevante en producto digital.'
@@ -2752,6 +3560,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-011-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Senior UX Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'para-revision',
@@ -2777,17 +3603,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2800,7 +3629,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Perfil enfocado en desarrollo web básico. No tiene experiencia en diseño de producto ni metodologías UX. Expectativa salarial fuera de rango.'
@@ -2887,6 +3718,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-012-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'evaluacion-serena',
@@ -2912,17 +3761,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2935,12 +3787,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-012-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Lead UX/UI Designer',
         jobLocation: 'Remote',
         currentStage: 'entrevista-tecnica',
@@ -2965,17 +3837,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -2988,7 +3863,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -3095,6 +3972,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-013-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'evaluacion-serena',
@@ -3120,17 +4015,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -3143,12 +4041,32 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       },
       {
         id: 'app-013-2',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Senior UI Designer',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'entrevista-pm',
@@ -3174,17 +4092,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -3197,7 +4118,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Perfil demasiado enfocado en investigación cualitativa en lugar de visual UI.'
@@ -3409,6 +4332,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-015-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Mid UX Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'psicometrico',
@@ -3433,17 +4374,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -3456,7 +4400,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -3558,6 +4504,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-016-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Senior UX Designer',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'psicometrico',
@@ -3582,17 +4546,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -3605,7 +4572,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -3707,6 +4676,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-017-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Senior UX Designer',
         jobLocation: 'Medellín, Colombia',
         currentStage: 'psicometrico',
@@ -3731,17 +4718,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -3754,7 +4744,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Experiencia en publicidad tradicional. No tiene experiencia en diseño digital ni producto. Perfil no alineado con la posición.'
@@ -3834,6 +4826,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-018-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Junior UX Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'psicometrico',
@@ -3858,17 +4868,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -3881,7 +4894,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         rejectionReason: 'Perfil enfocado en diseño gráfico tradicional. No cuenta con experiencia en producto digital ni conocimientos de UX.'
@@ -3969,6 +4984,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-019-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Backend Developer Node.js',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'evaluacion-cv',
@@ -3992,17 +5025,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -4015,7 +5051,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         blocker: {
@@ -4155,6 +5193,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-020-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Product Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'evaluacion-cv',
@@ -4178,17 +5234,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -4201,7 +5260,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -4303,6 +5364,24 @@ export const candidatesData: CandidateData[] = [
     applications: [
       {
         id: 'app-021-1',
+        cvEvaluation: {
+          summary: 'Perfil con excelente alineación técnica y estratégica. Se destaca su experiencia liderando sistemas complejos y su profundo conocimiento.',
+          score: 92,
+          criteria: [
+            { label: 'Años de Experiencia', score: 95, status: 'pass' },
+            { label: 'Stack Tecnológico', score: 90, status: 'pass' },
+            { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
+            { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'El candidato cuenta con experiencia altamente relevante para el rol.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, lo cual indica un compromiso sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia se alinea perfectamente con los requisitos técnicos del puesto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'El candidato es altamente calificado. Se recomienda avanzar en el proceso de selección.'
+        },
         jobTitle: 'Senior Product Designer',
         jobLocation: 'Bogotá, Colombia',
         currentStage: 'evaluacion-cv',
@@ -4326,17 +5405,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -4349,7 +5431,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         }
       }
@@ -4532,17 +5616,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño de Accenture?', 
-              score: 92
+              score: 92,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Se percibe una buena capacidad de gestión y adaptabilidad al cambio, con potencial de crecimiento.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Sólidos conocimientos técnicos y metodológicos, demostrando atención al detalle.'
             }
           ],
           overallFeedback: {
@@ -4555,7 +5642,9 @@ export const candidatesData: CandidateData[] = [
             improvements: [
               'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
               'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+            ],
+            onboardingStrategy: 'Se sugiere un plan de 30-60-90 días enfocado en inmersión cultural y alineación técnica con el equipo core.',
+            leaderRecommendation: 'Avanzar al siguiente paso considerando un acompañamiento inicial en sus primeras semanas.'
           }
         },
         backgroundCheck: {
