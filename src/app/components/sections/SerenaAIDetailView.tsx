@@ -225,9 +225,12 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
 
           {/* 1.5 Factores Destacados */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2 px-1">
-              <Sparkles className="w-4 h-4 text-blue-500" />
-              <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Factores destacados</h4>
+            <div className="flex flex-col gap-1 px-1">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-blue-500" />
+                <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Factores destacados</h4>
+              </div>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5 ml-6">Atributos clave detectados por la IA</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -279,9 +282,12 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                             {item.question}
                           </p>
                           {item.analysis && (
-                            <p className="text-[12px] text-slate-500 leading-relaxed mt-2 italic border-l-2 border-slate-100 pl-3">
-                              "{item.analysis}"
-                            </p>
+                            <div className="mt-3 p-3 bg-slate-50/80 rounded-xl border border-slate-100/50 relative group/analysis">
+                              <div className="absolute -left-px top-3 bottom-3 w-0.5 bg-blue-500/30 rounded-full" />
+                              <p className="text-[12px] text-slate-600 leading-relaxed font-medium italic pl-1">
+                                "{item.analysis}"
+                              </p>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -410,15 +416,15 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
         {/* 3. Feedback Tab — Refactor to match Psychometric Style */}
         <TabsContent value="feedback" className="mt-0 animate-in fade-in duration-300">
           <Card className="p-10 border-gray-200/60 shadow-sm relative overflow-hidden bg-white rounded-[32px]">
-            <div className="space-y-8">
+            <div className="space-y-6">
               {/* Header — Patrón Serena IA (Consistent with Psychometric) */}
               <div className="flex items-center gap-4 pb-6 border-b border-gray-100/80">
                 <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 shadow-sm">
-                  <Bot className="w-6 h-6" />
+                  <Brain className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="text-lg font-black text-slate-900 tracking-tight">Análisis de la Entrevista</h4>
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Feedback Detallado de Serena IA</p>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Evaluado por Serena IA</p>
                 </div>
               </div>
 
@@ -432,7 +438,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                 </p>
               </div>
 
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {/* 1. Áreas de Mejora */}
                 <div className="space-y-4">
                   <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Áreas de Mejora</h4>
