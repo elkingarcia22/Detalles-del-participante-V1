@@ -23,7 +23,7 @@ export function BackgroundCheckSection({ data, isValentina }: BackgroundCheckSec
 
   const getStatusConfig = (status: string) => {
     switch (status) {
-      case 'pass': return { icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-white' };
+      case 'pass': return { icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-transparent' };
       case 'fail': return { icon: AlertCircle, color: 'text-rose-600', bg: 'bg-rose-50' };
       case 'warning': return { icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' };
       default: return { icon: Shield, color: 'text-gray-600', bg: 'bg-gray-50' };

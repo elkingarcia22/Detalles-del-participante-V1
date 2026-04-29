@@ -20,6 +20,19 @@ export function EvaluationsSection() {
         </div>
       </div>
 
+      {/* Recomendación */}
+      <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4">
+        <div className="flex gap-3">
+          <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <div className="text-sm font-medium text-emerald-900 mb-1">Recomendación</div>
+            <p className="text-sm text-emerald-800">
+              Puede continuar en el proceso.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Content */}
       <div className="space-y-5">
         <h5 className="text-sm font-semibold text-gray-900">Evaluación de verificación de antecedentes</h5>
@@ -81,19 +94,6 @@ export function EvaluationsSection() {
               <div className="text-sm font-medium text-gray-900">Internacional y medios</div>
               <p className="text-sm text-gray-600">
                 Sin registros encontrados.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Recomendación */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <div className="flex gap-3">
-            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <div className="text-sm font-medium text-green-900 mb-1">Recomendación</div>
-              <p className="text-sm text-green-800">
-                Puede continuar en el proceso.
               </p>
             </div>
           </div>
