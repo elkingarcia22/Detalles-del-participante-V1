@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
-import { FileText, Upload, Download, Eye, Trash2, Plus } from 'lucide-react';
+import { FileText, Upload, Download, Eye, Trash2, Plus, X, RefreshCw } from 'lucide-react';
 import { Button } from '../ui/button';
 import { toast } from 'sonner';
+import { cn } from '../ui/utils';
 
 interface Document {
   id: string;
@@ -23,6 +24,12 @@ export function DocumentsSection({ documents: initialDocuments = [], onUploadTri
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [documents, setDocuments] = React.useState<Document[]>(initialDocuments);
+  const [deletingDocumentId, setDeletingDocumentId] = React.useState<string | null>(null);
+
+  const isCV = (doc: Document) => {
+    const name = doc.name.toLowerCase();
+    return name.includes('cv') || name.includes('hv') || name.includes('curriculum') || name.includes('resume');
+  };
 
   // Sync state with props when candidate changes
   React.useEffect(() => {
@@ -164,27 +171,66 @@ export function DocumentsSection({ documents: initialDocuments = [], onUploadTri
 
             {/* Actions */}
             <div className="flex items-center gap-1 flex-shrink-0">
-              <button
-                onClick={() => handleView(doc)}
-                className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                title="Ver documento"
-              >
-                <Eye className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleDownload(doc)}
-                className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                title="Descargar"
-              >
-                <Download className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleDelete(doc)}
-                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                title="Eliminar"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              {deletingDocumentId === doc.id ? (
+                <div className="flex items-center gap-2 px-2 py-1 bg-red-50 rounded-md border border-red-100">
+                  <span className="text-[10px] font-bold text-red-600 uppercase tracking-wider">¿Eliminar?</span>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleDelete(doc);
+                      setDeletingDocumentId(null);
+                    }}
+                    className="px-2 py-0.5 text-[10px] bg-red-600 text-white rounded font-medium hover:bg-red-700 transition-colors"
+                  >
+                    Sí
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setDeletingDocumentId(null);
+                    }}
+                    className="px-2 py-0.5 text-[10px] bg-white text-gray-600 rounded border border-gray-200 font-medium hover:bg-gray-50 transition-colors"
+                  >
+                    No
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={() => handleView(doc)}
+                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    title="Ver documento"
+                  >
+                    <Eye className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDownload(doc)}
+                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    title="Descargar"
+                  >
+                    <Download className="w-4 h-4" />
+                  </button>
+                  {isCV(doc) ? (
+                    <button
+                      onClick={handleUploadClick}
+                      className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      title="Actualizar CV"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setDeletingDocumentId(doc.id)}
+                      className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Eliminar"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </>
+              )}
             </div>
           </div>
         ))}

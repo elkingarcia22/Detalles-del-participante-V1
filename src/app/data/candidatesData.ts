@@ -38,22 +38,40 @@ export interface Application {
       objective: string;
       question: string;
       score: number;
+      analysis?: string;
     }>;
     overallFeedback: {
       summary: string;
       strengths: string[];
       improvements: string[];
+      onboardingStrategy?: string;
+      leaderRecommendation?: string;
     };
   };
   cvEvaluation?: {
     summary: string;
     score: number;
     criteria: Array<{ label: string, score: number, status: "pass" | "fail" | "warning" }>;
+    // Rich Serena IA evaluation fields
+    evaluations?: Array<{ category: string; description: string }>;
+    minimumThreshold?: number;
+    decision?: string;
+    recommendation?: string;
   };
   backgroundCheck?: {
     status: 'clean' | 'issues' | 'pending';
     completedDate: string;
-    details: Array<{ category: string; result: string; status: 'pass' | 'fail' | 'warning' }>;
+    recommendation?: string;
+    details: Array<{ category: string; result: string; status: 'pass' | 'fail' | 'warning'; records?: number; description?: string }>;
+  };
+  psychometricEvaluation?: {
+    iq: number;
+    learningQuotient: number;
+    factors: Array<{ label: string; description: string; status: 'pass' | 'fail' | 'warning' }>;
+    brainDominance: string;
+    observation: string;
+    recommendation: string;
+    reports?: Array<{ name: string; date: string; type: string }>;
   };
 }
 
@@ -174,7 +192,17 @@ export const candidatesData: CandidateData[] = [
             { label: 'Stack Tecnológico', score: 90, status: 'pass' },
             { label: 'Educación y Certificaciones', score: 100, status: 'pass' },
             { label: 'Estabilidad Laboral', score: 85, status: 'pass' }
-          ]
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'María García cuenta con más de 5 años de experiencia en diseño de producto, liderando sistemas de diseño en Rappi y Platzi, altamente relevante para el rol de Product Designer Senior.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración (2+ años por empresa), lo cual indica un compromiso sostenido y estabilidad profesional.' },
+            { category: 'Relevancia', description: 'Su experiencia en diseño de sistemas escalables y research de usuarios se alinea perfectamente con los requisitos técnicos del puesto.' },
+            { category: 'Ubicación', description: 'Reside en Bogotá, Colombia y está dispuesta a reubicarse, lo cual es favorable para la modalidad de trabajo requerida.' },
+            { category: 'Requisitos deseables', description: 'Cumple con la mayoría de los requisitos técnicos incluyendo Figma, Design Systems y accesibilidad WCAG. Su portfolio demuestra impacto medible en cada proyecto.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'María García López es una candidata altamente calificada para el puesto de Product Designer Senior. Se recomienda avanzar en el proceso de selección.'
         },
         jobTitle: 'Product Designer Senior',
         jobLocation: 'Bogotá, Colombia',
@@ -191,6 +219,26 @@ export const candidatesData: CandidateData[] = [
           productManagerScore: 90,
           hiringManagerScore: 93
         },
+        psychometricEvaluation: {
+          iq: 115,
+          learningQuotient: 122,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Superior al promedio. Capacidad excepcional para articular conceptos complejos y comunicarse eficazmente.', status: 'pass' },
+            { label: 'Concentración y Atención', description: 'Alta capacidad de enfoque bajo presión y en tareas repetitivas de precisión.', status: 'pass' },
+            { label: 'Planeación y Organización', description: 'Sobresaliente. Capacidad para gestionar múltiples flujos de trabajo de forma estructurada.', status: 'pass' },
+            { label: 'Análisis y Abstracción', description: 'Muy alto. Facilidad para identificar patrones y sintetizar información compleja.', status: 'pass' }
+          ],
+          brainDominance: 'Límbico Izquierdo y Cortical Izquierdo. Enfoque analítico, secuencial y orientado a procesos de diseño rigurosos.',
+          observation: 'Valentina demuestra una estructura cognitiva sólida, ideal para roles de liderazgo en diseño donde la precisión y el pensamiento sistémico son críticos.',
+          recommendation: 'Candidata altamente recomendada. Sus habilidades cognitivas superan el percentil 90 para el cargo de Senior Product Designer.',
+          reports: [
+            { name: 'Prueba de Aptitud Lógica', date: '12 Abr 2026', type: 'PDF' },
+            { name: 'Test de Personalidad (Big Five)', date: '12 Abr 2026', type: 'PDF' }
+          ],
+          minimumThreshold: 70,
+          obtainedScore: 88,
+          decision: 'Candidato Recomendado'
+        },
         serenaInterview: {
           transcript: [
             { role: 'serena', text: 'Hola María, es un gusto saludarte. Para comenzar, me gustaría que me contaras sobre el sistema de diseño que lideraste en tu última experiencia. ¿Cuál fue el mayor desafío técnico?', timestamp: '10:00' },
@@ -204,40 +252,49 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'La candidata demuestra una capacidad excepcional para articular desafíos arquitectónicos complejos, destacando la importancia de los Design Tokens como solución escalable y agnóstica.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Presenta un enfoque humano y participativo en la gestión de stakeholders. Su estrategia de gobernanza compartida es un indicador sólido de madurez en liderazgo técnico.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Su dominio de la normativa WCAG es profundo. La integración de linters en Figma y auditorías en CI/CD demuestra un enfoque preventivo y profesional hacia la accesibilidad.'
             }
           ],
           overallFeedback: {
-            summary: 'Demuestra una madurez excepcional en diseño de producto enterprise. Su capacidad para articular decisiones técnicas complejas con objetivos de negocio es notable.',
+            summary: 'Luisa demuestra una sólida base técnica y estratégica en la gestión de productos digitales con componentes de IA. Su habilidad para comunicarse efectivamente con diferentes stakeholders es notable, aunque podría beneficiarse de una mayor claridad en la descripción de experiencias específicas. Con un enfoque más detallado en ejemplos concretos, podría destacar aún más en roles de liderazgo de producto.',
             strengths: [
-              'Expertise profundo en sistemas de diseño escalables.',
-              'Compromiso genuino y metodológico con la accesibilidad digital.',
-              'Capacidad de liderazgo y gestión de cambio en equipos grandes.'
+              'Experiencia en el desarrollo de módulos de reclutamiento con inteligencia artificial.',
+              'Conocimiento en la integración de modelos de IA mediante API Keys y en servidores locales.',
+              'Capacidad para definir estrategias y roadmaps equilibrando prioridades urgentes e importantes.',
+              'Habilidad para comunicarse efectivamente con stakeholders técnicos y de negocio, adaptando el lenguaje según la audiencia.'
             ],
             improvements: [
-              'Puede fortalecer la medición de impacto mediante KPIs de negocio más específicos.',
-              'Expandir su conocimiento en herramientas de análisis de datos para complementar el research cualitativo.'
-            ]
+              'Podría mejorar en la claridad al describir experiencias pasadas, especialmente en el ámbito de edtech.',
+              'Sería beneficioso profundizar en ejemplos específicos de integración de IA en productos para demostrar un conocimiento más detallado.'
+            ],
+            onboardingStrategy: 'No se ha definido una estrategia específica.',
+            leaderRecommendation: 'No se han generado recomendaciones específicas.'
           }
         },
         backgroundCheck: {
           status: 'clean',
           completedDate: '2026-03-05',
+          recommendation: 'Puede continuar en el proceso. Todos los antecedentes verificados correctamente.',
           details: [
-            { category: 'Identidad', result: 'Verificada sin inconsistencias', status: 'pass' },
-            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
-            { category: 'Historial Crediticio', result: 'Comportamiento financiero estable', status: 'pass' },
-            { category: 'Referencias Laborales', result: 'Confirmadas y altamente positivas', status: 'pass' }
+            { category: 'Identidad', result: 'Verificada en múltiples bases oficiales, sin inconsistencias.', status: 'pass', records: 7, description: 'Verificada en múltiples bases oficiales, sin inconsistencias. Registros encontrados: 7.' },
+            { category: 'Historial penal y criminal', result: 'No se encontraron antecedentes penales.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Legal', result: 'Sin registros negativos.', status: 'pass', records: 1, description: 'Sin registros negativos. Registros encontrados: 1.' },
+            { category: 'Afiliaciones', result: 'Activo en el sistema de salud, consistente con registros.', status: 'pass', records: 1, description: 'Activo en el sistema de salud, consistente con registros. Registros encontrados: 1.' },
+            { category: 'Impuestos y Finanzas', result: 'Sin reportes fiscales negativos.', status: 'pass', records: 1, description: 'Sin reportes fiscales negativos. Registros encontrados: 1.' },
+            { category: 'Internacional y medios', result: 'Sin registros encontrados.', status: 'pass', records: 0, description: 'Sin registros encontrados.' }
           ]
         }
       },
@@ -267,17 +324,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'La respuesta refleja un entendimiento profundo de la escalabilidad técnica y la importancia de la abstracción mediante tokens.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Demuestra habilidades interpersonales sólidas al proponer un modelo de gobernanza colaborativo en lugar de una imposición técnica.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Su metodología de integrar accesibilidad en el pipeline de desarrollo es una de las mejores prácticas observadas en candidatos Senior.'
             }
           ],
           overallFeedback: {
@@ -321,17 +381,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'La candidata demuestra una capacidad excepcional para articular desafíos arquitectónicos complejos, destacando la importancia de los Design Tokens como solución escalable y agnóstico.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Presenta un enfoque humano y participativo en la gestión de stakeholders. Su estrategia de gobernanza compartida es un indicador sólido de madurez en liderazgo técnico.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Su dominio de la normativa WCAG es profundo. La integración de linters en Figma y auditorías en CI/CD demuestra un enfoque preventivo y profesional hacia la accesibilidad.'
             }
           ],
           overallFeedback: {
@@ -493,17 +556,20 @@ export const candidatesData: CandidateData[] = [
             { 
               objective: 'Evaluar visión sistémica y manejo de retos técnicos complejos.',
               question: '¿Cuál fue el mayor desafío técnico en el sistema de diseño?', 
-              score: 92
+              score: 92,
+              analysis: 'El candidato demuestra una sólida capacidad analítica, aunque su enfoque en la unificación de componentes se centra primordialmente en la eficiencia técnica inmediata.'
             },
             { 
               objective: 'Medir habilidades de liderazgo y gestión de cambio organizacional.',
               question: '¿Cómo manejaste la resistencia al cambio de los desarrolladores?', 
-              score: 85
+              score: 85,
+              analysis: 'Su estrategia de gobernanza es acertada, sin embargo, se percibe cierta falta de profundidad en la gestión de las dinámicas emocionales del equipo durante el cambio.'
             },
             { 
               objective: 'Validar conocimientos técnicos profundos en accesibilidad web.',
               question: '¿Cómo aseguras el cumplimiento de WCAG en etapas tempranas?', 
-              score: 95
+              score: 95,
+              analysis: 'Conocimiento técnico sólido. Su enfoque en auditorías automáticas es excelente, pero podría beneficiarse de un mayor énfasis en la inclusión desde la fase de ideación.'
             }
           ],
           overallFeedback: {
@@ -523,11 +589,12 @@ export const candidatesData: CandidateData[] = [
         backgroundCheck: {
           status: 'issues',
           completedDate: '2026-04-12',
+          recommendation: 'Se detectaron inconsistencias en el historial laboral. Se requiere validación adicional antes de continuar.',
           details: [
-            { category: 'Identidad', result: 'Verificada correctamente', status: 'pass' },
-            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
-            { category: 'Referencias Laborales', result: 'Discrepancia detectada en fechas con TechSolutions SAS (8 meses de diferencia)', status: 'fail' },
-            { category: 'Veracidad de CV', result: 'Inconsistencias encontradas en historial laboral', status: 'fail' }
+            { category: 'Identidad', result: 'Verificada correctamente.', status: 'pass', records: 5, description: 'Verificada en bases oficiales, sin inconsistencias. Registros encontrados: 5.' },
+            { category: 'Historial penal y criminal', result: 'No se registran antecedentes.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Referencias Laborales', result: 'Discrepancia detectada en fechas con TechSolutions SAS (8 meses de diferencia).', status: 'fail', records: 1, description: 'Discrepancia detectada en fechas con TechSolutions SAS (8 meses de diferencia). Requiere validación.' },
+            { category: 'Veracidad de CV', result: 'Inconsistencias encontradas en historial laboral.', status: 'fail', records: 1, description: 'Se encontraron inconsistencias entre el CV declarado y los registros oficiales.' }
           ]
         }
       },
@@ -4396,7 +4463,17 @@ export const candidatesData: CandidateData[] = [
             { label: 'Stack Tecnológico', score: 85, status: 'pass' },
             { label: 'Educación y Certificaciones', score: 70, status: 'warning' },
             { label: 'Estabilidad Laboral', score: 90, status: 'pass' }
-          ]
+          ],
+          evaluations: [
+            { category: 'Experiencia', description: 'Valentina Ruiz cuenta con más de 6 años de experiencia en UX/UI, incluyendo roles de liderazgo en Accenture Interactive y proyectos internacionales de gran escala, altamente relevante para el puesto.' },
+            { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración (2+ años por empresa), lo cual indica estabilidad y compromiso profesional sostenido.' },
+            { category: 'Relevancia', description: 'Su experiencia en diseño de interacción y metodologías ágiles se alinea bien con los requisitos del puesto, aunque requiere validación de sus certificaciones internacionales.' },
+            { category: 'Ubicación', description: 'Reside en Bogotá, Colombia y tiene disponibilidad para trabajo remoto o presencial, lo cual facilita la incorporación.' },
+            { category: 'Requisitos deseables', description: 'Cumple con los requisitos técnicos principales. Sin embargo, sus certificaciones internacionales están pendientes de validación, lo cual podría tener un impacto leve en la evaluación final.' }
+          ],
+          minimumThreshold: 70,
+          decision: 'Válida (supera el umbral)',
+          recommendation: 'Valentina Ruiz es una candidata calificada para el puesto de Product Designer Senior. Se recomienda avanzar en el proceso con validación de certificaciones pendientes.'
         },
         jobTitle: 'Product Designer Senior',
         jobLocation: 'Bogotá, Colombia',
@@ -4412,6 +4489,26 @@ export const candidatesData: CandidateData[] = [
           technicalScore: 95,
           productManagerScore: 91,
           hiringManagerScore: 94
+        },
+        psychometricEvaluation: {
+          iq: 95,
+          learningQuotient: 107,
+          factors: [
+            { label: 'Juicio y Vocabulario', description: 'Promedio, lo que sugiere que puede tener dificultades ocasionales con conceptos verbales complejos.', status: 'warning' },
+            { label: 'Concentración y Atención', description: 'Muy bajos, lo que podría afectar su capacidad para resolver problemas aritméticos y tolerar la presión.', status: 'fail' },
+            { label: 'Planeación y Organización', description: 'Dificultades significativas, lo que podría impactar en la planificación y atención a detalles.', status: 'fail' },
+            { label: 'Análisis y Abstracción', description: 'Promedio, pero con algunas dificultades en comprensión rápida y analogías abstractas.', status: 'warning' }
+          ],
+          brainDominance: 'Usa los cuatro cuadrantes del cerebro con facilidad, lo que le permite adaptarse a diferentes situaciones y abordar problemas de manera versátil.',
+          observation: 'Aunque el candidato presenta algunas debilidades en concentración, atención y planeación, su capacidad para adaptarse y utilizar diferentes enfoques cognitivos es una fortaleza significativa. Esto puede ser beneficioso en un entorno de desarrollo frontend donde se requiere flexibilidad.',
+          recommendation: 'El candidato es apto para continuar en el proceso de selección, ya que sus habilidades cognitivas generales y su capacidad de adaptación son adecuadas para el rol de Frontend Developer SemiSenior.',
+          reports: [
+            { name: 'Perfil de Inteligencia', date: '25 Abr 2026', type: 'PDF' },
+            { name: 'Dominancia Cerebral', date: '25 Abr 2026', type: 'PDF' }
+          ],
+          minimumThreshold: 70,
+          obtainedScore: 90,
+          decision: 'Válida (supera el umbral)'
         },
         blocker: {
           stageId: 'antecedentes',
@@ -4465,11 +4562,12 @@ export const candidatesData: CandidateData[] = [
         backgroundCheck: {
           status: 'pending',
           completedDate: '2026-04-10',
+          recommendation: 'Proceso en curso. Pendiente validación del certificado de Accenture International.',
           details: [
-            { category: 'Identidad', result: 'Verificada correctamente', status: 'pass' },
-            { category: 'Antecedentes Penales', result: 'No se registran antecedentes', status: 'pass' },
-            { category: 'Historial Crediticio', result: 'En proceso de verificación', status: 'warning' },
-            { category: 'Referencias Laborales', result: 'Pendiente confirmar certificado de Accenture International', status: 'warning' }
+            { category: 'Identidad', result: 'Verificada correctamente.', status: 'pass', records: 6, description: 'Verificada en bases oficiales, sin inconsistencias. Registros encontrados: 6.' },
+            { category: 'Historial penal y criminal', result: 'No se registran antecedentes.', status: 'pass', records: 2, description: 'Consultado, no se encontraron antecedentes. Registros encontrados: 2.' },
+            { category: 'Historial Crediticio', result: 'En proceso de verificación.', status: 'warning', records: 0, description: 'En proceso de verificación con entidades financieras. Pendiente de respuesta.' },
+            { category: 'Referencias Laborales', result: 'Pendiente confirmar certificado de Accenture International.', status: 'warning', records: 0, description: 'Pendiente confirmar certificado de la última empresa internacional (Accenture). Requiere documento adicional.' }
           ]
         }
       }

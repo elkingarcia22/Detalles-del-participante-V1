@@ -19,7 +19,9 @@ import {
   Lock,
   X,
   Pencil,
-  Trash2
+  Trash2,
+  Pause,
+  Brain
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
@@ -41,11 +43,19 @@ interface SerenaAIDetailViewProps {
       question: string;
       score: number;
       feedback?: string;
+      analysis?: string;
     }>;
     overallFeedback: {
-      summary: string;
-      strengths: string[];
-      improvements: string[];
+      summary?: string;
+      strengths?: string[];
+      improvements?: string[];
+      // Real Serena IA feedback structure
+      evaluations?: Array<{ category: string; description: string }>;
+      minimumThreshold?: number;
+      obtainedScore?: number;
+      decision?: string;
+      recommendation?: string;
+      cvScore?: number;
     };
   };
   score?: number;
@@ -65,6 +75,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState('');
   const [deletingCommentId, setDeletingCommentId] = useState<number | null>(null);
+  const [playingAudioIndex, setPlayingAudioIndex] = useState<number | null>(null);
 
   const handleAddComment = () => {
     if (!newComment.trim()) return;
@@ -100,10 +111,26 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
 
   const { transcript, questionScores, overallFeedback } = interviewData;
 
-  const handlePlayAudio = (text: string) => {
-    toast.info(`Reproduciendo audio: "${text.substring(0, 30)}..."`, {
-      icon: <Volume2 className="w-4 h-4 text-blue-500" />,
-    });
+  const evaluations = overallFeedback?.evaluations || [
+    { category: 'Experiencia', description: 'Luisa Abello cuenta con más de 13 años de experiencia en gestión de producto, incluyendo roles de liderazgo en empresas como Twilio y Nokia, lo cual es altamente relevante para el puesto de Head de Producto de IA. Ha trabajado en entornos SaaS y tiene experiencia con componentes de IA y machine learning.' },
+    { category: 'Estabilidad laboral', description: 'Ha mantenido roles de larga duración, generalmente de 1 a 3 años, lo cual indica estabilidad y compromiso.' },
+    { category: 'Relevancia', description: 'Su experiencia en gestión de producto digital y liderazgo de equipos multidisciplinarios se alinea perfectamente con los requisitos del puesto.' },
+    { category: 'Ubicación', description: 'Reside en Ciudad de México y está dispuesta a reubicarse, lo cual es favorable para la modalidad de trabajo remoto.' },
+    { category: 'Requisitos deseables', description: 'Cumple con la mayoría de los requisitos técnicos y habilidades blandas, incluyendo metodologías ágiles y habilidades analíticas. Sin embargo, no se menciona explícitamente el uso de SQL o Posthog, lo cual podría tener un impacto leve.' }
+  ];
+
+  const minThreshold = overallFeedback?.minimumThreshold || 70;
+  const obtainedScore = overallFeedback?.obtainedScore || 85;
+  const decision = overallFeedback?.decision || "Válida (supera el umbral)";
+  const recommendation = overallFeedback?.recommendation || "Luisa Abello es una candidata altamente calificada para el puesto de Head de Producto de IA. Se recomienda avanzar en el proceso de selección.";
+  const cvScore = overallFeedback?.cvScore || 85;
+
+  const handlePlayAudio = (idx: number) => {
+    if (playingAudioIndex === idx) {
+      setPlayingAudioIndex(null);
+    } else {
+      setPlayingAudioIndex(idx);
+    }
   };
 
   const handleDownloadReport = () => {
@@ -130,17 +157,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
           </div>
         </div>
         
-        <div className="flex items-center gap-3">
-          <div className="text-right px-4 hidden sm:block">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-0.5">Score de Candidato</p>
-            <div className="flex items-center justify-end gap-2">
-              <span className={cn(
-                "text-2xl font-black",
-                score >= 80 ? "text-gray-900" : score >= 60 ? "text-amber-600" : "text-red-600"
-              )}>{score}/100</span>
-            </div>
-          </div>
-        </div>
+
       </div>
 
       <Tabs defaultValue="analysis" className="w-full" onValueChange={setActiveTab}>
@@ -150,7 +167,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
             className="rounded-xl px-6 py-2.5 text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-blue-600 transition-all flex items-center gap-2"
           >
             <BarChart3 className="w-4 h-4" />
-            Análisis y Puntajes
+            Puntajes
           </TabsTrigger>
           <TabsTrigger 
             value="transcript" 
@@ -178,8 +195,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
         {/* 1. Analysis Tab */}
         <TabsContent value="analysis" className="mt-0 animate-in fade-in duration-300 space-y-8">
           {/* 1. Resumen de Evaluación */}
-          {/* 1. Resumen de Evaluación */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <Card className="p-5 border-gray-100 bg-white shadow-sm">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
@@ -205,19 +221,29 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
               </div>
               <p className="text-[10px] text-gray-500 font-medium mt-2">Minutos totales</p>
             </Card>
+          </div>
 
-            <Card className="p-5 border-gray-100 bg-white shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
-                  <TrendingUp className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Confianza</p>
-                  <p className="text-2xl font-black text-gray-900">98%</p>
-                </div>
+          {/* 1.5 Factores Destacados */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 px-1">
+              <Sparkles className="w-4 h-4 text-blue-500" />
+              <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Factores destacados</h4>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="p-4 bg-blue-50/50 border border-blue-100 rounded-2xl">
+                <p className="text-xs font-bold text-blue-700">Comunicación Clara</p>
+                <p className="text-[10px] text-blue-600/70 mt-1">Capacidad para articular ideas de forma estructurada.</p>
               </div>
-              <p className="text-[10px] text-gray-500 font-medium mt-2">Nivel de precisión IA</p>
-            </Card>
+              <div className="p-4 bg-indigo-50/50 border border-indigo-100 rounded-2xl">
+                <p className="text-xs font-bold text-indigo-700">Resolución de Problemas</p>
+                <p className="text-[10px] text-indigo-600/70 mt-1">Enfoque analítico ante desafíos técnicos.</p>
+              </div>
+              <div className="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl">
+                <p className="text-xs font-bold text-emerald-700">Adaptabilidad</p>
+                <p className="text-[10px] text-emerald-600/70 mt-1">Flexibilidad para ajustarse a nuevos requerimientos.</p>
+              </div>
+            </div>
           </div>
 
           {/* 2. Desglose por Pregunta */}
@@ -252,72 +278,27 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                           <p className="text-sm font-bold text-gray-900 leading-tight">
                             {item.question}
                           </p>
+                          {item.analysis && (
+                            <p className="text-[12px] text-slate-500 leading-relaxed mt-2 italic border-l-2 border-slate-100 pl-3">
+                              "{item.analysis}"
+                            </p>
+                          )}
                         </div>
                       </div>
                       
                       <div className="flex items-center gap-4 shrink-0">
-                        {item.feedback && (
-                          <div className="hidden lg:block px-4 py-2 bg-gray-50/80 rounded-xl italic text-[10px] text-slate-500 max-w-[250px] truncate border border-gray-100">
-                            "{item.feedback}"
-                          </div>
-                        )}
-                        <div className="flex items-center gap-2.5 px-3 py-1.5 bg-gray-50 rounded-xl border border-gray-100">
-                          <span className="text-lg font-black text-slate-800">{item.score}</span>
-                          <span className="text-[8px] font-bold text-gray-400 uppercase">Pts</span>
+                        <div className="flex items-center gap-2.5 px-3 py-1.5 bg-blue-50 rounded-xl border border-blue-100 shadow-sm">
+                          <span className="text-sm font-black text-blue-700">{item.score}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Audio Player Section - Redesigned 'Escuchar respuesta' */}
-                    <div className="px-5 py-4 bg-slate-50/50 border-t border-gray-50 flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-4">
-                        <button 
-                          onClick={() => handlePlayAudio(item.question)}
-                          className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 text-[10px] font-black text-gray-700 hover:text-blue-700 transition-all shadow-sm group/audio active:scale-95"
-                        >
-                          <div className="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-white group-hover/audio:bg-blue-600 group-hover/audio:scale-110 transition-all shadow-sm shadow-slate-200">
-                            <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
-                          </div>
-                          ESCUCHAR RESPUESTA
-                        </button>
-                        
-                        <div className="hidden sm:flex items-center gap-[3px] h-6 px-3 bg-white/50 rounded-lg border border-gray-100">
-                          {[0.4, 0.7, 0.5, 0.8, 0.3, 0.6, 0.9, 0.4, 0.7, 0.5, 0.8, 0.3, 0.6, 0.9, 0.4].map((h, i) => (
-                            <div 
-                              key={i} 
-                              className="w-[2px] bg-gray-200 rounded-full group-hover:bg-blue-200 transition-colors" 
-                              style={{ height: `${h * 100}%` }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-1.5 px-2 py-1 bg-white rounded-md border border-gray-100 shadow-sm">
-                          <Volume2 className="w-3 h-3 text-gray-400" />
-                          <span className="text-[10px] font-black text-gray-400 tabular-nums">0:45</span>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </Card>
               ))}
             </div>
           </div>
 
-          {/* 3. Observaciones */}
-          <div className="space-y-3 pt-6">
-            <div className="flex items-center gap-2 px-1">
-              <Sparkles className="w-4 h-4 text-gray-400" />
-              <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Observación de IA</h4>
-            </div>
-            
-            <Card className="p-8 border-gray-100 bg-slate-50/50 shadow-sm border-dashed rounded-3xl">
-              <p className="text-base text-gray-700 leading-relaxed italic font-medium">
-                "El candidato demuestra una capacidad sobresaliente para articular soluciones técnicas complejas. Se recomienda profundizar en su experiencia con arquitecturas distribuidas en la entrevista técnica, ya que mostró un dominio teórico excepcional pero con pocos ejemplos prácticos detallados."
-              </p>
-            </Card>
-          </div>
         </TabsContent>
 
         {/* 2. Transcript Tab */}
@@ -373,38 +354,49 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                     )}>
                         {msg.text}
                         
-                        {/* Audio Player for Candidate */}
-                        {msg.role === 'candidate' && (
-                          <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-4">
-                            <button 
-                              onClick={() => handlePlayAudio(msg.text)}
-                              className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 shrink-0 group/play"
-                            >
+                        {/* Audio Player */}
+                        <div className="mt-6 pt-4 border-t border-slate-200/60 flex items-center gap-4">
+                          <button 
+                            onClick={() => handlePlayAudio(idx)}
+                            className={cn(
+                              "w-10 h-10 rounded-full text-white flex items-center justify-center transition-all shadow-lg shadow-slate-200 shrink-0 group/play",
+                              playingAudioIndex === idx ? "bg-blue-600 hover:bg-blue-700" : "bg-slate-900 hover:bg-slate-800"
+                            )}
+                          >
+                            {playingAudioIndex === idx ? (
+                              <Pause className="w-4 h-4 fill-current group-hover/play:scale-110 transition-transform" />
+                            ) : (
                               <Play className="w-4 h-4 fill-current ml-0.5 group-hover/play:scale-110 transition-transform" />
-                            </button>
-                            
-                            <div className="flex-1 h-8 flex items-center gap-[3px] px-2">
-                              {[
-                                0.3, 0.5, 0.8, 0.4, 0.6, 0.9, 0.5, 0.7, 0.4, 0.8, 
-                                0.6, 0.3, 0.5, 0.9, 0.4, 0.7, 0.5, 0.8, 0.4, 0.6,
-                                0.9, 0.5, 0.7, 0.4, 0.8, 0.6, 0.3, 0.5, 0.9, 0.4
-                              ].map((h, i) => (
-                                <div 
-                                  key={i} 
-                                  className="flex-1 bg-slate-200 rounded-full transition-all duration-300" 
-                                  style={{ 
-                                    height: `${h * 100}%`,
-                                    opacity: i > 12 ? 0.4 : 1 // Simulate partial progress
-                                  }} 
-                                />
-                              ))}
-                            </div>
-                            
-                            <div className="text-[10px] font-black text-slate-400 tabular-nums uppercase tracking-widest bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
-                              0:45
-                            </div>
+                            )}
+                          </button>
+                          
+                          <div className="flex-1 h-8 flex items-center gap-[3px] px-2">
+                            {[
+                              0.3, 0.5, 0.8, 0.4, 0.6, 0.9, 0.5, 0.7, 0.4, 0.8, 
+                              0.6, 0.3, 0.5, 0.9, 0.4, 0.7, 0.5, 0.8, 0.4, 0.6,
+                              0.9, 0.5, 0.7, 0.4, 0.8, 0.6, 0.3, 0.5, 0.9, 0.4
+                            ].map((h, i) => (
+                              <div 
+                                key={i} 
+                                className={cn(
+                                  "flex-1 rounded-full transition-all duration-300",
+                                  playingAudioIndex === idx 
+                                    ? "bg-blue-500" 
+                                    : msg.role === 'serena' ? "bg-slate-300" : "bg-slate-200"
+                                )} 
+                                style={{ 
+                                  height: `${h * 100}%`,
+                                  opacity: playingAudioIndex === idx ? 1 : (i > 12 ? 0.4 : 1), // Simulate partial progress
+                                  animation: playingAudioIndex === idx ? `pulse 1s infinite alternate ${i * 0.05}s` : 'none'
+                                }} 
+                              />
+                            ))}
                           </div>
-                        )}
+                          
+                          <div className="text-[10px] font-black text-slate-400 tabular-nums uppercase tracking-widest bg-white/50 px-2 py-1 rounded-md border border-slate-200/60">
+                            0:45
+                          </div>
+                        </div>
                       </div>
                   </div>
                 </div>
@@ -415,70 +407,106 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
           </Card>
         </TabsContent>
 
-        {/* 3. Feedback Tab */}
+        {/* 3. Feedback Tab — Refactor to match Psychometric Style */}
         <TabsContent value="feedback" className="mt-0 animate-in fade-in duration-300">
-          <div className="space-y-6">
-            <Card className="p-8 border-gray-100 shadow-sm relative overflow-hidden">
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-600">
-                    <TrendingUp className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Análisis cualitativo basado en respuestas y tono</p>
-                  </div>
+          <Card className="p-10 border-gray-200/60 shadow-sm relative overflow-hidden bg-white rounded-[32px]">
+            <div className="space-y-8">
+              {/* Header — Patrón Serena IA (Consistent with Psychometric) */}
+              <div className="flex items-center gap-4 pb-6 border-b border-gray-100/80">
+                <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100 shadow-sm">
+                  <Bot className="w-6 h-6" />
                 </div>
-                
-                <p className="text-base text-gray-700 leading-relaxed max-w-4xl mb-10">
-                  {overallFeedback.summary}
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Strengths */}
-                  <div className="bg-white border border-gray-200 rounded-3xl p-8 relative overflow-hidden group hover:border-emerald-200 transition-colors">
-                    <h5 className="text-xs font-black text-gray-900 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
-                      <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-colors">
-                        <TrendingUp className="w-4 h-4" />
-                      </div>
-                      Fortalezas Destacadas
-                    </h5>
-                    <ul className="space-y-5">
-                      {overallFeedback.strengths.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-4">
-                          <div className="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center mt-0.5 flex-shrink-0">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                          </div>
-                          <p className="text-sm text-gray-700 leading-relaxed font-semibold group-hover:text-gray-900 transition-colors">{item}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Areas for Improvement */}
-                  <div className="bg-white border border-gray-200 rounded-3xl p-8 relative overflow-hidden group hover:border-amber-200 transition-colors">
-                    <h5 className="text-xs font-black text-gray-900 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
-                      <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-amber-50 group-hover:text-amber-600 transition-colors">
-                        <ArrowRight className="w-4 h-4" />
-                      </div>
-                      Áreas de Crecimiento
-                    </h5>
-                    <ul className="space-y-5">
-                      {overallFeedback.improvements.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-4">
-                          <div className="w-6 h-6 rounded-full bg-amber-50 flex items-center justify-center mt-0.5 flex-shrink-0">
-                            <Target className="w-3.5 h-3.5 text-amber-600" />
-                          </div>
-                          <p className="text-sm text-gray-700 leading-relaxed font-semibold group-hover:text-gray-900 transition-colors">{item}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div>
+                  <h4 className="text-lg font-black text-slate-900 tracking-tight">Análisis de la Entrevista</h4>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">Feedback Detallado de Serena IA</p>
                 </div>
-
-
               </div>
-            </Card>
-          </div>
+
+              {/* Highlight Box — Conclusión General (Moved to top for high visibility) */}
+              <div className="flex items-start gap-4 p-5 bg-[#F0FDF4] rounded-2xl border border-[#DCFCE7] shadow-sm shadow-emerald-50/50">
+                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-emerald-600 shadow-sm shrink-0">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
+                <p className="text-[13px] font-bold text-[#166534] leading-relaxed py-1">
+                  "Luisa demuestra una sólida base técnica y estratégica en la gestión de productos digitales con componentes de IA. Su habilidad para comunicarse efectivamente con diferentes stakeholders es notable, aunque podría beneficiarse de una mayor claridad en la descripción de experiencias específicas."
+                </p>
+              </div>
+
+              <div className="space-y-8">
+                {/* 1. Áreas de Mejora */}
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Áreas de Mejora</h4>
+                  <ul className="space-y-5">
+                    <li className="flex items-start gap-3">
+                      <span className="mt-2 w-2 h-2 rounded-full bg-amber-500 flex-shrink-0 shadow-sm shadow-amber-100" />
+                      <p className="text-[14px] text-slate-600 leading-relaxed font-medium">
+                        Podría mejorar en la claridad al describir experiencias pasadas, especialmente en el ámbito de edtech.
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-2 w-2 h-2 rounded-full bg-amber-500 flex-shrink-0 shadow-sm shadow-amber-100" />
+                      <p className="text-[14px] text-slate-600 leading-relaxed font-medium">
+                        Sería beneficioso profundizar en ejemplos específicos de integración de IA en productos para demostrar un conocimiento más detallado.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="h-px bg-slate-50 w-full" />
+
+                {/* 2. Habilidades Identificadas */}
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Habilidades Identificadas</h4>
+                  <ul className="space-y-5">
+                    <li className="flex items-start gap-3">
+                      <span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 shadow-sm shadow-blue-100" />
+                      <p className="text-[14px] text-slate-600 leading-relaxed font-medium">
+                        Experiencia en el desarrollo de módulos de reclutamiento con inteligencia artificial.
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 shadow-sm shadow-blue-100" />
+                      <p className="text-[14px] text-slate-600 leading-relaxed font-medium">
+                        Conocimiento en la integración de modelos de IA mediante API Keys y en servidores locales.
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 shadow-sm shadow-blue-100" />
+                      <p className="text-[14px] text-slate-600 leading-relaxed font-medium">
+                        Capacidad para definir estrategias y roadmaps equilibrando prioridades urgentes e importantes.
+                      </p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 shadow-sm shadow-blue-100" />
+                      <p className="text-[14px] text-slate-600 leading-relaxed font-medium">
+                        Habilidad para comunicarse efectivamente con stakeholders técnicos y de negocio, adaptando el lenguaje según la audiencia.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="h-px bg-slate-50 w-full" />
+
+                {/* 3. Seguridad */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Intentos de Trampa</h4>
+                    <p className="text-sm font-bold text-emerald-600 flex items-center gap-2 px-1">
+                      <CheckCircle2 className="w-4 h-4" />
+                      Ninguno identificado
+                    </p>
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Prompt Injection</h4>
+                    <p className="text-sm font-bold text-emerald-600 flex items-center gap-2 px-1">
+                      <CheckCircle2 className="w-4 h-4" />
+                      Ninguno identificado
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
         </TabsContent>
         
         {/* 4. Comments Tab */}
