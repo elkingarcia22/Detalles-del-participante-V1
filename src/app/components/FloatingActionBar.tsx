@@ -288,39 +288,40 @@ export function FloatingActionBar({
         initial={false}
         animate={{
           width: isMinimized ? 80 : 'auto',
-          height: isMinimized ? 4 : 'auto',
+          height: isMinimized ? 4 : 60, // Fixed height for more stable transition
           backgroundColor: isMinimized ? 'rgba(31, 41, 55, 1)' : 'rgba(17, 24, 39, 0.98)',
           borderRadius: isMinimized ? 100 : 20,
-          padding: isMinimized ? 0 : '8px',
+          padding: isMinimized ? 0 : '10px',
           boxShadow: isMinimized 
-            ? '0 4px 12px rgba(0, 0, 0, 0.3)'
-            : '0 20px 40px -10px rgba(0, 0, 0, 0.5)',
-          y: isMinimized ? 0 : -4, // Slight lift when expanded
+            ? '0 4px 12px rgba(0,0,0,0.3)'
+            : '0 20px 40px -10px rgba(0,0,0,0.5)',
+          y: isMinimized ? 0 : -4,
         }}
         transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 30,
-          mass: 1
+          layout: {
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+          },
+          default: {
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+          }
         }}
         className={cn(
           "shadow-2xl backdrop-blur-xl border transition-colors duration-300 overflow-hidden",
-          !isMinimized ? "border-gray-700/50 bg-gray-900 inline-flex" : "border-gray-600/30 cursor-pointer hover:bg-gray-700 hover:scale-x-110"
+          !isMinimized ? "border-gray-700/50 bg-gray-900 inline-flex" : "border-gray-600/30 cursor-pointer hover:bg-gray-700"
         )}
       >
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {!isMinimized && (
             <motion.div
               key="expanded-content"
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 400,
-                damping: 30
-              }}
-              className="px-2"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.1 } }}
+              className="px-2 flex items-center h-full"
             >
               <div className="flex items-center gap-1.5 sm:gap-2">
                 {visibleActions.map((action) => {
