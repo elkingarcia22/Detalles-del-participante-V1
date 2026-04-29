@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Ban,
   ArrowRight,
@@ -282,119 +283,145 @@ export function FloatingActionBar({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className={cn(
-        "shadow-2xl backdrop-blur-sm bg-opacity-95 transition-all duration-500",
-        isMinimized 
-          ? "w-16 h-1.5 bg-gray-400 rounded-full cursor-pointer hover:bg-gray-300 hover:scale-110" 
-          : "bg-gray-900 border border-gray-700 rounded-2xl inline-flex"
-      )}>
-        {isMinimized ? (
-          <div className="w-full h-full" />
-        ) : (
-          <div className="px-2 sm:px-3 py-2.5">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-            
-            {visibleActions.map((action) => {
-              if (action.isSpecial && action.key === 'move_sep') {
-                return (
-                  <div key={action.key} className="relative">
-                     <Button
-                      variant="ghost"
+      <motion.div 
+        layout
+        initial={false}
+        animate={{
+          width: isMinimized ? 80 : 'auto',
+          height: isMinimized ? 6 : 'auto',
+          backgroundColor: isMinimized ? 'rgba(156, 163, 175, 0.5)' : 'rgba(17, 24, 39, 0.95)',
+          borderRadius: isMinimized ? 100 : 16,
+          padding: isMinimized ? 0 : '10px',
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 30
+        }}
+        className={cn(
+          "shadow-2xl backdrop-blur-md border border-transparent transition-colors duration-300 overflow-hidden",
+          !isMinimized && "border-gray-700 bg-gray-900 inline-flex",
+          isMinimized && "cursor-pointer hover:bg-gray-400 hover:scale-110"
+        )}
+      >
+        <AnimatePresence mode="wait">
+          {!isMinimized && (
+            <motion.div
+              key="expanded-content"
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="px-2 sm:px-3"
+            >
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                {visibleActions.map((action) => {
+                  if (action.isSpecial && action.key === 'move_sep') {
+                    return (
+                      <div key={action.key} className="relative">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => handleSubmenuToggle(e, true)}
+                          className={cn(
+                            "h-auto flex-col gap-0.5 px-1 py-1.5 w-[80px] flex-shrink-0 text-gray-300 hover:text-white hover:bg-gray-800 transition-all",
+                            isSubmenuOpen && submenuPosition.fromBar && "bg-gray-800 text-white"
+                          )}
+                        >
+                          <action.icon className="w-4 h-4" />
+                          <span className="text-[9px] text-center">{action.label}</span>
+                        </Button>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <Button
+                      key={action.key}
+                      variant={action.variant === 'reject' ? 'outline' : action.variant === 'primary' ? 'default' : 'ghost'}
                       size="sm"
-                      onClick={(e) => handleSubmenuToggle(e, true)}
+                      onClick={action.onClick}
                       className={cn(
-                        "h-auto flex-col gap-0.5 px-1 py-1.5 w-[80px] flex-shrink-0 text-gray-300 hover:text-white hover:bg-gray-800 transition-all",
-                        isSubmenuOpen && submenuPosition.fromBar && "bg-gray-800 text-white"
+                        "h-auto flex-col gap-0.5 px-1 py-1.5 w-[80px] flex-shrink-0 transition-colors",
+                        action.variant === 'reject' ? "text-red-400 hover:text-red-300 hover:bg-red-950 border-red-800 bg-transparent" :
+                        action.variant === 'primary' ? "bg-blue-600 hover:bg-blue-700 text-white border-transparent" :
+                        "text-gray-300 hover:text-white hover:bg-gray-800"
                       )}
                     >
                       <action.icon className="w-4 h-4" />
                       <span className="text-[9px] text-center">{action.label}</span>
                     </Button>
-                  </div>
-                );
-              }
+                  );
+                })}
 
-              return (
-                <Button
-                  key={action.key}
-                  variant={action.variant === 'reject' ? 'outline' : action.variant === 'primary' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={action.onClick}
-                  className={cn(
-                    "h-auto flex-col gap-0.5 px-1 py-1.5 w-[80px] flex-shrink-0 transition-colors",
-                    action.variant === 'reject' ? "text-red-400 hover:text-red-300 hover:bg-red-950 border-red-800 bg-transparent" :
-                    action.variant === 'primary' ? "bg-blue-600 hover:bg-blue-700 text-white border-transparent" :
-                    "text-gray-300 hover:text-white hover:bg-gray-800"
+                {/* More Actions Dropdown */}
+                <div ref={dropdownRef} className="relative">
+                  <Button
+                    ref={buttonRef}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="h-auto flex-col gap-0.5 px-1 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 w-[80px] flex-shrink-0"
+                  >
+                    <MoreHorizontal className="w-4 h-4" />
+                    <span className="text-[9px] text-center">Más</span>
+                  </Button>
+
+                  {isDropdownOpen && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      className="absolute right-0 bottom-full mb-2 bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-64 max-h-[70vh] overflow-y-auto z-50"
+                    >
+                      {extraActions.map((action) => {
+                        if (action.isSpecial) return null;
+
+                        return (
+                          <div
+                            key={action.key}
+                            className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
+                            onClick={() => {
+                              if (action.onClick) action.onClick();
+                              setIsDropdownOpen(false);
+                            }}
+                          >
+                            <action.icon className="w-4 h-4 mr-3 flex-shrink-0" />
+                            <span>{action.label}</span>
+                          </div>
+                        );
+                      })}
+
+                      {/* Renderizado especial para 'Mover a etapa' si está en el menú Más */}
+                      {mode === 'vacancy' && extraActions.some(a => a.key === 'move_sep') && (
+                        <>
+                          <div className="h-px bg-gray-700 my-1" />
+                          <div
+                            className="flex items-center justify-between px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
+                            onClick={(e) => handleSubmenuToggle(e, false)}
+                          >
+                            <div className="flex items-center">
+                              <Layers className="w-4 h-4 mr-3 flex-shrink-0" />
+                              <span>Mover a etapa</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 flex-shrink-0" />
+                          </div>
+                        </>
+                      )}
+                    </motion.div>
                   )}
-                >
-                  <action.icon className="w-4 h-4" />
-                  <span className="text-[9px] text-center">{action.label}</span>
-                </Button>
-              );
-            })}
-
-            {/* More Actions Dropdown */}
-            <div ref={dropdownRef} className="relative">
-              <Button
-                ref={buttonRef}
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="h-auto flex-col gap-0.5 px-1 py-1.5 text-gray-300 hover:text-white hover:bg-gray-800 w-[80px] flex-shrink-0"
-              >
-                <MoreHorizontal className="w-4 h-4" />
-                <span className="text-[9px] text-center">Más</span>
-              </Button>
-
-              {isDropdownOpen && (
-                <div className="absolute right-0 bottom-full mb-2 bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-64 max-h-[70vh] overflow-y-auto z-50">
-                  {extraActions.map((action) => {
-                    if (action.isSpecial) return null;
-
-                    return (
-                      <div
-                        key={action.key}
-                        className="flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                        onClick={() => {
-                          if (action.onClick) action.onClick();
-                          setIsDropdownOpen(false);
-                        }}
-                      >
-                        <action.icon className="w-4 h-4 mr-3 flex-shrink-0" />
-                        <span>{action.label}</span>
-                      </div>
-                    );
-                  })}
-
-                  {/* Renderizado especial para 'Mover a etapa' si está en el menú Más */}
-                  {mode === 'vacancy' && extraActions.some(a => a.key === 'move_sep') && (
-                    <>
-                      <div className="h-px bg-gray-700 my-1" />
-                      <div
-                        className="flex items-center justify-between px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 cursor-pointer transition-colors"
-                        onClick={(e) => handleSubmenuToggle(e, false)}
-                      >
-                        <div className="flex items-center">
-                          <Layers className="w-4 h-4 mr-3 flex-shrink-0" />
-                          <span>Mover a etapa</span>
-                        </div>
-                        <ChevronRight className="w-4 h-4 flex-shrink-0" />
-                      </div>
-                    </>
-                  )}
-                  
                 </div>
-              )}
-            </div>
-          </div>
-        </div>
-        )}
-      </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
 
       {/* Portal para el submenú de etapas (Renderizado fuera para evitar recortes) */}
       {isSubmenuOpen && createPortal(
-        <div 
-          className="fixed bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-72 max-h-[70vh] overflow-y-auto z-[100] py-2 animate-in fade-in zoom-in-95 duration-200"
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          className="fixed bg-gray-900 border border-gray-700 shadow-2xl rounded-lg backdrop-blur-sm bg-opacity-95 w-72 max-h-[70vh] overflow-y-auto z-[100] py-2"
           style={{ 
             top: `${submenuPosition.top}px`, 
             left: `${submenuPosition.left}px` 
@@ -427,7 +454,7 @@ export function FloatingActionBar({
               <span>{stage}</span>
             </div>
           ))}
-        </div>,
+        </motion.div>,
         document.body
       )}
     </div>
