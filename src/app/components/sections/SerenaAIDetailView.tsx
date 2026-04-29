@@ -320,15 +320,7 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
               ))}
             </div>
             
-            <div className="p-4 bg-white border-t border-gray-100">
-              <div className="bg-gray-50 rounded-2xl px-6 py-3 flex items-center justify-between text-xs font-medium text-gray-500">
-                <span className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  Transcripción verificada por Nexión IA
-                </span>
-                <span className="italic">Duración total: 12m 45s</span>
-              </div>
-            </div>
+
           </Card>
         </TabsContent>
 
