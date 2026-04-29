@@ -43,7 +43,7 @@ export function PsychometricSection({ score = 88, isValentina }: PsychometricSec
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
           <h5 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Interpretación de Resultados</h5>
-          <div className="space-y-4 bg-gray-50 border border-gray-200 p-4 rounded-xl">
+          <div className="space-y-4 bg-white border border-gray-200 p-4 rounded-xl">
             <p className="text-sm text-gray-700 leading-relaxed">
               El candidato muestra un fuerte componente de pensamiento lógico y resolución de problemas. En el test de personalidad, sobresale en <span className="font-semibold text-gray-900">Apertura a la experiencia</span> y <span className="font-semibold text-gray-900">Responsabilidad</span>, rasgos alineados con roles de diseño Senior.
             </p>
