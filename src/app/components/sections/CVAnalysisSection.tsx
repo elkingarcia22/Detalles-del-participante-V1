@@ -25,7 +25,7 @@ export function CVAnalysisSection({ data, candidateName }: CVAnalysisSectionProp
     <div className="bg-white border border-gray-200 rounded-lg p-6 space-y-6">
       <div className="flex items-center justify-between pb-4 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+          <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500">
             <FileText className="w-5 h-5" />
           </div>
           <div>
