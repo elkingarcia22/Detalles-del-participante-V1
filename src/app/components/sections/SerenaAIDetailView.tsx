@@ -14,7 +14,8 @@ import {
   Trophy,
   Target,
   BarChart3,
-  Search
+  Search,
+  Sparkles
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Badge } from '../ui/badge';
@@ -136,90 +137,112 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
         </TabsList>
 
         {/* 1. Analysis Tab */}
-        <TabsContent value="analysis" className="mt-0 animate-in fade-in duration-300">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-4">
-              <div className="flex items-center gap-2 px-1 mb-2">
-                <Target className="w-5 h-5 text-gray-400" />
-                <h4 className="text-sm font-bold tracking-tight text-slate-700 uppercase">Desglose por Pregunta</h4>
+        <TabsContent value="analysis" className="mt-0 animate-in fade-in duration-300 space-y-8">
+          {/* 1. Resumen de Evaluación */}
+          {/* 1. Resumen de Evaluación */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Card className="p-5 border-gray-100 bg-white shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Preguntas</p>
+                  <p className="text-2xl font-black text-gray-900">{questionScores.length}</p>
+                </div>
               </div>
-              <div className="grid gap-4">
-                {questionScores.map((item, idx) => (
-                  <Card key={idx} className="p-5 border-gray-100 hover:border-blue-100 transition-all hover:shadow-md group">
-                    <div className="flex flex-col sm:flex-row items-start justify-between gap-6">
-                      <div className="flex-1 space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-lg bg-gray-50 flex items-center justify-center text-[10px] font-black text-gray-400 border border-gray-100">
-                              {idx + 1}
-                            </span>
-                            <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{item.objective}</span>
-                          </div>
-                          <div className="sm:hidden flex items-center gap-1.5">
-                            <span className="text-xl font-black text-slate-800">{item.score}</span>
-                            <span className="text-[9px] font-bold text-gray-400 uppercase">Puntos</span>
-                          </div>
-                        </div>
-                        <p className="text-base font-bold text-gray-900 leading-tight">
-                          {item.question}
-                        </p>
-                        {item.feedback && (
-                          <div className="bg-blue-50/30 border-l-2 border-blue-200 p-3 rounded-r-lg italic text-sm text-slate-600 leading-relaxed">
-                            "{item.feedback}"
-                          </div>
-                        )}
-                      </div>
-                      <div className="hidden sm:flex flex-col items-center justify-center min-w-[80px] p-4 bg-gray-50 rounded-2xl border border-gray-100 group-hover:bg-blue-50/50 group-hover:border-blue-100 transition-colors">
-                        <span className="text-3xl font-black text-slate-800 group-hover:text-blue-700 transition-colors">{item.score}</span>
-                        <span className="text-[9px] font-bold text-gray-400 uppercase tracking-tighter mt-1">Puntos</span>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
+              <p className="text-[10px] text-gray-500 font-medium mt-2">Respondidas exitosamente</p>
+            </Card>
+
+            <Card className="p-5 border-gray-100 bg-white shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
+                  <Play className="w-5 h-5 fill-current" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Duración</p>
+                  <p className="text-2xl font-black text-gray-900">12:45</p>
+                </div>
               </div>
+              <p className="text-[10px] text-gray-500 font-medium mt-2">Minutos totales</p>
+            </Card>
+
+            <Card className="p-5 border-gray-100 bg-white shadow-sm hover:shadow-md transition-all">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Confianza</p>
+                  <p className="text-2xl font-black text-gray-900">98%</p>
+                </div>
+              </div>
+              <p className="text-[10px] text-gray-500 font-medium mt-2">Nivel de precisión IA</p>
+            </Card>
+          </div>
+
+          {/* 2. Desglose por Pregunta */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-1">
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-gray-400" />
+                <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Desglose por Pregunta</h4>
+              </div>
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">
+                {questionScores.length} TOTALES
+              </span>
             </div>
             
-            <div className="space-y-6">
-              <Card className="p-6 bg-slate-900 text-white border-none shadow-xl shadow-slate-200">
-                <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-6 text-slate-400">Resumen de Evaluación</h4>
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                    <span className="text-sm font-medium text-slate-400">Preguntas respondidas</span>
-                    <span className="text-lg font-bold">{questionScores.length}</span>
-                  </div>
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                    <span className="text-sm font-medium text-slate-400">Tiempo de entrevista</span>
-                    <span className="text-lg font-bold">12:45 min</span>
-                  </div>
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                    <span className="text-sm font-medium text-slate-400">Nivel de Confianza</span>
-                    <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">Alto (98%)</Badge>
-                  </div>
-                  <div className="pt-2">
-                    <div className="flex justify-between items-end mb-2">
-                      <span className="text-sm font-medium text-slate-400">Score General</span>
-                      <span className="text-3xl font-black text-emerald-400">{score}%</span>
+            <div className="grid gap-2">
+              {questionScores.map((item, idx) => (
+                <Card key={idx} className="p-3.5 border-gray-100 bg-white shadow-sm">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex-1 flex items-center gap-4">
+                      <span className="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center text-xs font-black text-gray-400 border border-gray-100 shrink-0">
+                        {idx + 1}
+                      </span>
+                      <div className="space-y-1">
+                        <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest block leading-none">{item.objective}</span>
+                        <p className="text-sm font-bold text-gray-900 leading-tight">
+                          {item.question}
+                        </p>
+                      </div>
                     </div>
-                    <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-                      <div 
-                        className="bg-emerald-500 h-full rounded-full transition-all duration-1000" 
-                        style={{ width: `${score}%` }}
-                      />
+                    <div className="flex items-center gap-4 shrink-0">
+                      {item.feedback && (
+                        <div className="hidden lg:block px-3 py-1.5 bg-gray-50/80 rounded-lg italic text-[10px] text-slate-500 max-w-[280px] truncate border border-gray-100">
+                          "{item.feedback}"
+                        </div>
+                      )}
+                      <div className="flex items-center gap-2.5 px-3 py-1.5 bg-gray-50 rounded-xl border border-gray-100">
+                        <span className="text-lg font-black text-slate-800">{item.score}</span>
+                        <span className="text-[8px] font-bold text-gray-400 uppercase">Pts</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Card>
-
-              <Card className="p-6 border-gray-100 bg-gray-50/50">
-                <div className="flex items-center gap-2 mb-4">
-                  <Search className="w-4 h-4 text-blue-600" />
-                  <h4 className="text-xs font-black text-gray-900 uppercase tracking-widest">Observación de IA</h4>
-                </div>
-                <p className="text-sm text-gray-600 leading-relaxed italic">
-                  "El candidato demuestra una capacidad sobresaliente para articular soluciones técnicas complejas. Se recomienda profundizar en su experiencia con arquitecturas distribuidas en la entrevista técnica."
-                </p>
-              </Card>
+                </Card>
+              ))}
             </div>
+          </div>
+
+          {/* 3. Observaciones */}
+          <div className="space-y-3 pt-4">
+            <div className="flex items-center gap-2 px-1">
+              <Sparkles className="w-4 h-4 text-gray-400" />
+              <h4 className="text-[11px] font-black tracking-widest text-slate-500 uppercase">Observación de IA</h4>
+            </div>
+            
+            <Card className="p-7 border-gray-100 bg-white shadow-sm relative group overflow-hidden">
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500" />
+              <p className="text-base text-gray-600 leading-relaxed italic font-medium relative z-10">
+                "El candidato demuestra una capacidad sobresaliente para articular soluciones técnicas complejas. Se recomienda profundizar en su experiencia con arquitecturas distribuidas en la entrevista técnica, ya que mostró un dominio teórico excepcional pero con pocos ejemplos prácticos detallados."
+              </p>
+              
+              {/* Decorative Watermark */}
+              <div className="absolute -bottom-6 -right-6 opacity-[0.03] pointer-events-none group-hover:scale-110 group-hover:rotate-12 transition-all duration-700">
+                <Bot className="w-32 h-32" />
+              </div>
+            </Card>
           </div>
         </TabsContent>
 
@@ -274,19 +297,24 @@ export function SerenaAIDetailView({ interviewData, score = 88, onBack, isValent
                         ? "bg-white text-gray-800 border-2 border-slate-100 rounded-tr-none" 
                         : "bg-slate-100 text-gray-700 border border-slate-200 rounded-tl-none"
                     )}>
-                      {msg.text}
-                      
-                      {/* Audio Button for Candidate */}
-                      {msg.role === 'candidate' && (
-                        <button 
-                          onClick={() => handlePlayAudio(msg.text)}
-                          className="absolute -left-12 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all opacity-0 group-hover:opacity-100"
-                          title="Reproducir audio de esta respuesta"
-                        >
-                          <Play className="w-3.5 h-3.5 fill-current" />
-                        </button>
-                      )}
-                    </div>
+                        {msg.text}
+                        
+                        {/* Audio Player for Candidate */}
+                        {msg.role === 'candidate' && (
+                          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center gap-4">
+                            <button 
+                              onClick={() => handlePlayAudio(msg.text)}
+                              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all text-[10px] font-black uppercase tracking-widest border border-blue-100"
+                            >
+                              <Play className="w-3 h-3 fill-current" />
+                              Escuchar Respuesta
+                            </button>
+                            <div className="flex-1 h-1 bg-slate-100 rounded-full relative overflow-hidden">
+                              <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-blue-400/20 to-blue-600/20 animate-pulse" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
                   </div>
                 </div>
               ))}
