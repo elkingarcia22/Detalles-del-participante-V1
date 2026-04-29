@@ -295,7 +295,7 @@ function StageAccordion({ id, title, category, icon: Icon, iconColor = "text-blu
       {/* Accordion Content */}
       {isOpen && (
         <div className="border-t border-gray-200 bg-gray-50">
-          {children && status === 'completed' && (
+          {children && (status === 'completed' || status === 'rejected') && (
             <div className="p-4 sm:p-6">
               {children}
             </div>
